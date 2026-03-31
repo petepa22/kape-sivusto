@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julkisivuremontin hintalaskuri | KaPe Oy</title>
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #2d6432;
+  --primary-dark: #1e4422;
+  --primary-light: #3a8241;
+  --bg: #f4f5f7;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--gray-800);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+  color: var(--white);
+  padding: 2rem 1rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header-brand {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.header-sub {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title .icon {
+  font-size: 1.2rem;
+}
+
+/* Form elements */
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.35rem;
+}
+
+.help-text {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--gray-800);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -moz-appearance: textfield;
+}
+
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(45,100,50,0.12);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Radio buttons */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.radio-option:hover {
+  border-color: var(--primary);
+  background: var(--gray-50);
+}
+
+.radio-option.selected {
+  border-color: var(--primary);
+  background: rgba(45,100,50,0.04);
+}
+
+.radio-option input[type="radio"] {
+  margin-top: 2px;
+  accent-color: var(--primary);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.radio-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  line-height: 1.4;
+}
+
+.radio-desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  font-weight: 400;
+}
+
+.radio-price {
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+/* Checkboxes */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkbox-option:hover {
+  border-color: var(--primary);
+  background: var(--gray-50);
+}
+
+.checkbox-option.checked {
+  border-color: var(--primary);
+  background: rgba(45,100,50,0.04);
+}
+
+.checkbox-option input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: var(--primary);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.checkbox-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  line-height: 1.4;
+}
+
+.checkbox-desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  font-weight: 400;
+}
+
+/* Sub-input inside checkbox */
+.sub-input {
+  margin-top: 0.6rem;
+  margin-left: 0.15rem;
+  display: none;
+}
+
+.sub-input.visible {
+  display: block;
+}
+
+.sub-input label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--gray-600);
+}
+
+.sub-input input[type="number"] {
+  max-width: 120px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+}
+
+.inline-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inline-group .unit {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+/* Talous radio */
+.talous-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.talous-option {
+  flex: 1;
+  text-align: center;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.talous-option:hover {
+  border-color: var(--primary);
+}
+
+.talous-option.selected {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--white);
+}
+
+.talous-option input {
+  display: none;
+}
+
+/* Results */
+.results {
+  display: none;
+}
+
+.results.visible {
+  display: block;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--gray-100);
+  gap: 1rem;
+}
+
+.result-row:last-child {
+  border-bottom: none;
+}
+
+.result-label {
+  font-size: 0.88rem;
+  color: var(--gray-600);
+  flex-shrink: 1;
+}
+
+.result-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.result-divider {
+  height: 1px;
+  background: var(--gray-200);
+  margin: 0.5rem 0;
+}
+
+.result-total {
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-top: 0.75rem;
+}
+
+.result-total .result-row {
+  border-bottom: none;
+  padding: 0.3rem 0;
+}
+
+.result-total .result-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+
+.result-total .result-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.result-savings {
+  background: rgba(45,100,50,0.06);
+  border: 1.5px solid rgba(45,100,50,0.15);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-top: 0.75rem;
+}
+
+.result-savings .result-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.result-savings .result-value {
+  color: var(--primary);
+}
+
+.savings-final {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1.5px solid rgba(45,100,50,0.2);
+}
+
+.savings-final .result-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.savings-final .result-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem 2rem;
+  background: var(--primary);
+  color: var(--white);
+  text-decoration: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: var(--shadow-md);
+}
+
+.cta-button:hover {
+  background: var(--primary-dark);
+}
+
+.cta-button:active {
+  transform: scale(0.98);
+}
+
+.cta-note {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* Lead gate form */
+.lead-gate {
+  padding: 1.5rem;
+}
+.lead-gate h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.lead-gate .lead-intro {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+.lead-gate .form-group { margin-bottom: 1rem; }
+.lead-gate label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.3rem;
+}
+.lead-gate input[type="text"],
+.lead-gate input[type="email"],
+.lead-gate input[type="tel"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--gray-50);
+}
+.lead-gate input[type="text"]:focus,
+.lead-gate input[type="email"]:focus,
+.lead-gate input[type="tel"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(45,100,50,0.12);
+  background: var(--white);
+}
+.lead-gate .consent-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+.lead-gate .consent-group input[type="checkbox"] {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.lead-gate .consent-group label {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--gray-600);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.lead-gate .submit-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all 0.25s;
+}
+.lead-gate .submit-btn:hover {
+  background: var(--primary-dark);
+}
+.lead-gate .submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.lead-gate .form-error {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+.lead-gate .privacy-note {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  text-align: center;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+.lead-success {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  display: none;
+}
+.lead-success .success-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+.lead-success h3 {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.lead-success p {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+}
+.price-teaser {
+  background: rgba(45,100,50,0.06);
+  border: 1.5px solid rgba(45,100,50,0.15);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+.price-teaser .teaser-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 0.25rem;
+}
+.price-teaser .teaser-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  filter: blur(8px);
+  user-select: none;
+}
+.price-teaser .teaser-hint {
+  font-size: 0.78rem;
+  color: var(--primary);
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+
+/* Disclaimer */
+.disclaimer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--gray-400);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-200);
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (min-width: 600px) {
+  .header {
+    padding: 2.5rem 2rem 3rem;
+  }
+  .header h1 {
+    font-size: 2rem;
+  }
+  .container {
+    padding: 2rem 1.5rem 3rem;
+  }
+  .card {
+    padding: 2rem;
+  }
+}
+
+/* Smooth transition for results */
+.results {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="../laskurit.html" style="color:rgba(255,255,255,0.8);font-size:0.85rem;text-decoration:none;display:inline-block;margin-bottom:0.5rem;">&larr; Takaisin laskureihin</a>
+  <div class="header-brand">Rakennusliike KaPe Oy</div>
+  <h1>Julkisivuremontin hintalaskuri</h1>
+  <div class="header-sub">Arvioi julkisivu- tai ulkosein&auml;remontin kustannukset</div>
+</div>
+
+<div class="container">
+
+  <!-- Seinäpinta-ala -->
+  <div class="card">
+    <div class="card-title"><span class="icon">&#9634;</span> Perustiedot</div>
+    <div class="form-group">
+      <label for="area">Seinien pinta-ala</label>
+      <div class="help-text">Tyypillinen omakotitalo: 100 &ndash; 200 m&sup2;</div>
+      <div class="inline-group">
+        <input type="number" id="area" min="10" max="1000" value="120" step="1">
+        <span class="unit">m&sup2;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Remontin tyyppi -->
+  <div class="card">
+    <div class="card-title"><span class="icon">&#9998;</span> Remontin tyyppi</div>
+    <div class="radio-group" id="typeGroup">
+      <label class="radio-option selected" data-value="maalaus">
+        <input type="radio" name="remonttityyppi" value="maalaus" checked>
+        <div>
+          <div class="radio-label">Julkisivumaalaus</div>
+          <div class="radio-desc">Kevyt huolto &ndash; pesu, pohjustus ja maalaus</div>
+          <div class="radio-price">20 &ndash; 35 &euro;/m&sup2;</div>
+        </div>
+      </label>
+      <label class="radio-option" data-value="puuverhous">
+        <input type="radio" name="remonttityyppi" value="puuverhous">
+        <div>
+          <div class="radio-label">Puuverhouksen uusiminen</div>
+          <div class="radio-desc">Purku + tuulensuoja + koolaus + paneeli + telineet (yleisin)</div>
+          <div class="radio-price">110 &ndash; 160 &euro;/m&sup2;</div>
+        </div>
+      </label>
+      <label class="radio-option" data-value="puuverhous_eristys">
+        <input type="radio" name="remonttityyppi" value="puuverhous_eristys">
+        <div>
+          <div class="radio-label">Puuverhous + lis&auml;eristys 100 mm</div>
+          <div class="radio-desc">Kattava remontti &ndash; parempi energiatehokkuus</div>
+          <div class="radio-price">150 &ndash; 220 &euro;/m&sup2;</div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Lisätyöt -->
+  <div class="card">
+    <div class="card-title"><span class="icon">&#10010;</span> Lis&auml;ty&ouml;t</div>
+    <div class="checkbox-group">
+
+      <label class="checkbox-option" id="eristysOption">
+        <input type="checkbox" id="lisaeristys">
+        <div>
+          <div class="checkbox-label">Lis&auml;eristys 50 mm</div>
+          <div class="checkbox-desc">+15 &ndash; 25 &euro;/m&sup2; (ei tarvita, jos valittuna &quot;Puuverhous + lis&auml;eristys&quot;)</div>
+        </div>
+      </label>
+
+      <label class="checkbox-option" id="maalausOption">
+        <input type="checkbox" id="pintamaalaus">
+        <div>
+          <div class="checkbox-label">Pintamaalaus</div>
+          <div class="checkbox-desc">+25 &ndash; 40 &euro;/m&sup2; (tehdasmaalattu paneeli, mutta pintamaalaus erikseen)</div>
+        </div>
+      </label>
+
+      <div class="checkbox-option" id="ikkunatOption">
+        <input type="checkbox" id="ikkunat">
+        <div>
+          <div class="checkbox-label">Ikkunoiden vaihto</div>
+          <div class="checkbox-desc">700 &ndash; 1 200 &euro;/kpl (normaali koko)</div>
+          <div class="sub-input" id="ikkunatSub">
+            <label for="ikkunatKpl">Ikkunoiden m&auml;&auml;r&auml;</label>
+            <div class="inline-group">
+              <input type="number" id="ikkunatKpl" min="0" max="30" value="8">
+              <span class="unit">kpl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkbox-option" id="ovetOption">
+        <input type="checkbox" id="ovet">
+        <div>
+          <div class="checkbox-label">Ulko-ovien vaihto</div>
+          <div class="checkbox-desc">1 000 &ndash; 1 800 &euro;/kpl</div>
+          <div class="sub-input" id="ovetSub">
+            <label for="ovetKpl">Ovien m&auml;&auml;r&auml;</label>
+            <div class="inline-group">
+              <input type="number" id="ovetKpl" min="0" max="10" value="1">
+              <span class="unit">kpl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Kotitalousvähennys -->
+  <div class="card">
+    <div class="card-title"><span class="icon">&#127968;</span> Kotitalousv&auml;hennys</div>
+    <div class="form-group">
+      <label>Talouden henkil&ouml;m&auml;&auml;r&auml; (verotus)</label>
+      <div class="help-text">Kotitalousv&auml;hennys 35 %, max 1 600 &euro;/henkil&ouml;, omavastuu 150 &euro;/henkil&ouml;</div>
+      <div class="talous-group" id="talousGroup">
+        <div class="talous-option selected" data-value="1" onclick="selectTalous(1)">
+          <input type="radio" name="talous" value="1" checked>
+          1 henkil&ouml;
+        </div>
+        <div class="talous-option" data-value="2" onclick="selectTalous(2)">
+          <input type="radio" name="talous" value="2">
+          2 henkil&ouml;&auml;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lead gate -->
+  <div class="card" id="lead-gate-section">
+    <div class="lead-gate">
+      <div class="price-teaser">
+        <div class="teaser-label">Arvioitu kokonaishinta</div>
+        <div class="teaser-value" id="teaser-price">12 000 – 18 000 €</div>
+        <div class="teaser-hint">Täytä yhteystiedot nähdäksesi tarkan arvion</div>
+      </div>
+
+      <h3>Saat arvion sähköpostiisi</h3>
+      <p class="lead-intro">Täytä yhteystietosi, niin lähetämme sinulle yksityiskohtaisen hinta-arvion.</p>
+
+      <form id="lead-form" data-netlify="true">
+        <input type="hidden" name="form-name" value="julkisivulaskuri">
+        <input type="hidden" name="estimate" id="estimate-data">
+        <div class="form-group">
+          <label for="lead-name">Nimi *</label>
+          <input type="text" id="lead-name" name="name" required placeholder="Etunimi Sukunimi">
+          <div class="form-error" id="err-name">Syötä nimesi</div>
+        </div>
+        <div class="form-group">
+          <label for="lead-email">Sähköposti *</label>
+          <input type="email" id="lead-email" name="email" required placeholder="nimi@esimerkki.fi">
+          <div class="form-error" id="err-email">Syötä toimiva sähköpostiosoite</div>
+        </div>
+        <div class="form-group">
+          <label for="lead-phone">Puhelin</label>
+          <input type="tel" id="lead-phone" name="phone" placeholder="044 123 4567">
+        </div>
+        <div class="consent-group">
+          <input type="checkbox" id="lead-consent" name="consent" required>
+          <label for="lead-consent">Hyväksyn, että Rakennusliike KaPe Oy voi olla minuun yhteydessä tarjouksen tiimoilta ja lähettää ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Näytä arvio ja lähetä sähköpostiin</button>
+        <div class="privacy-note">Tietojasi käsitellään luottamuksellisesti.<br>Emme luovuta niitä kolmansille osapuolille.</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success message -->
+  <div class="card lead-success" id="lead-success">
+    <div class="success-icon">✅</div>
+    <h3>Kiitos! Arvio on lähetetty sähköpostiisi.</h3>
+    <p>Tarkista sähköpostisi (myös roskaposti-kansio).<br>Olemme sinuun yhteydessä pian!</p>
+    <div style="margin-top:1.25rem;">
+      <a href="tel:+358440150618" class="cta-button" style="font-size:0.95rem; padding:0.8rem 2rem;">☎ Soita heti: 044 015 0618</a>
+    </div>
+    <div class="cta-note" style="margin-top:0.75rem;">Haluatko nopeamman vastauksen? Soita suoraan.</div>
+  </div>
+
+  <div class="disclaimer">
+    Laskurin antama hinta-arvio ei ole sitova tarjous.<br>
+    Hinnat perustuvat Keski-Pohjanmaan hintatasoon. Toteutunut hinta m&auml;&auml;r&auml;ytyy kohteen katselmuksessa.<br>
+    &copy; KaPe Oy 2026
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var areaInput = document.getElementById('area');
+  var radios = document.querySelectorAll('input[name="remonttityyppi"]');
+  var lisaeristys = document.getElementById('lisaeristys');
+  var pintamaalaus = document.getElementById('pintamaalaus');
+  var ikkunat = document.getElementById('ikkunat');
+  var ikkunatKpl = document.getElementById('ikkunatKpl');
+  var ikkunatSub = document.getElementById('ikkunatSub');
+  var ovet = document.getElementById('ovet');
+  var ovetKpl = document.getElementById('ovetKpl');
+  var ovetSub = document.getElementById('ovetSub');
+  var eristysOption = document.getElementById('eristysOption');
+  var maalausOption = document.getElementById('maalausOption');
+
+  var talousHenkilot = 1;
+
+  var PRICES = {
+    maalaus: { min: 24, max: 32 },
+    puuverhous: { min: 120, max: 150 },
+    puuverhous_eristys: { min: 165, max: 200 },
+    lisaeristys50: { min: 17, max: 23 },
+    pintamaalaus: { min: 28, max: 36 },
+    ikkuna: { min: 800, max: 1050 },
+    ovi: { min: 1100, max: 1500 }
+  };
+
+  var ALV = 0.255;
+
+  var typeNames = {
+    maalaus: 'Julkisivumaalaus',
+    puuverhous: 'Puuverhouksen uusiminen',
+    puuverhous_eristys: 'Puuverhous + lis\u00e4eristys 100 mm'
+  };
+
+  // Radio styling
+  document.querySelectorAll('.radio-option').forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      document.querySelectorAll('.radio-option').forEach(function(o) { o.classList.remove('selected'); });
+      this.classList.add('selected');
+      updateVisibility();
+      updateTeaser();
+    });
+  });
+
+  // Checkbox styling
+  function setupCheckbox(checkbox, optionEl, subEl) {
+    var parent = checkbox.closest('.checkbox-option') || optionEl;
+    parent.addEventListener('click', function(e) {
+      if (e.target.tagName === 'INPUT' && e.target.type === 'number') return;
+      if (e.target.tagName === 'LABEL' && e.target.getAttribute('for') && e.target.getAttribute('for') !== checkbox.id) return;
+      checkbox.checked = !checkbox.checked;
+      parent.classList.toggle('checked', checkbox.checked);
+      if (subEl) subEl.classList.toggle('visible', checkbox.checked);
+      updateTeaser();
+    });
+    checkbox.addEventListener('change', function() {
+      parent.classList.toggle('checked', checkbox.checked);
+      if (subEl) subEl.classList.toggle('visible', checkbox.checked);
+      updateTeaser();
+    });
+  }
+
+  setupCheckbox(lisaeristys, eristysOption, null);
+  setupCheckbox(pintamaalaus, maalausOption, null);
+  setupCheckbox(ikkunat, document.getElementById('ikkunatOption'), ikkunatSub);
+  setupCheckbox(ovet, document.getElementById('ovetOption'), ovetSub);
+
+  window.selectTalous = function(val) {
+    talousHenkilot = val;
+    document.querySelectorAll('.talous-option').forEach(function(o) {
+      o.classList.toggle('selected', parseInt(o.dataset.value) === val);
+    });
+    updateTeaser();
+  };
+
+  function updateVisibility() {
+    var type = getType();
+    if (type === 'puuverhous_eristys') {
+      eristysOption.style.display = 'none';
+      lisaeristys.checked = false;
+      eristysOption.classList.remove('checked');
+    } else {
+      eristysOption.style.display = '';
+    }
+    if (type === 'puuverhous' || type === 'puuverhous_eristys') {
+      maalausOption.style.display = '';
+    } else {
+      maalausOption.style.display = 'none';
+      pintamaalaus.checked = false;
+      maalausOption.classList.remove('checked');
+    }
+  }
+
+  function getType() {
+    var checked = document.querySelector('input[name="remonttityyppi"]:checked');
+    return checked ? checked.value : 'maalaus';
+  }
+
+  function fmt(num) {
+    return Math.round(num).toLocaleString('fi-FI');
+  }
+
+  function getCalcData() {
+    var area = parseFloat(areaInput.value) || 0;
+    var type = getType();
+    var price = PRICES[type];
+
+    var rows = [];
+    var totalMin = 0;
+    var totalMax = 0;
+
+    var baseMin = area * price.min;
+    var baseMax = area * price.max;
+    totalMin += baseMin;
+    totalMax += baseMax;
+    rows.push({ label: typeNames[type] + ' (' + area + ' m\u00b2)', min: baseMin, max: baseMax });
+
+    if (lisaeristys.checked && type !== 'puuverhous_eristys') {
+      var eMin = area * PRICES.lisaeristys50.min;
+      var eMax = area * PRICES.lisaeristys50.max;
+      totalMin += eMin; totalMax += eMax;
+      rows.push({ label: 'Lis\u00e4eristys 50 mm', min: eMin, max: eMax });
+    }
+
+    if (pintamaalaus.checked && (type === 'puuverhous' || type === 'puuverhous_eristys')) {
+      var mMin = area * PRICES.pintamaalaus.min;
+      var mMax = area * PRICES.pintamaalaus.max;
+      totalMin += mMin; totalMax += mMax;
+      rows.push({ label: 'Pintamaalaus', min: mMin, max: mMax });
+    }
+
+    if (ikkunat.checked) {
+      var kpl = parseInt(ikkunatKpl.value) || 0;
+      if (kpl > 0) {
+        var iMin = kpl * PRICES.ikkuna.min;
+        var iMax = kpl * PRICES.ikkuna.max;
+        totalMin += iMin; totalMax += iMax;
+        rows.push({ label: 'Ikkunoiden vaihto (' + kpl + ' kpl)', min: iMin, max: iMax });
+      }
+    }
+
+    if (ovet.checked) {
+      var okpl = parseInt(ovetKpl.value) || 0;
+      if (okpl > 0) {
+        var oMin = okpl * PRICES.ovi.min;
+        var oMax = okpl * PRICES.ovi.max;
+        totalMin += oMin; totalMax += oMax;
+        rows.push({ label: 'Ulko-ovien vaihto (' + okpl + ' kpl)', min: oMin, max: oMax });
+      }
+    }
+
+    var alvMin = totalMin * ALV;
+    var alvMax = totalMax * ALV;
+    var grandMin = totalMin + alvMin;
+    var grandMax = totalMax + alvMax;
+
+    var workMin = grandMin * 0.6;
+    var workMax = grandMax * 0.6;
+
+    var maxVahennys = talousHenkilot * 1600;
+    var omavastuu = talousHenkilot * 150;
+    var vahennysMin = Math.min(workMin * 0.35 - omavastuu, maxVahennys);
+    var vahennysMax = Math.min(workMax * 0.35 - omavastuu, maxVahennys);
+    if (vahennysMin < 0) vahennysMin = 0;
+    if (vahennysMax < 0) vahennysMax = 0;
+
+    var afterMin = grandMin - vahennysMax;
+    var afterMax = grandMax - vahennysMin;
+
+    return {
+      type: type, area: area, rows: rows,
+      totalMin: totalMin, totalMax: totalMax,
+      alvMin: alvMin, alvMax: alvMax,
+      grandMin: grandMin, grandMax: grandMax,
+      workMin: workMin, workMax: workMax,
+      vahennysMin: vahennysMin, vahennysMax: vahennysMax,
+      afterMin: afterMin, afterMax: afterMax,
+      talous: talousHenkilot
+    };
+  }
+
+  function updateTeaser() {
+    var d = getCalcData();
+    document.getElementById('teaser-price').textContent = fmt(d.afterMin) + ' \u2013 ' + fmt(d.afterMax) + ' \u20ac';
+  }
+
+  function buildEstimateText(d) {
+    var lines = [];
+    lines.push('JULKISIVUREMONTIN HINTA-ARVIO');
+    lines.push('Rakennusliike KaPe Oy');
+    lines.push('---');
+    lines.push('');
+    lines.push('Remonttityyppi: ' + typeNames[d.type]);
+    lines.push('Pinta-ala: ' + d.area + ' m\u00b2');
+    lines.push('');
+    d.rows.forEach(function(r) {
+      lines.push(r.label + ': ' + fmt(r.min) + ' \u2013 ' + fmt(r.max) + ' \u20ac');
+    });
+    lines.push('');
+    lines.push('ALV 25,5 %: ' + fmt(d.alvMin) + ' \u2013 ' + fmt(d.alvMax) + ' \u20ac');
+    lines.push('KOKONAISHINTA (sis. ALV): ' + fmt(d.grandMin) + ' \u2013 ' + fmt(d.grandMax) + ' \u20ac');
+    lines.push('');
+    lines.push('Kotitalousv\u00e4hennys: -' + fmt(d.vahennysMin) + ' \u2013 ' + fmt(d.vahennysMax) + ' \u20ac');
+    lines.push('');
+    lines.push('HINTA V\u00c4HENNYKSEN J\u00c4LKEEN: ' + fmt(d.afterMin) + ' \u2013 ' + fmt(d.afterMax) + ' \u20ac');
+    lines.push('');
+    lines.push('---');
+    lines.push('T\u00e4m\u00e4 on suuntaa-antava arvio. Tarkka hinta selvi\u00e4\u00e4 kohteen katselmuksessa.');
+    lines.push('Ota yhteytt\u00e4: 044 015 0618 | petteri.palosaari@kape.fi');
+    return lines.join('\n');
+  }
+
+  // Lead form submission
+  document.getElementById('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var name = document.getElementById('lead-name').value.trim();
+    var email = document.getElementById('lead-email').value.trim();
+    var consent = document.getElementById('lead-consent').checked;
+
+    var valid = true;
+    document.getElementById('err-name').style.display = name ? 'none' : 'block';
+    if (!name) valid = false;
+
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    document.getElementById('err-email').style.display = emailOk ? 'none' : 'block';
+    if (!emailOk) valid = false;
+
+    if (!consent || !valid) return;
+
+    var d = getCalcData();
+    var estimate = buildEstimateText(d);
+
+    var btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'L\u00e4hetet\u00e4\u00e4n...';
+
+    // Set hidden estimate field
+    document.getElementById('estimate-data').value = estimate;
+
+    // Submit via Netlify Forms
+    var formData = new FormData(document.getElementById('lead-form'));
+    formData.set('estimate', estimate);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).then(function() { showSuccess(); }).catch(function() { showSuccess(); });
+
+    function showSuccess() {
+      document.getElementById('lead-gate-section').style.display = 'none';
+      document.getElementById('lead-success').style.display = 'block';
+    }
+  });
+
+  // Events
+  areaInput.addEventListener('input', updateTeaser);
+  ikkunatKpl.addEventListener('input', updateTeaser);
+  ovetKpl.addEventListener('input', updateTeaser);
+  radios.forEach(function(r) { r.addEventListener('change', updateTeaser); });
+
+  // Init
+  updateVisibility();
+  updateTeaser();
+})();
+</script>
+</body>
+</html>

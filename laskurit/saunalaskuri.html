@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saunaremontin hintalaskuri - KaPe Oy</title>
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #2d6432;
+  --primary-dark: #1e4422;
+  --primary-light: #3a8241;
+  --bg: #f4f5f7;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --radius: 10px;
+  --radius-lg: 14px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--gray-800);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+  color: var(--white);
+  padding: 1.5rem 1rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: var(--bg);
+  border-radius: 20px 20px 0 0;
+}
+
+.header-brand {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.header p {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 3rem;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Form elements */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.3rem;
+}
+
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--gray-800);
+  background: var(--gray-50);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(45,100,50,0.12);
+  background: var(--white);
+}
+
+.area-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.area-badge {
+  background: var(--gray-100);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+}
+
+.area-badge .label {
+  font-size: 0.72rem;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.area-badge .value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Radio & Checkbox styling */
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option-item {
+  position: relative;
+}
+
+.option-item input[type="radio"],
+.option-item input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.option-item label {
+  display: block;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--gray-50);
+}
+
+.option-item label:hover {
+  border-color: var(--gray-300);
+  background: var(--white);
+}
+
+.option-item input:checked + label {
+  border-color: var(--primary);
+  background: rgba(45,100,50,0.04);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.option-item .opt-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--gray-800);
+}
+
+.option-item .opt-desc {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  margin-top: 0.15rem;
+}
+
+.option-item .opt-price {
+  font-size: 0.78rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+/* Household size */
+.household-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+/* Results */
+.results-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 2px solid var(--primary);
+}
+
+.result-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0;
+  font-size: 0.9rem;
+}
+
+.result-line .r-label {
+  color: var(--gray-600);
+}
+
+.result-line .r-value {
+  font-weight: 600;
+  color: var(--gray-800);
+  text-align: right;
+}
+
+.result-divider {
+  border: none;
+  border-top: 1px solid var(--gray-200);
+  margin: 0.5rem 0;
+}
+
+.result-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.result-total .r-label {
+  color: var(--gray-800);
+}
+
+.result-total .r-value {
+  color: var(--primary);
+}
+
+.result-sub {
+  font-size: 0.78rem;
+  color: var(--gray-400);
+  text-align: right;
+  margin-top: -0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.deduction-box {
+  background: rgba(45,100,50,0.05);
+  border: 1px solid rgba(45,100,50,0.2);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.deduction-box .d-title {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.88rem;
+  margin-bottom: 0.35rem;
+}
+
+.deduction-box .result-line {
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+}
+
+.final-price {
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+.final-price .fp-label {
+  font-size: 0.82rem;
+  opacity: 0.9;
+  margin-bottom: 0.15rem;
+}
+
+.final-price .fp-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: var(--primary);
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.9rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: inherit;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+
+.cta-btn:hover {
+  background: var(--primary-dark);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.cta-btn:active {
+  transform: translateY(0);
+}
+
+.cta-phone {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  margin-top: 0.5rem;
+}
+
+/* Lead gate form */
+.lead-gate { padding: 1.5rem; }
+.lead-gate h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+.lead-gate .lead-intro { font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1.25rem; line-height: 1.6; }
+.lead-gate .lg-form-group { margin-bottom: 1rem; }
+.lead-gate .lg-form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin-bottom: 0.3rem; }
+.lead-gate input[type="text"],
+.lead-gate input[type="email"],
+.lead-gate input[type="tel"] {
+  width: 100%; padding: 0.7rem 1rem; border: 1.5px solid var(--gray-200); border-radius: 8px;
+  font-size: 1rem; font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s; background: var(--gray-50);
+}
+.lead-gate input[type="text"]:focus,
+.lead-gate input[type="email"]:focus,
+.lead-gate input[type="tel"]:focus {
+  outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,100,50,0.12); background: var(--white);
+}
+.lead-gate .consent-group {
+  display: flex; align-items: flex-start; gap: 0.6rem; margin-top: 1rem; margin-bottom: 1.25rem;
+}
+.lead-gate .consent-group input[type="checkbox"] {
+  margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary); flex-shrink: 0;
+}
+.lead-gate .consent-group label {
+  font-size: 0.82rem; font-weight: 400; color: var(--gray-600); line-height: 1.5; cursor: pointer;
+}
+.lead-gate .submit-btn {
+  display: block; width: 100%; padding: 1rem; background: var(--primary); color: var(--white);
+  border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer;
+  box-shadow: var(--shadow-md); transition: all 0.25s;
+}
+.lead-gate .submit-btn:hover { background: var(--primary-dark); }
+.lead-gate .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.lead-gate .form-error { color: #c0392b; font-size: 0.8rem; margin-top: 0.25rem; display: none; }
+.lead-gate .privacy-note { font-size: 0.75rem; color: var(--gray-400); text-align: center; margin-top: 0.75rem; line-height: 1.5; }
+.lead-success { text-align: center; padding: 2rem 1.5rem; display: none; }
+.lead-success .success-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.lead-success h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.lead-success p { color: var(--gray-600); font-size: 0.9rem; }
+.price-teaser {
+  background: rgba(45,100,50,0.06); border: 1.5px solid rgba(45,100,50,0.15);
+  border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; text-align: center;
+}
+.price-teaser .teaser-label { font-size: 0.8rem; font-weight: 600; color: var(--primary-dark); margin-bottom: 0.25rem; }
+.price-teaser .teaser-value { font-size: 1.3rem; font-weight: 800; color: var(--primary-dark); filter: blur(8px); user-select: none; }
+.price-teaser .teaser-hint { font-size: 0.78rem; color: var(--primary); margin-top: 0.4rem; font-weight: 500; }
+
+/* Disclaimer */
+.disclaimer {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 0.78rem;
+  color: #92400e;
+  line-height: 1.5;
+  margin-top: 1rem;
+}
+
+.disclaimer strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.78rem;
+  color: var(--gray-400);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.25rem;
+  }
+  .form-row {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+  .results-card {
+    padding: 1rem;
+  }
+  .final-price .fp-value {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 481px) {
+  .header {
+    padding: 2rem 1.5rem 2.5rem;
+  }
+  .header h1 {
+    font-size: 1.75rem;
+  }
+  .container {
+    padding: 1rem 1.5rem 3rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="../laskurit.html" style="color:rgba(255,255,255,0.8);font-size:0.85rem;text-decoration:none;display:inline-block;margin-bottom:0.5rem;">&larr; Takaisin laskureihin</a>
+  <div class="header-brand">Rakennusliike KaPe Oy</div>
+  <h1>Saunaremontin hintalaskuri</h1>
+  <p>Laske suuntaa-antava hinta saunaremontille Keski-Pohjanmaalla</p>
+</div>
+
+<div class="container">
+
+  <!-- 1. Saunan mitat -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">1</span>
+      Saunan mitat
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="pituus">Pituus (m)</label>
+        <input type="number" id="pituus" value="2.0" min="1" max="10" step="0.1">
+      </div>
+      <div class="form-group">
+        <label for="leveys">Leveys (m)</label>
+        <input type="number" id="leveys" value="2.0" min="1" max="10" step="0.1">
+      </div>
+      <div class="form-group">
+        <label for="korkeus">Korkeus (m)</label>
+        <input type="number" id="korkeus" value="2.3" min="2" max="4" step="0.1">
+      </div>
+    </div>
+    <div class="area-display">
+      <div class="area-badge">
+        <div class="label">Lattia-ala</div>
+        <div class="value" id="lattiaAla">4.0 m&sup2;</div>
+      </div>
+      <div class="area-badge">
+        <div class="label">Sein&auml;-ala</div>
+        <div class="value" id="seinaAla">18.4 m&sup2;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Remontin laajuus -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">2</span>
+      Remontin laajuus
+    </div>
+    <div class="option-group">
+      <div class="option-item">
+        <input type="radio" name="laajuus" id="pinta" value="pinta">
+        <label for="pinta">
+          <div class="opt-title">Pintaremontti</div>
+          <div class="opt-desc">Uudet paneelit, lauteet</div>
+          <div class="opt-price">400&ndash;600 &euro;/m&sup2; lattia-alasta</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="laajuus" id="perus" value="perus" checked>
+        <label for="perus">
+          <div class="opt-title">Perusremontti</div>
+          <div class="opt-desc">Purku, eristys, panelointi, lauteet</div>
+          <div class="opt-price">700&ndash;1 000 &euro;/m&sup2;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="laajuus" id="laaja" value="laaja">
+        <label for="laaja">
+          <div class="opt-title">Laaja remontti</div>
+          <div class="opt-desc">Rakenteet, eristys, kaikki uusiksi</div>
+          <div class="opt-price">1 000&ndash;1 500 &euro;/m&sup2;</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Kiuas -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">3</span>
+      Kiuas
+    </div>
+    <div class="option-group">
+      <div class="option-item">
+        <input type="radio" name="kiuas" id="kiuas_ei" value="ei" checked>
+        <label for="kiuas_ei">
+          <div class="opt-title">Ei vaihdeta</div>
+          <div class="opt-price">0 &euro;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="kiuas" id="kiuas_sahko" value="sahko">
+        <label for="kiuas_sahko">
+          <div class="opt-title">S&auml;hk&ouml;kiuas</div>
+          <div class="opt-desc">Asennus + kiuas</div>
+          <div class="opt-price">800&ndash;1 500 &euro;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="kiuas" id="kiuas_puu" value="puu">
+        <label for="kiuas_puu">
+          <div class="opt-title">Puukiuas</div>
+          <div class="opt-desc">Asennus + kiuas + hormiliit&auml;nt&auml;</div>
+          <div class="opt-price">1 500&ndash;3 000 &euro;</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Lisätyöt -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">4</span>
+      Lis&auml;ty&ouml;t
+    </div>
+    <div class="option-group">
+      <div class="option-item">
+        <input type="checkbox" id="lauteet_l" value="lauteet_l">
+        <label for="lauteet_l">
+          <div class="opt-title">Lauteet (L-malli)</div>
+          <div class="opt-price">1 200&ndash;2 000 &euro;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="lauteet_suora" value="lauteet_suora">
+        <label for="lauteet_suora">
+          <div class="opt-title">Lauteet (suora malli)</div>
+          <div class="opt-price">800&ndash;1 400 &euro;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="lasiovi" value="lasiovi">
+        <label for="lasiovi">
+          <div class="opt-title">Lasiovi</div>
+          <div class="opt-price">400&ndash;800 &euro;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="lattialammitys" value="lattialammitys">
+        <label for="lattialammitys">
+          <div class="opt-title">Lattial&auml;mmitys (s&auml;hk&ouml;)</div>
+          <div class="opt-price">50&ndash;100 &euro;/m&sup2;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="valaistus" value="valaistus">
+        <label for="valaistus">
+          <div class="opt-title">Valaistus (LED-nauha + spotit)</div>
+          <div class="opt-price">300&ndash;700 &euro;</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="laatoitus" value="laatoitus">
+        <label for="laatoitus">
+          <div class="opt-title">L&ouml;ylyhuoneen lattian laatoitus</div>
+          <div class="opt-price">60&ndash;100 &euro;/m&sup2;</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Kotitalousvähennys -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">5</span>
+      Talouden koko (kotitalousv&auml;hennys)
+    </div>
+    <div class="option-group household-row">
+      <div class="option-item">
+        <input type="radio" name="talous" id="talous1" value="1" checked>
+        <label for="talous1">
+          <div class="opt-title">1 henkil&ouml;</div>
+          <div class="opt-desc">Max 1 600 &euro; v&auml;hennys</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="talous" id="talous2" value="2">
+        <label for="talous2">
+          <div class="opt-title">2 henkil&ouml;&auml;</div>
+          <div class="opt-desc">Max 3 200 &euro; v&auml;hennys</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lead gate -->
+  <div class="results-card" id="lead-gate-section">
+    <div class="lead-gate">
+      <div class="price-teaser">
+        <div class="teaser-label">Arvioitu kokonaishinta</div>
+        <div class="teaser-value" id="teaser-price">5 000 – 10 000 &euro;</div>
+        <div class="teaser-hint">T&auml;yt&auml; yhteystiedot n&auml;hd&auml;ksesi tarkan arvion</div>
+      </div>
+
+      <h3>Saat arvion s&auml;hk&ouml;postiisi</h3>
+      <p class="lead-intro">T&auml;yt&auml; yhteystietosi, niin l&auml;het&auml;mme sinulle yksityiskohtaisen hinta-arvion.</p>
+
+      <form id="lead-form" data-netlify="true" method="POST">
+        <input type="hidden" name="form-name" value="saunalaskuri">
+        <input type="hidden" name="estimate" id="hidden-estimate" value="">
+        <div class="lg-form-group">
+          <label for="lead-name">Nimi *</label>
+          <input type="text" id="lead-name" name="name" required placeholder="Etunimi Sukunimi">
+          <div class="form-error" id="err-name">Sy&ouml;t&auml; nimesi</div>
+        </div>
+        <div class="lg-form-group">
+          <label for="lead-email">S&auml;hk&ouml;posti *</label>
+          <input type="email" id="lead-email" name="email" required placeholder="nimi@esimerkki.fi">
+          <div class="form-error" id="err-email">Sy&ouml;t&auml; toimiva s&auml;hk&ouml;postiosoite</div>
+        </div>
+        <div class="lg-form-group">
+          <label for="lead-phone">Puhelin</label>
+          <input type="tel" id="lead-phone" name="phone" placeholder="044 123 4567">
+        </div>
+        <div class="consent-group">
+          <input type="checkbox" id="lead-consent" name="consent" required>
+          <label for="lead-consent">Hyv&auml;ksyn, ett&auml; Rakennusliike KaPe Oy voi olla minuun yhteydess&auml; tarjouksen tiimoilta ja l&auml;hett&auml;&auml; ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
+        <div class="privacy-note">Tietojasi k&auml;sitell&auml;&auml;n luottamuksellisesti.<br>Emme luovuta niit&auml; kolmansille osapuolille.</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success message -->
+  <div class="results-card lead-success" id="lead-success">
+    <div class="success-icon">&#10004;&#65039;</div>
+    <h3>Kiitos! Arvio on l&auml;hetetty s&auml;hk&ouml;postiisi.</h3>
+    <p>Tarkista s&auml;hk&ouml;postisi (my&ouml;s roskaposti-kansio).<br>Olemme sinuun yhteydess&auml; pian!</p>
+    <div style="margin-top:1.25rem;">
+      <a href="tel:+358440150618" class="cta-btn" style="font-size:0.95rem; padding:0.8rem 2rem;">&#9742; Soita heti: 044 015 0618</a>
+    </div>
+    <div style="margin-top:0.75rem;font-size:0.82rem;color:var(--gray-500);font-style:italic;">Haluatko nopeamman vastauksen? Soita suoraan.</div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <strong>Huomioithan:</strong>
+    Laskurin antama hinta-arvio ei ole sitova tarjous. Saunaremontin lopulliseen hintaan vaikuttavat mm. vanhojen rakenteiden kunto, materiaalivalinnat ja kohteen sijainti. Tarkka hinta selvi&auml;&auml; aina kohteen katselmuksessa.
+  </div>
+
+  <div class="footer">
+    &copy; 2026 KaPe Oy &ndash; Keski-Pohjanmaa<br>
+    Hinnat sis. ALV 25,5 %
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var pricing = {
+    rakennus: {
+      pinta: { min: 400, max: 600 },
+      perus: { min: 700, max: 1000 },
+      laaja: { min: 1000, max: 1500 }
+    },
+    kiuas: {
+      ei: { min: 0, max: 0 },
+      sahko: { min: 800, max: 1500 },
+      puu: { min: 1500, max: 3000 }
+    },
+    lauteet_l: { min: 1200, max: 2000 },
+    lauteet_suora: { min: 800, max: 1400 },
+    lasiovi: { min: 400, max: 800 },
+    lattialammitys: { min: 50, max: 100 },
+    valaistus: { min: 300, max: 700 },
+    laatoitus: { min: 60, max: 100 }
+  };
+
+  var laajuusNames = { pinta: 'Pintaremontti', perus: 'Perusremontti', laaja: 'Laaja remontti' };
+  var kiuasNames = { ei: 'Ei vaihdeta', sahko: 'S\u00e4hk\u00f6kiuas', puu: 'Puukiuas' };
+
+  var $ = function(id) { return document.getElementById(id); };
+  var val = function(id) { return parseFloat($(id).value) || 0; };
+  var radio = function(name) { var el = document.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ''; };
+  var checked = function(id) { return $(id).checked; };
+
+  function fmt(n) { return Math.round(n).toLocaleString('fi-FI'); }
+
+  // Lauteet mutual exclusion: L-malli and suora malli cannot both be selected
+  $('lauteet_l').addEventListener('change', function() {
+    if (this.checked) {
+      $('lauteet_suora').checked = false;
+    }
+    updateTeaser();
+  });
+  $('lauteet_suora').addEventListener('change', function() {
+    if (this.checked) {
+      $('lauteet_l').checked = false;
+    }
+    updateTeaser();
+  });
+
+  function getCalcData() {
+    var pituus = val('pituus');
+    var leveys = val('leveys');
+    var korkeus = val('korkeus');
+    var lattiaAla = pituus * leveys;
+    var seinaAla = 2 * (pituus + leveys) * korkeus;
+
+    $('lattiaAla').textContent = lattiaAla.toFixed(1) + ' m\u00b2';
+    $('seinaAla').textContent = seinaAla.toFixed(1) + ' m\u00b2';
+
+    var laajuus = radio('laajuus');
+    var kiuas = radio('kiuas');
+    var talous = parseInt(radio('talous')) || 1;
+
+    if (!laajuus) return null;
+
+    // Rakennustyöt: type price × floor area
+    var rak = pricing.rakennus[laajuus];
+    var rakMin = rak.min * lattiaAla;
+    var rakMax = rak.max * lattiaAla;
+
+    // Kiuas
+    var ki = pricing.kiuas[kiuas] || { min: 0, max: 0 };
+    var kiuasMin = ki.min;
+    var kiuasMax = ki.max;
+
+    // Lisätyöt
+    var lisaMin = 0, lisaMax = 0;
+    var lisaRows = [];
+
+    if (checked('lauteet_l')) {
+      lisaMin += pricing.lauteet_l.min;
+      lisaMax += pricing.lauteet_l.max;
+      lisaRows.push({ label: 'Lauteet (L-malli)', min: pricing.lauteet_l.min, max: pricing.lauteet_l.max });
+    }
+
+    if (checked('lauteet_suora')) {
+      lisaMin += pricing.lauteet_suora.min;
+      lisaMax += pricing.lauteet_suora.max;
+      lisaRows.push({ label: 'Lauteet (suora malli)', min: pricing.lauteet_suora.min, max: pricing.lauteet_suora.max });
+    }
+
+    if (checked('lasiovi')) {
+      lisaMin += pricing.lasiovi.min;
+      lisaMax += pricing.lasiovi.max;
+      lisaRows.push({ label: 'Lasiovi', min: pricing.lasiovi.min, max: pricing.lasiovi.max });
+    }
+
+    if (checked('lattialammitys')) {
+      var llMin = pricing.lattialammitys.min * lattiaAla;
+      var llMax = pricing.lattialammitys.max * lattiaAla;
+      lisaMin += llMin; lisaMax += llMax;
+      lisaRows.push({ label: 'Lattial\u00e4mmitys', min: llMin, max: llMax });
+    }
+
+    if (checked('valaistus')) {
+      lisaMin += pricing.valaistus.min;
+      lisaMax += pricing.valaistus.max;
+      lisaRows.push({ label: 'Valaistus (LED + spotit)', min: pricing.valaistus.min, max: pricing.valaistus.max });
+    }
+
+    if (checked('laatoitus')) {
+      var laMin = pricing.laatoitus.min * lattiaAla;
+      var laMax = pricing.laatoitus.max * lattiaAla;
+      lisaMin += laMin; lisaMax += laMax;
+      lisaRows.push({ label: 'Lattian laatoitus', min: laMin, max: laMax });
+    }
+
+    var totalMin = rakMin + kiuasMin + lisaMin;
+    var totalMax = rakMax + kiuasMax + lisaMax;
+
+    // Kotitalousvähennys: work share ~65%, deduction 35%, max 1600€/person, deductible 150€/person
+    var tyoOsuusMin = totalMin * 0.65;
+    var tyoOsuusMax = totalMax * 0.65;
+
+    var maxVahennys = talous * 1600;
+    var omavastuu = talous * 150;
+    var effVahennysMin = Math.max(0, Math.min(tyoOsuusMin * 0.35, maxVahennys) - omavastuu);
+    var effVahennysMax = Math.max(0, Math.min(tyoOsuusMax * 0.35, maxVahennys) - omavastuu);
+
+    var finalMin = totalMin - effVahennysMax;
+    var finalMax = totalMax - effVahennysMin;
+
+    return {
+      lattiaAla: lattiaAla, seinaAla: seinaAla,
+      laajuus: laajuus, kiuas: kiuas, talous: talous,
+      rakMin: rakMin, rakMax: rakMax,
+      kiuasMin: kiuasMin, kiuasMax: kiuasMax,
+      lisaRows: lisaRows,
+      lisaMin: lisaMin, lisaMax: lisaMax,
+      totalMin: totalMin, totalMax: totalMax,
+      tyoOsuusMin: tyoOsuusMin, tyoOsuusMax: tyoOsuusMax,
+      vahennysMin: effVahennysMin, vahennysMax: effVahennysMax,
+      omavastuu: omavastuu,
+      finalMin: finalMin, finalMax: finalMax
+    };
+  }
+
+  function updateTeaser() {
+    var d = getCalcData();
+    if (!d) return;
+    $('teaser-price').textContent = fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac';
+  }
+
+  function buildEstimateText(d) {
+    var lines = [];
+    lines.push('SAUNAREMONTIN HINTA-ARVIO');
+    lines.push('Rakennusliike KaPe Oy');
+    lines.push('---');
+    lines.push('');
+    lines.push('Sauna: ' + d.lattiaAla.toFixed(1) + ' m\u00b2 (lattia), ' + d.seinaAla.toFixed(1) + ' m\u00b2 (sein\u00e4t)');
+    lines.push('Remontin laajuus: ' + laajuusNames[d.laajuus]);
+    lines.push('Kiuas: ' + kiuasNames[d.kiuas]);
+    lines.push('');
+    lines.push('Rakennusty\u00f6t: ' + fmt(d.rakMin) + ' \u2013 ' + fmt(d.rakMax) + ' \u20ac');
+    if (d.kiuasMin > 0 || d.kiuasMax > 0) {
+      lines.push('Kiuas: ' + fmt(d.kiuasMin) + ' \u2013 ' + fmt(d.kiuasMax) + ' \u20ac');
+    }
+    if (d.lisaRows.length > 0) {
+      lines.push('');
+      lines.push('Lis\u00e4ty\u00f6t:');
+      d.lisaRows.forEach(function(r) {
+        lines.push('  ' + r.label + ': ' + fmt(r.min) + ' \u2013 ' + fmt(r.max) + ' \u20ac');
+      });
+    }
+    lines.push('');
+    lines.push('YHTEENS\u00c4 (sis. ALV 25,5 %): ' + fmt(d.totalMin) + ' \u2013 ' + fmt(d.totalMax) + ' \u20ac');
+    lines.push('');
+    lines.push('Kotitalousv\u00e4hennys: -' + fmt(d.vahennysMin) + ' \u2013 ' + fmt(d.vahennysMax) + ' \u20ac');
+    lines.push('');
+    lines.push('HINTA V\u00c4HENNYKSEN J\u00c4LKEEN: ' + fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac');
+    lines.push('');
+    lines.push('---');
+    lines.push('T\u00e4m\u00e4 on suuntaa-antava arvio. Tarkka hinta selvi\u00e4\u00e4 kohteen katselmuksessa.');
+    lines.push('Ota yhteytt\u00e4: 044 015 0618 | petteri.palosaari@kape.fi');
+    return lines.join('\n');
+  }
+
+  // Lead form
+  $('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var name = $('lead-name').value.trim();
+    var email = $('lead-email').value.trim();
+    var consent = $('lead-consent').checked;
+
+    var valid = true;
+    $('err-name').style.display = name ? 'none' : 'block';
+    if (!name) valid = false;
+
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    $('err-email').style.display = emailOk ? 'none' : 'block';
+    if (!emailOk) valid = false;
+
+    if (!consent || !valid) return;
+
+    var d = getCalcData();
+    var estimate = buildEstimateText(d);
+
+    // Set hidden field for Netlify
+    $('hidden-estimate').value = estimate;
+
+    var btn = $('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'L\u00e4hetet\u00e4\u00e4n...';
+
+    // Submit to Netlify
+    var formData = new FormData($('lead-form'));
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).then(function() {
+      $('lead-gate-section').style.display = 'none';
+      $('lead-success').style.display = 'block';
+    }).catch(function() {
+      // Show success anyway (offline/dev)
+      $('lead-gate-section').style.display = 'none';
+      $('lead-success').style.display = 'block';
+    });
+  });
+
+  // Bind all inputs
+  document.querySelectorAll('input').forEach(function(el) {
+    el.addEventListener('input', updateTeaser);
+    el.addEventListener('change', updateTeaser);
+  });
+
+  updateTeaser();
+})();
+</script>
+</body>
+</html>

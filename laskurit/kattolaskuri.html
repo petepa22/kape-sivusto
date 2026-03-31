@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kattoremontin hintalaskuri | KaPe Oy</title>
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #2d6432;
+  --primary-dark: #1e4422;
+  --primary-light: #3a8340;
+  --bg: #f4f5f7;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--gray-800);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+  color: var(--white);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.header-brand {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header-sub {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+/* Layout */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .header h1 { font-size: 2rem; }
+  .header { padding: 2rem 1.5rem; }
+  .container { padding: 2rem 1.5rem; }
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title .icon {
+  font-size: 1.3rem;
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+label, .label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.4rem;
+}
+
+.label-hint {
+  font-weight: 400;
+  color: var(--gray-400);
+  font-size: 0.8rem;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--gray-50);
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(45,100,50,0.12);
+  background: var(--white);
+}
+
+/* Radio group styled as cards */
+.radio-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.radio-option {
+  position: relative;
+}
+
+.radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-option label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--gray-50);
+  font-weight: 500;
+}
+
+.radio-option label:hover {
+  border-color: var(--primary-light);
+  background: #f0f7f0;
+}
+
+.radio-option input:checked + label {
+  border-color: var(--primary);
+  background: #e8f5e9;
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.radio-price {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  font-weight: 400;
+}
+
+.radio-option input:checked + label .radio-price {
+  color: var(--primary);
+}
+
+/* Checkbox group */
+.checkbox-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.checkbox-option {
+  position: relative;
+}
+
+.checkbox-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox-option label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--gray-50);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.checkbox-option label:hover {
+  border-color: var(--primary-light);
+  background: #f0f7f0;
+}
+
+.checkbox-option input:checked + label {
+  border-color: var(--primary);
+  background: #e8f5e9;
+  color: var(--primary-dark);
+}
+
+.check-icon {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--gray-300);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  background: var(--white);
+}
+
+.checkbox-option input:checked + label .check-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.check-icon::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.checkbox-option input:checked + label .check-icon::after {
+  opacity: 1;
+}
+
+.check-label-text {
+  flex: 1;
+}
+
+.check-price {
+  font-size: 0.78rem;
+  color: var(--gray-400);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.checkbox-option input:checked + label .check-price {
+  color: var(--primary);
+}
+
+/* Household selector */
+.household-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.household-selector .radio-option label {
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Results */
+.results-panel {
+  position: sticky;
+  top: 1rem;
+}
+
+.results-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.results-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: var(--white);
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.results-body {
+  padding: 1.5rem;
+}
+
+.result-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  animation: fadeSlideIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.result-line:not(:last-child) {
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.result-label {
+  color: var(--gray-600);
+  padding-right: 1rem;
+}
+
+.result-value {
+  font-weight: 600;
+  color: var(--gray-800);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.result-divider {
+  height: 2px;
+  background: var(--gray-200);
+  margin: 0.75rem 0;
+  border: none;
+}
+
+.result-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  animation: fadeSlideIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.result-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  animation: fadeSlideIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.result-section-title:first-child {
+  margin-top: 0;
+}
+
+/* Final price highlight */
+.final-price-box {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  animation: fadeSlideIn 0.4s ease forwards;
+  opacity: 0;
+}
+
+.final-price-box .final-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 0.25rem;
+}
+
+.final-price-box .final-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+@media (min-width: 768px) {
+  .final-price-box .final-value {
+    font-size: 1.75rem;
+  }
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid var(--gray-200);
+  animation: fadeSlideIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--white);
+  text-decoration: none;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-md), 0 4px 15px rgba(45,100,50,0.3);
+  transition: all 0.25s;
+  border: none;
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), 0 8px 25px rgba(45,100,50,0.35);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+}
+
+.cta-note {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* Lead gate form */
+.lead-gate {
+  padding: 1.5rem;
+}
+
+.lead-gate h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.lead-gate .lead-intro {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.lead-gate .form-group {
+  margin-bottom: 1rem;
+}
+
+.lead-gate label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.3rem;
+}
+
+.lead-gate input[type="text"],
+.lead-gate input[type="email"],
+.lead-gate input[type="tel"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--gray-50);
+}
+
+.lead-gate input[type="text"]:focus,
+.lead-gate input[type="email"]:focus,
+.lead-gate input[type="tel"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(45,100,50,0.12);
+  background: var(--white);
+}
+
+.lead-gate .consent-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.lead-gate .consent-group input[type="checkbox"] {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.lead-gate .consent-group label {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--gray-600);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.lead-gate .submit-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-md), 0 4px 15px rgba(45,100,50,0.3);
+  transition: all 0.25s;
+}
+
+.lead-gate .submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), 0 8px 25px rgba(45,100,50,0.35);
+}
+
+.lead-gate .submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.lead-gate .form-error {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.lead-gate .privacy-note {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  text-align: center;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.lead-success {
+  text-align: center;
+  padding: 1.5rem;
+  display: none;
+}
+
+.lead-success .success-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.lead-success h3 {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.lead-success p {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+}
+
+/* Teaser preview */
+.price-teaser {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.price-teaser .teaser-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 0.25rem;
+}
+
+.price-teaser .teaser-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  filter: blur(8px);
+  user-select: none;
+}
+
+.price-teaser .teaser-hint {
+  font-size: 0.78rem;
+  color: var(--primary);
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.8rem;
+  color: var(--gray-400);
+}
+
+/* Animations */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Number formatting helper */
+.unit {
+  font-weight: 400;
+  color: var(--gray-400);
+  font-size: 0.85em;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="../laskurit.html" style="color:rgba(255,255,255,0.8);font-size:0.85rem;text-decoration:none;display:inline-block;margin-bottom:0.5rem;">&larr; Takaisin laskureihin</a>
+  <div class="header-brand">Rakennusliike KaPe Oy</div>
+  <h1>Kattoremontin hintalaskuri</h1>
+  <div class="header-sub">Keski-Pohjanmaa &middot; Suuntaa-antava hinta-arvio</div>
+</div>
+
+<div class="container">
+  <div class="layout">
+
+    <!-- LEFT: Form -->
+    <div class="form-side">
+
+      <!-- Pinta-ala -->
+      <div class="card" style="margin-bottom:1.5rem">
+        <div class="card-title"><span class="icon">&#9634;</span> Katon tiedot</div>
+
+        <div class="form-group">
+          <label for="area">Katon pinta-ala <span class="label-hint">(m&sup2;)</span></label>
+          <input type="number" id="area" value="150" min="20" max="1000" step="1">
+        </div>
+
+        <div class="form-group">
+          <div class="label">Kattotyyppi</div>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="rooftype" id="rt-profiili" value="profiili" checked>
+              <label for="rt-profiili">
+                <span>Profiilipelti <span class="label-hint">(edullisin)</span></span>
+                <span class="radio-price">55 &ndash; 80 &euro;/m&sup2;</span>
+              </label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="rooftype" id="rt-tiili" value="tiili">
+              <label for="rt-tiili">
+                <span>Tiilikuvioitu pelti</span>
+                <span class="radio-price">80 &ndash; 120 &euro;/m&sup2;</span>
+              </label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="rooftype" id="rt-konesauma" value="konesauma">
+              <label for="rt-konesauma">
+                <span>Konesaumapelti <span class="label-hint">(laadukkain)</span></span>
+                <span class="radio-price">95 &ndash; 150 &euro;/m&sup2;</span>
+              </label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="rooftype" id="rt-betonitiili" value="betonitiili">
+              <label for="rt-betonitiili">
+                <span>Betoni- / savitiilikate</span>
+                <span class="radio-price">70 &ndash; 110 &euro;/m&sup2;</span>
+              </label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="rooftype" id="rt-huopa" value="huopa">
+              <label for="rt-huopa">
+                <span>Huopakatto</span>
+                <span class="radio-price">55 &ndash; 90 &euro;/m&sup2;</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lisatyot -->
+      <div class="card" style="margin-bottom:1.5rem">
+        <div class="card-title"><span class="icon">&#10010;</span> Lis&auml;ty&ouml;t</div>
+        <div class="checkbox-group">
+          <div class="checkbox-option">
+            <input type="checkbox" id="cb-alus" value="alus">
+            <label for="cb-alus">
+              <span class="check-icon"></span>
+              <span class="check-label-text">Aluskatteen ja ruoteiden uusiminen</span>
+              <span class="check-price">+15&ndash;25 &euro;/m&sup2;</span>
+            </label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="cb-sade" value="sade">
+            <label for="cb-sade">
+              <span class="check-icon"></span>
+              <span class="check-label-text">Sadevesij&auml;rjestelm&auml;</span>
+              <span class="check-price">1 500&ndash;2 500 &euro;</span>
+            </label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="cb-turva" value="turva">
+            <label for="cb-turva">
+              <span class="check-icon"></span>
+              <span class="check-label-text">Kattoturvatuotteet</span>
+              <span class="check-price">1 100&ndash;2 000 &euro;</span>
+            </label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="cb-piippu" value="piippu">
+            <label for="cb-piippu">
+              <span class="check-icon"></span>
+              <span class="check-label-text">Piipun pellitys</span>
+              <span class="check-price">500&ndash;1 000 &euro;/kpl</span>
+            </label>
+          </div>
+          <div id="piippu-maara-group" style="display:none; margin-left:2.5rem; margin-bottom:0.75rem;">
+            <label for="piippu-maara" style="font-size:0.85rem;">Piippujen m&auml;&auml;r&auml;</label>
+            <input type="number" id="piippu-maara" value="1" min="1" max="6" step="1" style="width:80px;">
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="cb-lapiviennit" value="lapiviennit">
+            <label for="cb-lapiviennit">
+              <span class="check-icon"></span>
+              <span class="check-label-text">L&auml;pivientien uusiminen</span>
+              <span class="check-price">eri tyypit</span>
+            </label>
+          </div>
+          <div id="lapiviennit-maara-group" style="display:none; margin-left:2.5rem; margin-bottom:0.75rem; font-size:0.88rem;">
+            <div style="margin-bottom:0.5rem;">
+              <label style="font-size:0.82rem; color:var(--gray-600);">Viem&auml;rin tuuletusputki <span style="color:var(--gray-400)">(150&ndash;300 &euro;/kpl)</span></label>
+              <input type="number" id="lv-viemari" value="0" min="0" max="6" step="1" style="width:70px;">
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <label style="font-size:0.82rem; color:var(--gray-600);">Liesituulettimen l&auml;pivienti <span style="color:var(--gray-400)">(300&ndash;600 &euro;/kpl)</span></label>
+              <input type="number" id="lv-liesi" value="0" min="0" max="4" step="1" style="width:70px;">
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <label style="font-size:0.82rem; color:var(--gray-600);">Huippuimuri / IV-l&auml;pivienti <span style="color:var(--gray-400)">(400&ndash;800 &euro;/kpl)</span></label>
+              <input type="number" id="lv-huippuimuri" value="0" min="0" max="4" step="1" style="width:70px;">
+            </div>
+            <div>
+              <label style="font-size:0.82rem; color:var(--gray-600);">Harjatuuletus <span style="color:var(--gray-400)">(500&ndash;1 200 &euro;)</span></label>
+              <input type="number" id="lv-harja" value="0" min="0" max="2" step="1" style="width:70px;">
+            </div>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="cb-eriste" value="eriste">
+            <label for="cb-eriste">
+              <span class="check-icon"></span>
+              <span class="check-label-text">Yl&auml;pohjan lis&auml;eristys</span>
+              <span class="check-price">+12&ndash;18 &euro;/m&sup2;</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kotitalousvahennys -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#127968;</span> Kotitalousv&auml;hennys</div>
+        <div class="form-group">
+          <div class="label">Talouden henkil&ouml;m&auml;&auml;r&auml;</div>
+          <div class="household-selector">
+            <div class="radio-option">
+              <input type="radio" name="household" id="hh-1" value="1" checked>
+              <label for="hh-1">1 henkil&ouml;</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="household" id="hh-2" value="2">
+              <label for="hh-2">2 henkil&ouml;&auml;</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Lead gate + Results -->
+    <div class="results-panel">
+      <div class="results-card">
+        <div class="results-header">
+          <span>&#128200;</span> Hinta-arvio
+        </div>
+
+        <!-- Teaser: blurred price preview -->
+        <div id="lead-gate-section">
+          <div class="lead-gate">
+            <div class="price-teaser" id="price-teaser">
+              <div class="teaser-label">Arvioitu kokonaishinta</div>
+              <div class="teaser-value" id="teaser-price">12 500 &ndash; 18 000 &euro;</div>
+              <div class="teaser-hint">T&auml;yt&auml; yhteystiedot n&auml;hd&auml;ksesi tarkan arvion</div>
+            </div>
+
+            <h3>Saat arvion s&auml;hk&ouml;postiisi</h3>
+            <p class="lead-intro">T&auml;yt&auml; yhteystietosi, niin l&auml;het&auml;mme sinulle yksityiskohtaisen hinta-arvion.</p>
+
+            <form id="lead-form" data-netlify="true">
+              <input type="hidden" name="form-name" value="kattolaskuri">
+              <input type="hidden" name="estimate" id="estimate-data">
+              <div class="form-group">
+                <label for="lead-name">Nimi *</label>
+                <input type="text" id="lead-name" name="name" required placeholder="Etunimi Sukunimi">
+                <div class="form-error" id="err-name">Sy&ouml;t&auml; nimesi</div>
+              </div>
+              <div class="form-group">
+                <label for="lead-email">S&auml;hk&ouml;posti *</label>
+                <input type="email" id="lead-email" name="email" required placeholder="nimi@esimerkki.fi">
+                <div class="form-error" id="err-email">Sy&ouml;t&auml; toimiva s&auml;hk&ouml;postiosoite</div>
+              </div>
+              <div class="form-group">
+                <label for="lead-phone">Puhelin</label>
+                <input type="tel" id="lead-phone" name="phone" placeholder="044 123 4567">
+              </div>
+              <div class="consent-group">
+                <input type="checkbox" id="lead-consent" name="consent" required>
+                <label for="lead-consent">Hyv&auml;ksyn, ett&auml; Rakennusliike KaPe Oy voi olla minuun yhteydess&auml; tarjouksen tiimoilta ja l&auml;hett&auml;&auml; ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
+              </div>
+              <button type="submit" class="submit-btn" id="submit-btn">N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
+              <div class="privacy-note">Tietojasi k&auml;sitell&auml;&auml;n luottamuksellisesti.<br>Emme luovuta niit&auml; kolmansille osapuolille.</div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Success message -->
+        <div class="lead-success" id="lead-success">
+          <div class="success-icon">&#9989;</div>
+          <h3>Kiitos! Arvio on l&auml;hetetty s&auml;hk&ouml;postiisi.</h3>
+          <p>Tarkista s&auml;hk&ouml;postisi (my&ouml;s roskaposti-kansio).<br>Olemme sinuun yhteydess&auml; pian!</p>
+          <div style="margin-top:1.25rem;">
+            <a href="tel:+358440150618" class="cta-button" style="font-size:0.95rem; padding:0.8rem 2rem;">&#9742; Soita heti: 044 015 0618</a>
+          </div>
+          <div class="cta-note" style="margin-top:0.75rem;">Haluatko nopeamman vastauksen? Soita suoraan.</div>
+        </div>
+
+        <!-- Results container (hidden, used only for email content generation) -->
+        <div class="results-body" id="results" style="display:none;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  &copy; 2026 KaPe Oy &middot; Kaikki hinnat sis. ALV 25,5 % &middot; Hinnat ovat suuntaa-antavia
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const ALV = 1.255;
+  const WORK_SHARE = 0.60;
+  const KTV_PERCENT = 0.35;
+  const KTV_MAX_PER_PERSON = 1600;
+  const KTV_DEDUCTIBLE_PER_PERSON = 150;
+
+  const ROOF_PRICES = {
+    profiili:    { min: 60, max: 75 },
+    tiili:       { min: 85, max: 105 },
+    konesauma:   { min: 100, max: 130 },
+    betonitiili: { min: 75, max: 95 },
+    huopa:       { min: 60, max: 75 }
+  };
+
+  const EXTRAS = {
+    alus:        { type: 'area',  min: 16, max: 22, label: 'Alusrakenteiden uusiminen' },
+    sade:        { type: 'fixed', min: 1700, max: 2200, label: 'Sadevesij\u00e4rjestelm\u00e4' },
+    turva:       { type: 'fixed', min: 1200, max: 1600, label: 'Kattoturvatuotteet' },
+    piippu:      { type: 'count', min: 600, max: 850, label: 'Piipun pellitys', countId: 'piippu-maara' },
+    eriste:      { type: 'area',  min: 13, max: 17, label: 'Yl\u00e4pohjan lis\u00e4eristys' }
+  };
+
+  const ROOF_LABELS = {
+    profiili: 'Profiilipelti',
+    tiili: 'Tiilikuvioitu pelti',
+    konesauma: 'Konesaumapelti',
+    betonitiili: 'Betoni-/savitiilikate',
+    huopa: 'Huopakatto'
+  };
+
+  let isUnlocked = false;
+
+  function fmt(num) {
+    return Math.round(num).toLocaleString('fi-FI');
+  }
+
+  function getCalcData() {
+    const area = Math.max(20, Math.min(1000, parseInt(document.getElementById('area').value) || 150));
+    const roofType = document.querySelector('input[name="rooftype"]:checked').value;
+    const household = parseInt(document.querySelector('input[name="household"]:checked').value);
+
+    const checkedExtras = [];
+    document.querySelectorAll('.checkbox-option input:checked').forEach(cb => {
+      checkedExtras.push(cb.value);
+    });
+
+    const roofP = ROOF_PRICES[roofType];
+    const baseMin = roofP.min * area * ALV;
+    const baseMax = roofP.max * area * ALV;
+
+    let extrasMinTotal = 0;
+    let extrasMaxTotal = 0;
+    const extraLines = [];
+
+    checkedExtras.forEach(key => {
+      if (key === 'lapiviennit') return; // handled separately
+      const ex = EXTRAS[key];
+      let eMin, eMax;
+      if (ex.type === 'area') {
+        eMin = ex.min * area * ALV;
+        eMax = ex.max * area * ALV;
+      } else if (ex.type === 'count') {
+        const count = Math.max(1, parseInt(document.getElementById(ex.countId).value) || 1);
+        eMin = ex.min * count * ALV;
+        eMax = ex.max * count * ALV;
+      } else {
+        eMin = ex.min * ALV;
+        eMax = ex.max * ALV;
+      }
+      extrasMinTotal += eMin;
+      extrasMaxTotal += eMax;
+      extraLines.push({ label: ex.label, min: eMin, max: eMax });
+    });
+
+    // Läpiviennit (eritelty)
+    if (checkedExtras.includes('lapiviennit')) {
+      const LV = [
+        { id: 'lv-viemari',     min: 150, max: 300, label: 'Viem\u00e4rin tuuletusputki' },
+        { id: 'lv-liesi',       min: 300, max: 600, label: 'Liesituulettimen l\u00e4pivienti' },
+        { id: 'lv-huippuimuri', min: 400, max: 800, label: 'Huippuimuri / IV-l\u00e4pivienti' },
+        { id: 'lv-harja',       min: 500, max: 1200, label: 'Harjatuuletus' }
+      ];
+      LV.forEach(lv => {
+        const cnt = parseInt(document.getElementById(lv.id).value) || 0;
+        if (cnt > 0) {
+          const eMin = lv.min * cnt * ALV;
+          const eMax = lv.max * cnt * ALV;
+          extrasMinTotal += eMin;
+          extrasMaxTotal += eMax;
+          extraLines.push({ label: lv.label + (cnt > 1 ? ' (' + cnt + ' kpl)' : ''), min: eMin, max: eMax });
+        }
+      });
+    }
+
+    const totalMin = baseMin + extrasMinTotal;
+    const totalMax = baseMax + extrasMaxTotal;
+    const workMin = totalMin * WORK_SHARE;
+    const workMax = totalMax * WORK_SHARE;
+
+    const ktvMaxPerHousehold = KTV_MAX_PER_PERSON * household;
+    const ktvDeductible = KTV_DEDUCTIBLE_PER_PERSON * household;
+    const ktvRawMin = workMin * KTV_PERCENT;
+    const ktvRawMax = workMax * KTV_PERCENT;
+    const ktvGrossMin = Math.min(ktvRawMin, ktvMaxPerHousehold);
+    const ktvGrossMax = Math.min(ktvRawMax, ktvMaxPerHousehold);
+    const ktvNetMin = Math.max(0, ktvGrossMin - ktvDeductible);
+    const ktvNetMax = Math.max(0, ktvGrossMax - ktvDeductible);
+    const finalMin = totalMin - ktvNetMax;
+    const finalMax = totalMax - ktvNetMin;
+
+    return { area, roofType, household, baseMin, baseMax, extraLines, totalMin, totalMax, workMin, workMax, ktvRawMin, ktvRawMax, ktvMaxPerHousehold, ktvDeductible, ktvNetMin, ktvNetMax, finalMin, finalMax };
+  }
+
+  function updateTeaser() {
+    const d = getCalcData();
+    document.getElementById('teaser-price').textContent = fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac';
+  }
+
+  function buildEstimateText(d) {
+    var lines = [];
+    lines.push('KATTOREMONTIN HINTA-ARVIO');
+    lines.push('Rakennusliike KaPe Oy');
+    lines.push('---');
+    lines.push('');
+    lines.push('Kattotyyppi: ' + ROOF_LABELS[d.roofType]);
+    lines.push('Pinta-ala: ' + d.area + ' m\u00b2');
+    lines.push('');
+    lines.push('Kattoremontti: ' + fmt(d.baseMin) + ' \u2013 ' + fmt(d.baseMax) + ' \u20ac');
+    if (d.extraLines.length > 0) {
+      lines.push('');
+      lines.push('Lis\u00e4ty\u00f6t:');
+      d.extraLines.forEach(function(line) {
+        lines.push('  ' + line.label + ': ' + fmt(line.min) + ' \u2013 ' + fmt(line.max) + ' \u20ac');
+      });
+    }
+    lines.push('');
+    lines.push('KOKONAISHINTA (sis. ALV 25,5 %): ' + fmt(d.totalMin) + ' \u2013 ' + fmt(d.totalMax) + ' \u20ac');
+    lines.push('');
+    lines.push('Kotitalousv\u00e4hennys:');
+    lines.push('  Ty\u00f6n osuus (~60 %): ' + fmt(d.workMin) + ' \u2013 ' + fmt(d.workMax) + ' \u20ac');
+    lines.push('  V\u00e4hennys (35 %): ' + fmt(d.ktvRawMin) + ' \u2013 ' + fmt(d.ktvRawMax) + ' \u20ac');
+    lines.push('  Nettov\u00e4hennys: -' + fmt(d.ktvNetMin) + ' \u2013 ' + fmt(d.ktvNetMax) + ' \u20ac');
+    lines.push('');
+    lines.push('HINTA V\u00c4HENNYKSEN J\u00c4LKEEN: ' + fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac');
+    lines.push('');
+    lines.push('---');
+    lines.push('T\u00e4m\u00e4 on suuntaa-antava arvio. Tarkka hinta selvi\u00e4\u00e4 kohteen katselmuksessa.');
+    lines.push('Ota yhteytt\u00e4: 044 015 0618 | petteri.palosaari@kape.fi');
+    return lines.join('\n');
+  }
+
+  function renderResults() {
+    const d = getCalcData();
+    let delay = 0;
+    const dl = (ms) => { delay += ms; return 'animation-delay:' + delay + 'ms'; };
+
+    let html = '';
+    html += '<div class="result-section-title" style="' + dl(0) + '">Kattoremontti</div>';
+    html += '<div class="result-line" style="' + dl(40) + '"><span class="result-label">' + ROOF_LABELS[d.roofType] + ' (' + d.area + ' m\u00b2)</span><span class="result-value">' + fmt(d.baseMin) + ' \u2013 ' + fmt(d.baseMax) + ' <span class="unit">\u20ac</span></span></div>';
+
+    if (d.extraLines.length > 0) {
+      html += '<div class="result-section-title" style="' + dl(40) + '">Lis\u00e4ty\u00f6t</div>';
+      d.extraLines.forEach(line => {
+        html += '<div class="result-line" style="' + dl(30) + '"><span class="result-label">' + line.label + '</span><span class="result-value">' + fmt(line.min) + ' \u2013 ' + fmt(line.max) + ' <span class="unit">\u20ac</span></span></div>';
+      });
+    }
+
+    html += '<hr class="result-divider">';
+    html += '<div class="result-total" style="' + dl(50) + '"><span>Kokonaishinta <span class="unit">(sis. ALV 25,5 %)</span></span><span>' + fmt(d.totalMin) + ' \u2013 ' + fmt(d.totalMax) + ' <span class="unit">\u20ac</span></span></div>';
+
+    html += '<div class="result-section-title" style="' + dl(40) + '">Kotitalousv\u00e4hennys</div>';
+    html += '<div class="result-line" style="' + dl(30) + '"><span class="result-label">Ty\u00f6n osuus (~60 %)</span><span class="result-value">' + fmt(d.workMin) + ' \u2013 ' + fmt(d.workMax) + ' <span class="unit">\u20ac</span></span></div>';
+    html += '<div class="result-line" style="' + dl(30) + '"><span class="result-label">V\u00e4hennys 35 % ty\u00f6st\u00e4</span><span class="result-value">' + fmt(d.ktvRawMin) + ' \u2013 ' + fmt(d.ktvRawMax) + ' <span class="unit">\u20ac</span></span></div>';
+    html += '<div class="result-line" style="' + dl(30) + '"><span class="result-label">Enimm\u00e4isv\u00e4hennys (' + d.household + ' hl\u00f6)</span><span class="result-value">' + fmt(d.ktvMaxPerHousehold) + ' <span class="unit">\u20ac</span></span></div>';
+    html += '<div class="result-line" style="' + dl(30) + '"><span class="result-label">Omavastuu (' + d.household + ' \u00d7 150 \u20ac)</span><span class="result-value">\u2212' + fmt(d.ktvDeductible) + ' <span class="unit">\u20ac</span></span></div>';
+    html += '<div class="result-line" style="' + dl(30) + '"><span class="result-label"><strong>Nettov\u00e4hennys</strong></span><span class="result-value" style="color:var(--primary);font-weight:700">\u2212' + fmt(d.ktvNetMin) + ' \u2013 ' + fmt(d.ktvNetMax) + ' <span class="unit">\u20ac</span></span></div>';
+
+    html += '<div class="final-price-box" style="' + dl(60) + '"><div class="final-label">Hinta kotitalousv\u00e4hennyksen j\u00e4lkeen</div><div class="final-value">' + fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac</div></div>';
+
+    html += '<div class="cta-section" style="' + dl(80) + '"><a href="tel:+358440150618" class="cta-button">\u260e Pyyd\u00e4 tarkka tarjous</a><div class="cta-note">Laskurin antama hinta-arvio ei ole sitova tarjous.<br>Tarkka hinta selvi\u00e4\u00e4 aina kohteen katselmuksessa.<br>Soita: 044 015 0618</div></div>';
+
+    document.getElementById('results').innerHTML = html;
+  }
+
+  function onCalcChange() {
+    updateTeaser();
+    if (isUnlocked) {
+      renderResults();
+    }
+  }
+
+  // Show/hide count fields when checkbox is toggled
+  function toggleCountField(checkboxId, groupId) {
+    const cb = document.getElementById(checkboxId);
+    const group = document.getElementById(groupId);
+    cb.addEventListener('change', function() {
+      group.style.display = this.checked ? 'block' : 'none';
+      onCalcChange();
+    });
+    const countInput = group.querySelector('input[type="number"]');
+    if (countInput) countInput.addEventListener('input', onCalcChange);
+  }
+
+  toggleCountField('cb-piippu', 'piippu-maara-group');
+  toggleCountField('cb-lapiviennit', 'lapiviennit-maara-group');
+
+  // Bind läpivienti sub-inputs
+  ['lv-viemari','lv-liesi','lv-huippuimuri','lv-harja'].forEach(id => {
+    document.getElementById(id).addEventListener('input', onCalcChange);
+  });
+
+  // Bind calculator events
+  document.getElementById('area').addEventListener('input', onCalcChange);
+  document.querySelectorAll('input[name="rooftype"]').forEach(r => r.addEventListener('change', onCalcChange));
+  document.querySelectorAll('.checkbox-option input').forEach(cb => {
+    if (cb.id !== 'cb-piippu' && cb.id !== 'cb-lapiviennit') {
+      cb.addEventListener('change', onCalcChange);
+    }
+  });
+  document.querySelectorAll('input[name="household"]').forEach(r => r.addEventListener('change', onCalcChange));
+
+  // Lead form submission
+  document.getElementById('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('lead-name').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
+    const consent = document.getElementById('lead-consent').checked;
+
+    // Validate
+    let valid = true;
+    document.getElementById('err-name').style.display = name ? 'none' : 'block';
+    if (!name) valid = false;
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    document.getElementById('err-email').style.display = emailOk ? 'none' : 'block';
+    if (!emailOk) valid = false;
+
+    if (!consent || !valid) return;
+
+    // Collect lead data
+    const d = getCalcData();
+    var estimate = buildEstimateText(d);
+
+    // Disable button while sending
+    var btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'L\u00e4hetet\u00e4\u00e4n...';
+
+    // Set hidden estimate field
+    document.getElementById('estimate-data').value = estimate;
+
+    // Submit via Netlify Forms
+    var formData = new FormData(document.getElementById('lead-form'));
+    formData.set('estimate', estimate);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).then(function() { showSuccess(); }).catch(function() { showSuccess(); });
+
+    function showSuccess() {
+      document.getElementById('lead-gate-section').style.display = 'none';
+      document.getElementById('lead-success').style.display = 'block';
+    }
+  });
+
+  // Initial teaser update
+  updateTeaser();
+})();
+</script>
+
+</body>
+</html>
