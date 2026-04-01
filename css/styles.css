@@ -460,7 +460,8 @@ ul {
 }
 
 /* --- Contact form --- */
-.contact-form {
+.contact-form,
+.contact-form-direct {
   max-width: 600px;
   margin: 0 auto;
   background: #fff;
@@ -1037,7 +1038,8 @@ ul {
     grid-template-columns: 1fr;
   }
 
-  .contact-form {
+  .contact-form,
+  .contact-form-direct {
     padding: 24px;
   }
 
