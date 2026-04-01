@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Märkätilaremontin hintalaskuri - KaPe Oy</title>
+<title>Maalaustyön hintalaskuri - KaPe Oy</title>
 <style>
 *, *::before, *::after {
   box-sizing: border-box;
@@ -124,6 +124,13 @@ body {
 
 /* Form elements */
 .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-row-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.75rem;
@@ -248,49 +255,20 @@ body {
   margin-top: 0.15rem;
 }
 
-/* Count input inline */
-.count-input {
-  display: none;
-  margin-top: 0.5rem;
-  padding: 0.75rem;
-  background: var(--gray-50);
-  border-radius: 8px;
-  border: 1px solid var(--gray-200);
-}
-
-.count-input.visible {
-  display: block;
-}
-
-.count-input label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--gray-600);
-  margin-bottom: 0.3rem;
-  display: block;
-}
-
-.count-input input {
-  width: 100%;
-  padding: 0.5rem 0.7rem;
-  border: 1.5px solid var(--gray-200);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: inherit;
-  background: var(--white);
-}
-
-.count-input input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(45,100,50,0.12);
-}
-
 /* Household size */
 .household-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
+}
+
+/* Conditional sections */
+.conditional {
+  display: none;
+}
+
+.conditional.visible {
+  display: block;
 }
 
 /* Results */
@@ -507,8 +485,8 @@ body {
   .header h1 {
     font-size: 1.25rem;
   }
-  .form-row {
-    grid-template-columns: 1fr 1fr 1fr;
+  .form-row-3 {
+    grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
   }
   .card {
@@ -540,152 +518,221 @@ body {
 <div class="header">
   <a href="../laskurit.html" style="color:rgba(255,255,255,0.8);font-size:0.85rem;text-decoration:none;display:inline-block;margin-bottom:0.5rem;">&larr; Takaisin laskureihin</a>
   <div class="header-brand">Rakennusliike KaPe Oy</div>
-  <h1>M&auml;rk&auml;tilaremontin hintalaskuri</h1>
-  <p>Laske suuntaa-antava hinta m&auml;rk&auml;tilaremontille Keski-Pohjanmaalla</p>
+  <h1>Maalausty&ouml;n hintalaskuri</h1>
+  <p>Laske suuntaa-antava hinta sis&auml;- tai ulkomaalaukselle Keski-Pohjanmaalla</p>
 </div>
 
 <div class="container">
 
-  <!-- 1. Mitat -->
+  <!-- 1. Maalaustyyppi -->
   <div class="card">
     <div class="card-title">
       <span class="icon">1</span>
-      Tilan mitat
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="pituus">Pituus (m)</label>
-        <input type="number" id="pituus" value="3.0" min="1" max="15" step="0.1">
-      </div>
-      <div class="form-group">
-        <label for="leveys">Leveys (m)</label>
-        <input type="number" id="leveys" value="2.5" min="1" max="15" step="0.1">
-      </div>
-      <div class="form-group">
-        <label for="korkeus">Korkeus (m)</label>
-        <input type="number" id="korkeus" value="2.4" min="2" max="4" step="0.1">
-      </div>
-    </div>
-    <div class="area-display">
-      <div class="area-badge">
-        <div class="label">Lattia-ala</div>
-        <div class="value" id="lattiaAla">7.5 m&sup2;</div>
-      </div>
-      <div class="area-badge">
-        <div class="label">Sein&auml;-ala</div>
-        <div class="value" id="seinaAla">26.4 m&sup2;</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Tilan tyyppi -->
-  <div class="card">
-    <div class="card-title">
-      <span class="icon">2</span>
-      Tilan tyyppi
+      Maalaustyyppi
     </div>
     <div class="option-group">
       <div class="option-item">
-        <input type="radio" name="tilatyyppi" id="kodinhoito" value="kodinhoito" checked>
-        <label for="kodinhoito">
-          <div class="opt-title">Kodinhoitohuone (pesu + kuivaus)</div>
-          <div class="opt-desc">Pyykinpesukoneen ja kuivausrummun tilat, vesipiste</div>
+        <input type="radio" name="tyyppi" id="tyyppi_sisa" value="sisa" checked>
+        <label for="tyyppi_sisa">
+          <div class="opt-title">Sis&auml;maalaus</div>
+          <div class="opt-desc">Huoneiden sein&auml;t, katot, listat</div>
         </label>
       </div>
       <div class="option-item">
-        <input type="radio" name="tilatyyppi" id="tekninen" value="tekninen">
-        <label for="tekninen">
-          <div class="opt-title">Tekninen tila / pannuhuone</div>
-          <div class="opt-desc">L&auml;mmityslaitteet, vesivaraaja, tekninen varustelu</div>
-        </label>
-      </div>
-      <div class="option-item">
-        <input type="radio" name="tilatyyppi" id="kellari" value="kellari">
-        <label for="kellari">
-          <div class="opt-title">Kellarin m&auml;rk&auml;tila</div>
-          <div class="opt-desc">Vaativampi ty&ouml;: kosteudenhallinta, mahdolliset rakennekorjaukset</div>
-        </label>
-      </div>
-      <div class="option-item">
-        <input type="radio" name="tilatyyppi" id="muu" value="muu">
-        <label for="muu">
-          <div class="opt-title">Muu m&auml;rk&auml;tila</div>
-          <div class="opt-desc">Esim. erillinen wc-tila, siivouskeskus tai vastaava</div>
+        <input type="radio" name="tyyppi" id="tyyppi_ulko" value="ulko">
+        <label for="tyyppi_ulko">
+          <div class="opt-title">Ulkomaalaus</div>
+          <div class="opt-desc">Julkisivut, r&auml;yst&auml;&auml;t, ikkunanpuitteet</div>
         </label>
       </div>
     </div>
   </div>
 
-  <!-- 3. Lisätyöt -->
+  <!-- 2A. Sisämaalaus - mitat -->
+  <div class="card conditional visible" id="sisa-mitat">
+    <div class="card-title">
+      <span class="icon">2</span>
+      Maalattava ala
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sisa_seinat">Sein&auml;pinta-ala (m&sup2;)</label>
+        <input type="number" id="sisa_seinat" value="60" min="5" max="500" step="1">
+      </div>
+      <div class="form-group">
+        <label for="sisa_huoneita">Huoneita (kpl)</label>
+        <input type="number" id="sisa_huoneita" value="3" min="1" max="20" step="1">
+      </div>
+    </div>
+    <p style="font-size:0.78rem;color:var(--gray-500);margin-top:0.25rem;">Vinkki: yhden huoneen sein&auml;t ovat tyypillisesti 20&ndash;35 m&sup2;.</p>
+  </div>
+
+  <!-- 2B. Ulkomaalaus - mitat -->
+  <div class="card conditional" id="ulko-mitat">
+    <div class="card-title">
+      <span class="icon">2</span>
+      Julkisivun tiedot
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="ulko_ala">Sein&auml;pinta-ala (m&sup2;)</label>
+        <input type="number" id="ulko_ala" value="120" min="10" max="1000" step="1">
+      </div>
+      <div class="form-group">
+        <label for="ulko_kerroksia">Kerroksia</label>
+        <input type="number" id="ulko_kerroksia" value="1" min="1" max="3" step="1">
+      </div>
+    </div>
+    <p style="font-size:0.78rem;color:var(--gray-500);margin-top:0.25rem;">Vinkki: omakotitalon julkisivu on tyypillisesti 100&ndash;180 m&sup2;.</p>
+  </div>
+
+  <!-- 3. Pinnan kunto -->
   <div class="card">
     <div class="card-title">
       <span class="icon">3</span>
+      Pinnan kunto
+    </div>
+    <div class="option-group">
+      <div class="option-item">
+        <input type="radio" name="kunto" id="kunto_hyva" value="hyva" checked>
+        <label for="kunto_hyva">
+          <div class="opt-title">Hyv&auml; kunto</div>
+          <div class="opt-desc">Tasainen pinta, vain maalaus</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="kunto" id="kunto_kohtalainen" value="kohtalainen">
+        <label for="kunto_kohtalainen">
+          <div class="opt-title">Kohtalainen</div>
+          <div class="opt-desc">Tasoitusta, hiontaa, pohjamaalaus</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="radio" name="kunto" id="kunto_huono" value="huono">
+        <label for="kunto_huono">
+          <div class="opt-title">Huono kunto</div>
+          <div class="opt-desc" id="kunto_huono_desc">Tapettien poisto, halkeamien korjaus, t&auml;ystasoitus</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4A. Sisämaalaus - Lisätyöt -->
+  <div class="card conditional visible" id="sisa-lisat">
+    <div class="card-title">
+      <span class="icon">4</span>
       Lis&auml;ty&ouml;t
     </div>
     <div class="option-group">
       <div class="option-item">
-        <input type="checkbox" id="lattialammitys" value="lattialammitys">
-        <label for="lattialammitys">
-          <div class="opt-title">Lattial&auml;mmitys (s&auml;hk&ouml;)</div>
+        <input type="checkbox" id="katto" value="katto">
+        <label for="katto">
+          <div class="opt-title">Kattomaalaus</div>
+          <div class="opt-desc">Huoneiden kattojen maalaus</div>
         </label>
       </div>
       <div class="option-item">
-        <input type="checkbox" id="lattiakaivo" value="lattiakaivo">
-        <label for="lattiakaivo">
-          <div class="opt-title">Lattiakaivo + viem&auml;r&ouml;inti</div>
+        <input type="checkbox" id="katto_ala_group" style="display:none">
+        <div class="form-group" id="katto_ala_wrap" style="display:none;padding:0.5rem 0.9rem;">
+          <label for="katto_ala">Katto-ala (m&sup2;)</label>
+          <input type="number" id="katto_ala" value="30" min="3" max="300" step="1">
+        </div>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="listat" value="listat">
+        <label for="listat">
+          <div class="opt-title">Listojen maalaus</div>
+          <div class="opt-desc">Jalkalistat, katto- ja ovilistat</div>
         </label>
       </div>
       <div class="option-item">
-        <input type="checkbox" id="vesipiste" value="vesipiste">
-        <label for="vesipiste">
-          <div class="opt-title">Vesipiste (hana + allas)</div>
-        </label>
-      </div>
-      <div id="vesipisteCountWrap" class="count-input">
-        <label for="vesipisteCount">Vesipisteiden m&auml;&auml;r&auml; (kpl)</label>
-        <input type="number" id="vesipisteCount" value="1" min="1" max="3" step="1">
+        <input type="checkbox" id="listat_jm_group" style="display:none">
+        <div class="form-group" id="listat_jm_wrap" style="display:none;padding:0.5rem 0.9rem;">
+          <label for="listat_jm">Listoja (juoksumetri&auml;)</label>
+          <input type="number" id="listat_jm" value="40" min="1" max="500" step="1">
+        </div>
       </div>
       <div class="option-item">
-        <input type="checkbox" id="ilmanvaihto" value="ilmanvaihto">
-        <label for="ilmanvaihto">
-          <div class="opt-title">Ilmanvaihdon parannus</div>
+        <input type="checkbox" id="ovet" value="ovet">
+        <label for="ovet">
+          <div class="opt-title">Ovien maalaus</div>
         </label>
       </div>
       <div class="option-item">
-        <input type="checkbox" id="tasoitus" value="tasoitus">
-        <label for="tasoitus">
-          <div class="opt-title">Seinien tasoitus / oikaisu</div>
+        <input type="checkbox" id="ovet_kpl_group" style="display:none">
+        <div class="form-group" id="ovet_kpl_wrap" style="display:none;padding:0.5rem 0.9rem;">
+          <label for="ovet_kpl">Ovia (kpl)</label>
+          <input type="number" id="ovet_kpl" value="3" min="1" max="20" step="1">
+        </div>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="tapetti_poisto" value="tapetti_poisto">
+        <label for="tapetti_poisto">
+          <div class="opt-title">Tapettien poisto</div>
+          <div class="opt-desc">Vanhat tapetit pois ennen maalausta</div>
         </label>
       </div>
     </div>
   </div>
 
-  <!-- 4. Kalustetaso -->
-  <div class="card">
+  <!-- 4B. Ulkomaalaus - Lisätyöt -->
+  <div class="card conditional" id="ulko-lisat">
     <div class="card-title">
       <span class="icon">4</span>
-      Kalustetaso
+      Lis&auml;ty&ouml;t
     </div>
     <div class="option-group">
       <div class="option-item">
-        <input type="radio" name="kaluste" id="kaluste_perus" value="perus">
-        <label for="kaluste_perus">
-          <div class="opt-title">Perus</div>
-          <div class="opt-desc">Perushanat, yksinkertaiset kalusteet</div>
+        <input type="checkbox" id="raystaat" value="raystaat">
+        <label for="raystaat">
+          <div class="opt-title">R&auml;yst&auml;iden maalaus</div>
         </label>
       </div>
       <div class="option-item">
-        <input type="radio" name="kaluste" id="kaluste_normaali" value="normaali" checked>
-        <label for="kaluste_normaali">
-          <div class="opt-title">Normaali</div>
-          <div class="opt-desc">Laadukkaat hanat, allaskaappi, s&auml;ilytysratkaisut</div>
+        <input type="checkbox" id="raystaat_jm_group" style="display:none">
+        <div class="form-group" id="raystaat_jm_wrap" style="display:none;padding:0.5rem 0.9rem;">
+          <label for="raystaat_jm">R&auml;yst&auml;it&auml; (juoksumetri&auml;)</label>
+          <input type="number" id="raystaat_jm" value="40" min="1" max="200" step="1">
+        </div>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="ikkunat" value="ikkunat">
+        <label for="ikkunat">
+          <div class="opt-title">Ikkunanpuitteiden maalaus</div>
         </label>
       </div>
       <div class="option-item">
-        <input type="radio" name="kaluste" id="kaluste_laadukas" value="laadukas">
-        <label for="kaluste_laadukas">
-          <div class="opt-title">Laadukas</div>
-          <div class="opt-desc">Premium-kalusteet, design-hanat, r&auml;&auml;t&auml;l&ouml;idyt ratkaisut</div>
+        <input type="checkbox" id="ikkunat_kpl_group" style="display:none">
+        <div class="form-group" id="ikkunat_kpl_wrap" style="display:none;padding:0.5rem 0.9rem;">
+          <label for="ikkunat_kpl">Ikkunoita (kpl)</label>
+          <input type="number" id="ikkunat_kpl" value="8" min="1" max="40" step="1">
+        </div>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="ulko_ovet" value="ulko_ovet">
+        <label for="ulko_ovet">
+          <div class="opt-title">Ulko-ovien maalaus</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="ulko_ovet_kpl_group" style="display:none">
+        <div class="form-group" id="ulko_ovet_kpl_wrap" style="display:none;padding:0.5rem 0.9rem;">
+          <label for="ulko_ovet_kpl">Ulko-ovia (kpl)</label>
+          <input type="number" id="ulko_ovet_kpl" value="2" min="1" max="10" step="1">
+        </div>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="pesu" value="pesu">
+        <label for="pesu">
+          <div class="opt-title">Julkisivun pesu</div>
+          <div class="opt-desc">Painepesuri ennen maalausta</div>
+        </label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="telineet" value="telineet">
+        <label for="telineet">
+          <div class="opt-title">Telineet</div>
+          <div class="opt-desc">Tarvitaan yli 1-kerroksisissa kohteissa</div>
         </label>
       </div>
     </div>
@@ -720,15 +767,15 @@ body {
     <div class="lead-gate">
       <div class="price-teaser">
         <div class="teaser-label">Arvioitu kokonaishinta</div>
-        <div class="teaser-value" id="teaser-price">6 000 &ndash; 12 000 &euro;</div>
+        <div class="teaser-value" id="teaser-price">2 000 &ndash; 4 000 &euro;</div>
         <div class="teaser-hint">T&auml;yt&auml; yhteystiedot n&auml;hd&auml;ksesi tarkan arvion</div>
       </div>
 
       <h3>Saat arvion s&auml;hk&ouml;postiisi</h3>
       <p class="lead-intro">T&auml;yt&auml; yhteystietosi, niin l&auml;het&auml;mme sinulle yksityiskohtaisen hinta-arvion.</p>
 
-      <form id="lead-form" data-netlify="true">
-        <input type="hidden" name="form-name" value="markatilaraskuri">
+      <form id="lead-form" data-netlify="true" method="POST">
+        <input type="hidden" name="form-name" value="maalauslaskuri">
         <input type="hidden" name="estimate" id="hidden-estimate" value="">
         <div class="lg-form-group">
           <label for="lead-name">Nimi *</label>
@@ -768,7 +815,7 @@ body {
   <!-- Disclaimer -->
   <div class="disclaimer">
     <strong>Huomioithan:</strong>
-    Laskurin antama hinta-arvio ei ole sitova tarjous. M&auml;rk&auml;tilaremontin lopulliseen hintaan vaikuttavat mm. vanhojen rakenteiden kunto, materiaalivalinnat ja kohteen sijainti. Tarkka hinta selvi&auml;&auml; aina kohteen katselmuksessa. LVI- ja s&auml;hk&ouml;ty&ouml;t tehd&auml;&auml;n aina p&auml;tev&auml;n ammattilaisen toimesta.
+    Laskurin antama hinta-arvio ei ole sitova tarjous. Maalausty&ouml;n lopulliseen hintaan vaikuttavat mm. pinnan todellinen kunto, materiaalivalinnat, huonekorkeus ja kohteen sijainti. Tarkka hinta selvi&auml;&auml; aina kohteen katselmuksessa.
   </div>
 
   <div class="footer">
@@ -781,131 +828,182 @@ body {
 <script>
 (function() {
   var pricing = {
-    rakennus: {
-      kodinhoito: { min: 500, max: 750 },
-      tekninen: { min: 400, max: 600 },
-      kellari: { min: 600, max: 900 },
-      muu: { min: 500, max: 800 }
+    sisa: {
+      hyva: { min: 12, max: 18 },
+      kohtalainen: { min: 18, max: 28 },
+      huono: { min: 25, max: 40 }
     },
-    lvi: {
-      kodinhoito: { min: 700, max: 1100 },
-      tekninen: { min: 500, max: 800 },
-      kellari: { min: 1200, max: 1800 },
-      muu: { min: 700, max: 1100 }
+    ulko: {
+      hyva: { min: 20, max: 30 },
+      kohtalainen: { min: 30, max: 45 },
+      huono: { min: 40, max: 60 }
     },
-    sahko: { min: 400, max: 700 },
-    lattialammitys: { min: 50, max: 120 },
-    lattiakaivo: { min: 800, max: 1500 },
-    vesipiste: { min: 600, max: 1200 },
-    ilmanvaihto: { min: 500, max: 1200 },
-    tasoitus: { min: 20, max: 40 },
-    kaluste: {
-      perus: { min: 400, max: 800 },
-      normaali: { min: 800, max: 1500 },
-      laadukas: { min: 1500, max: 3000 }
-    }
+    katto: { min: 15, max: 25 },
+    listat: { min: 5, max: 12 },
+    ovet: { min: 80, max: 150 },
+    tapetti_poisto: { min: 5, max: 12 },
+    raystaat: { min: 10, max: 20 },
+    ikkunat: { min: 80, max: 180 },
+    ulko_ovet: { min: 120, max: 250 },
+    pesu: { min: 3, max: 6 },
+    telineet: { min: 500, max: 1500 }
   };
 
-  var tilaNames = {
-    kodinhoito: 'Kodinhoitohuone',
-    tekninen: 'Tekninen tila / pannuhuone',
-    kellari: 'Kellarin m\u00e4rk\u00e4tila',
-    muu: 'Muu m\u00e4rk\u00e4tila'
-  };
-  var kalusteNames = { perus: 'Perus', normaali: 'Normaali', laadukas: 'Laadukas' };
+  var kuntoNames = { hyva: 'Hyv\u00e4 kunto', kohtalainen: 'Kohtalainen', huono: 'Huono kunto' };
 
   var $ = function(id) { return document.getElementById(id); };
   var val = function(id) { return parseFloat($(id).value) || 0; };
   var radio = function(name) { var el = document.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ''; };
-  var checked = function(id) { return $(id).checked; };
+  var checked = function(id) { return $(id) && $(id).checked; };
 
   function fmt(n) { return Math.round(n).toLocaleString('fi-FI'); }
 
+  // Toggle sisä/ulko sections
+  function updateSections() {
+    var tyyppi = radio('tyyppi');
+    var sisaEls = ['sisa-mitat', 'sisa-lisat'];
+    var ulkoEls = ['ulko-mitat', 'ulko-lisat'];
+
+    sisaEls.forEach(function(id) {
+      $(id).classList.toggle('visible', tyyppi === 'sisa');
+    });
+    ulkoEls.forEach(function(id) {
+      $(id).classList.toggle('visible', tyyppi === 'ulko');
+    });
+
+    // Update condition descriptions based on type
+    if (tyyppi === 'sisa') {
+      $('kunto_huono_desc').textContent = 'Tapettien poisto, halkeamien korjaus, t\u00e4ystasoitus';
+    } else {
+      $('kunto_huono_desc').textContent = 'Kaavinta, rakennekorjaukset, t\u00e4ysk\u00e4sittely';
+    }
+  }
+
+  // Toggle sub-inputs when checkbox is checked
+  function setupToggle(checkboxId, wrapId) {
+    $(checkboxId).addEventListener('change', function() {
+      $(wrapId).style.display = this.checked ? 'block' : 'none';
+      updateTeaser();
+    });
+  }
+
+  setupToggle('katto', 'katto_ala_wrap');
+  setupToggle('listat', 'listat_jm_wrap');
+  setupToggle('ovet', 'ovet_kpl_wrap');
+  setupToggle('raystaat', 'raystaat_jm_wrap');
+  setupToggle('ikkunat', 'ikkunat_kpl_wrap');
+  setupToggle('ulko_ovet', 'ulko_ovet_kpl_wrap');
+
   function getCalcData() {
-    var pituus = val('pituus');
-    var leveys = val('leveys');
-    var korkeus = val('korkeus');
-    var lattiaAla = pituus * leveys;
-    var seinaAla = 2 * (pituus + leveys) * korkeus;
-
-    $('lattiaAla').textContent = lattiaAla.toFixed(1) + ' m\u00b2';
-    $('seinaAla').textContent = seinaAla.toFixed(1) + ' m\u00b2';
-
-    var tilatyyppi = radio('tilatyyppi');
-    var kaluste = radio('kaluste');
+    var tyyppi = radio('tyyppi');
+    var kunto = radio('kunto');
     var talous = parseInt(radio('talous')) || 1;
 
-    if (!tilatyyppi || !kaluste) return null;
+    if (!tyyppi || !kunto) return null;
 
-    var rak = pricing.rakennus[tilatyyppi];
-    var rakMin = rak.min * lattiaAla;
-    var rakMax = rak.max * lattiaAla;
+    var seinaAla, lisaRows = [], lisaMin = 0, lisaMax = 0;
 
-    var lvi = pricing.lvi[tilatyyppi];
-    var sahko = pricing.sahko;
-    var kal = pricing.kaluste[kaluste];
-
-    var lisaMin = 0, lisaMax = 0;
-    var lisaRows = [];
-
-    if (checked('lattialammitys')) {
-      var llMin = pricing.lattialammitys.min * lattiaAla;
-      var llMax = pricing.lattialammitys.max * lattiaAla;
-      lisaMin += llMin; lisaMax += llMax;
-      lisaRows.push({ label: 'Lattial\u00e4mmitys', min: llMin, max: llMax });
+    // Main wall painting
+    var p = pricing[tyyppi][kunto];
+    if (tyyppi === 'sisa') {
+      seinaAla = val('sisa_seinat');
+    } else {
+      seinaAla = val('ulko_ala');
     }
 
-    if (checked('lattiakaivo')) {
-      lisaMin += pricing.lattiakaivo.min;
-      lisaMax += pricing.lattiakaivo.max;
-      lisaRows.push({ label: 'Lattiakaivo + viem\u00e4r\u00f6inti', min: pricing.lattiakaivo.min, max: pricing.lattiakaivo.max });
+    var mainMin = p.min * seinaAla;
+    var mainMax = p.max * seinaAla;
+
+    // Lisätyöt - sisämaalaus
+    if (tyyppi === 'sisa') {
+      if (checked('katto')) {
+        var ka = val('katto_ala');
+        var kMin = pricing.katto.min * ka;
+        var kMax = pricing.katto.max * ka;
+        lisaMin += kMin; lisaMax += kMax;
+        lisaRows.push({ label: 'Kattomaalaus (' + ka + ' m\u00b2)', min: kMin, max: kMax });
+      }
+      if (checked('listat')) {
+        var lm = val('listat_jm');
+        var lMin = pricing.listat.min * lm;
+        var lMax = pricing.listat.max * lm;
+        lisaMin += lMin; lisaMax += lMax;
+        lisaRows.push({ label: 'Listojen maalaus (' + lm + ' jm)', min: lMin, max: lMax });
+      }
+      if (checked('ovet')) {
+        var ok = val('ovet_kpl');
+        var oMin = pricing.ovet.min * ok;
+        var oMax = pricing.ovet.max * ok;
+        lisaMin += oMin; lisaMax += oMax;
+        lisaRows.push({ label: 'Ovien maalaus (' + ok + ' kpl)', min: oMin, max: oMax });
+      }
+      if (checked('tapetti_poisto')) {
+        var tMin = pricing.tapetti_poisto.min * seinaAla;
+        var tMax = pricing.tapetti_poisto.max * seinaAla;
+        lisaMin += tMin; lisaMax += tMax;
+        lisaRows.push({ label: 'Tapettien poisto', min: tMin, max: tMax });
+      }
     }
 
-    if (checked('vesipiste')) {
-      var vpCount = Math.max(1, Math.min(3, Math.round(val('vesipisteCount'))));
-      var vpMin = pricing.vesipiste.min * vpCount;
-      var vpMax = pricing.vesipiste.max * vpCount;
-      lisaMin += vpMin; lisaMax += vpMax;
-      lisaRows.push({ label: 'Vesipiste (' + vpCount + ' kpl)', min: vpMin, max: vpMax });
+    // Lisätyöt - ulkomaalaus
+    if (tyyppi === 'ulko') {
+      if (checked('raystaat')) {
+        var rjm = val('raystaat_jm');
+        var rMin = pricing.raystaat.min * rjm;
+        var rMax = pricing.raystaat.max * rjm;
+        lisaMin += rMin; lisaMax += rMax;
+        lisaRows.push({ label: 'R\u00e4yst\u00e4iden maalaus (' + rjm + ' jm)', min: rMin, max: rMax });
+      }
+      if (checked('ikkunat')) {
+        var ik = val('ikkunat_kpl');
+        var iMin = pricing.ikkunat.min * ik;
+        var iMax = pricing.ikkunat.max * ik;
+        lisaMin += iMin; lisaMax += iMax;
+        lisaRows.push({ label: 'Ikkunanpuitteet (' + ik + ' kpl)', min: iMin, max: iMax });
+      }
+      if (checked('ulko_ovet')) {
+        var uok = val('ulko_ovet_kpl');
+        var uoMin = pricing.ulko_ovet.min * uok;
+        var uoMax = pricing.ulko_ovet.max * uok;
+        lisaMin += uoMin; lisaMax += uoMax;
+        lisaRows.push({ label: 'Ulko-ovien maalaus (' + uok + ' kpl)', min: uoMin, max: uoMax });
+      }
+      if (checked('pesu')) {
+        var pMin = pricing.pesu.min * seinaAla;
+        var pMax = pricing.pesu.max * seinaAla;
+        lisaMin += pMin; lisaMax += pMax;
+        lisaRows.push({ label: 'Julkisivun pesu', min: pMin, max: pMax });
+      }
+      if (checked('telineet')) {
+        lisaMin += pricing.telineet.min;
+        lisaMax += pricing.telineet.max;
+        lisaRows.push({ label: 'Telineet', min: pricing.telineet.min, max: pricing.telineet.max });
+      }
     }
 
-    if (checked('ilmanvaihto')) {
-      lisaMin += pricing.ilmanvaihto.min;
-      lisaMax += pricing.ilmanvaihto.max;
-      lisaRows.push({ label: 'Ilmanvaihdon parannus', min: pricing.ilmanvaihto.min, max: pricing.ilmanvaihto.max });
-    }
+    var totalMin = mainMin + lisaMin;
+    var totalMax = mainMax + lisaMax;
 
-    if (checked('tasoitus')) {
-      var tasMin = pricing.tasoitus.min * seinaAla;
-      var tasMax = pricing.tasoitus.max * seinaAla;
-      lisaMin += tasMin; lisaMax += tasMax;
-      lisaRows.push({ label: 'Seinien tasoitus / oikaisu', min: tasMin, max: tasMax });
-    }
-
-    var totalMin = rakMin + lvi.min + sahko.min + kal.min + lisaMin;
-    var totalMax = rakMax + lvi.max + sahko.max + kal.max + lisaMax;
-
-    // Work share for kotitalousvähennys: 55-65%
-    var ktvTyoMin = lvi.min + sahko.min + (rakMin + lisaMin) * 0.55;
-    var ktvTyoMax = lvi.max + sahko.max + (rakMax + lisaMax) * 0.65;
+    // Kotitalousvähennys: work share ~75% (maalaus on työvaltaista), deduction 35%, max 1600€/person, deductible 150€/person
+    var tyoOsuusMin = totalMin * 0.75;
+    var tyoOsuusMax = totalMax * 0.75;
 
     var maxVahennys = talous * 1600;
     var omavastuu = talous * 150;
-    var effVahennysMin = Math.max(0, Math.min(ktvTyoMin * 0.35, maxVahennys) - omavastuu);
-    var effVahennysMax = Math.max(0, Math.min(ktvTyoMax * 0.35, maxVahennys) - omavastuu);
+    var effVahennysMin = Math.max(0, Math.min(tyoOsuusMin * 0.35, maxVahennys) - omavastuu);
+    var effVahennysMax = Math.max(0, Math.min(tyoOsuusMax * 0.35, maxVahennys) - omavastuu);
 
     var finalMin = totalMin - effVahennysMax;
     var finalMax = totalMax - effVahennysMin;
 
     return {
-      lattiaAla: lattiaAla, seinaAla: seinaAla, tilatyyppi: tilatyyppi, kaluste: kaluste, talous: talous,
-      rakMin: rakMin, rakMax: rakMax,
-      lviMin: lvi.min, lviMax: lvi.max,
-      sahkoMin: sahko.min, sahkoMax: sahko.max,
-      kalMin: kal.min, kalMax: kal.max,
+      tyyppi: tyyppi, kunto: kunto, talous: talous,
+      seinaAla: seinaAla,
+      mainMin: mainMin, mainMax: mainMax,
       lisaRows: lisaRows,
+      lisaMin: lisaMin, lisaMax: lisaMax,
       totalMin: totalMin, totalMax: totalMax,
-      ktvTyoMin: ktvTyoMin, ktvTyoMax: ktvTyoMax,
+      tyoOsuusMin: tyoOsuusMin, tyoOsuusMax: tyoOsuusMax,
       vahennysMin: effVahennysMin, vahennysMax: effVahennysMax,
       omavastuu: omavastuu,
       finalMin: finalMin, finalMax: finalMax
@@ -919,19 +1017,17 @@ body {
   }
 
   function buildEstimateText(d) {
+    var tyyppiNimi = d.tyyppi === 'sisa' ? 'Sis\u00e4maalaus' : 'Ulkomaalaus';
     var lines = [];
-    lines.push('M\u00c4RK\u00c4TILAREMONTIN HINTA-ARVIO');
+    lines.push('MAALAUSTY\u00d6N HINTA-ARVIO');
     lines.push('Rakennusliike KaPe Oy');
     lines.push('---');
     lines.push('');
-    lines.push('Tila: ' + tilaNames[d.tilatyyppi]);
-    lines.push('Mitat: ' + d.lattiaAla.toFixed(1) + ' m\u00b2 (lattia), ' + d.seinaAla.toFixed(1) + ' m\u00b2 (sein\u00e4t)');
-    lines.push('Kalustetaso: ' + kalusteNames[d.kaluste]);
+    lines.push('Tyyppi: ' + tyyppiNimi);
+    lines.push('Sein\u00e4pinta-ala: ' + d.seinaAla + ' m\u00b2');
+    lines.push('Pinnan kunto: ' + kuntoNames[d.kunto]);
     lines.push('');
-    lines.push('Rakennusty\u00f6t: ' + fmt(d.rakMin) + ' \u2013 ' + fmt(d.rakMax) + ' \u20ac');
-    lines.push('LVI-ty\u00f6t: ' + fmt(d.lviMin) + ' \u2013 ' + fmt(d.lviMax) + ' \u20ac');
-    lines.push('S\u00e4hk\u00f6ty\u00f6t: ' + fmt(d.sahkoMin) + ' \u2013 ' + fmt(d.sahkoMax) + ' \u20ac');
-    lines.push('Kalusteet: ' + fmt(d.kalMin) + ' \u2013 ' + fmt(d.kalMax) + ' \u20ac');
+    lines.push(tyyppiNimi + ': ' + fmt(d.mainMin) + ' \u2013 ' + fmt(d.mainMax) + ' \u20ac');
     if (d.lisaRows.length > 0) {
       lines.push('');
       lines.push('Lis\u00e4ty\u00f6t:');
@@ -951,12 +1047,6 @@ body {
     lines.push('Ota yhteytt\u00e4: 044 015 0618 | petteri.palosaari@kape.fi');
     return lines.join('\n');
   }
-
-  // Vesipiste count toggle
-  $('vesipiste').addEventListener('change', function() {
-    $('vesipisteCountWrap').classList.toggle('visible', this.checked);
-    updateTeaser();
-  });
 
   // Lead form
   $('lead-form').addEventListener('submit', function(e) {
@@ -986,12 +1076,6 @@ body {
     btn.disabled = true;
     btn.textContent = 'L\u00e4hetet\u00e4\u00e4n...';
 
-    console.log('Lead data:', {
-      name: name, email: email, phone: $('lead-phone').value.trim(),
-      calculator: 'M\u00e4rk\u00e4tilalaskuri', estimate: estimate,
-      price_range: fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac'
-    });
-
     // Submit to Netlify
     var formData = new FormData($('lead-form'));
     fetch('/', {
@@ -1009,10 +1093,11 @@ body {
 
   // Bind all inputs
   document.querySelectorAll('input').forEach(function(el) {
-    el.addEventListener('input', updateTeaser);
-    el.addEventListener('change', updateTeaser);
+    el.addEventListener('input', function() { updateSections(); updateTeaser(); });
+    el.addEventListener('change', function() { updateSections(); updateTeaser(); });
   });
 
+  updateSections();
   updateTeaser();
 })();
 </script>
