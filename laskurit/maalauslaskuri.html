@@ -797,7 +797,7 @@ body {
           <input type="checkbox" id="lead-consent" name="consent" required>
           <label for="lead-consent">Hyv&auml;ksyn, ett&auml; Rakennusliike KaPe Oy voi olla minuun yhteydess&auml; tarjouksen tiimoilta ja l&auml;hett&auml;&auml; ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
         </div>
-        <button type="submit" class="submit-btn" id="submit-btn">N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
+        <button type="submit" class="submit-btn" id="submit-btn" disabled>N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
         <div class="privacy-note">Tietojasi k&auml;sitell&auml;&auml;n luottamuksellisesti.<br>Emme luovuta niit&auml; kolmansille osapuolille.</div>
       </form>
     </div>
@@ -886,6 +886,11 @@ body {
     $(checkboxId).addEventListener('change', function() {
       $(wrapId).style.display = this.checked ? 'block' : 'none';
       updateTeaser();
+
+  // Toggle submit button based on consent
+  $('lead-consent').addEventListener('change', function() {
+    $('submit-btn').disabled = !this.checked;
+  });
     });
   }
 
@@ -1058,6 +1063,8 @@ body {
     var email = $('lead-email').value.trim();
     var consent = $('lead-consent').checked;
 
+    // Enable/disable submit based on consent is handled below
+
     var valid = true;
     $('err-name').style.display = name ? 'none' : 'block';
     if (!name) valid = false;
@@ -1080,10 +1087,10 @@ body {
 
     // Submit to FormSubmit.co
     var formData = new FormData($('lead-form'));
-    fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', {
+    fetch('https://formspree.io/f/mqeglaay', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(formData))
+      headers: { 'Accept': 'application/json' },
+      body: formData
     }).then(function() {
       $('lead-gate-section').style.display = 'none';
       $('lead-success').style.display = 'block';
@@ -1095,12 +1102,27 @@ body {
 
   // Bind all inputs
   document.querySelectorAll('input').forEach(function(el) {
-    el.addEventListener('input', function() { updateSections(); updateTeaser(); });
-    el.addEventListener('change', function() { updateSections(); updateTeaser(); });
+    el.addEventListener('input', function() { updateSections(); updateTeaser();
+
+  // Toggle submit button based on consent
+  $('lead-consent').addEventListener('change', function() {
+    $('submit-btn').disabled = !this.checked;
+  }); });
+    el.addEventListener('change', function() { updateSections(); updateTeaser();
+
+  // Toggle submit button based on consent
+  $('lead-consent').addEventListener('change', function() {
+    $('submit-btn').disabled = !this.checked;
+  }); });
   });
 
   updateSections();
   updateTeaser();
+
+  // Toggle submit button based on consent
+  $('lead-consent').addEventListener('change', function() {
+    $('submit-btn').disabled = !this.checked;
+  });
 })();
 </script>
 </body>

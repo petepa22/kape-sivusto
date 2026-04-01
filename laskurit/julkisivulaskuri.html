@@ -822,7 +822,7 @@ input[type="number"]::-webkit-inner-spin-button {
           <input type="checkbox" id="lead-consent" name="consent" required>
           <label for="lead-consent">Hyväksyn, että Rakennusliike KaPe Oy voi olla minuun yhteydessä tarjouksen tiimoilta ja lähettää ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
         </div>
-        <button type="submit" class="submit-btn" id="submit-btn">Näytä arvio ja lähetä sähköpostiin</button>
+        <button type="submit" class="submit-btn" id="submit-btn" disabled>Näytä arvio ja lähetä sähköpostiin</button>
         <div class="privacy-note">Tietojasi käsitellään luottamuksellisesti.<br>Emme luovuta niitä kolmansille osapuolille.</div>
       </form>
     </div>
@@ -1091,10 +1091,10 @@ input[type="number"]::-webkit-inner-spin-button {
     // Submit via Netlify Forms
     var formData = new FormData(document.getElementById('lead-form'));
     formData.set('estimate', estimate);
-    fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', {
+    fetch('https://formspree.io/f/mqeglaay', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(formData))
+      headers: { 'Accept': 'application/json' },
+      body: formData
     }).then(function() { showSuccess(); }).catch(function() { showSuccess(); });
 
     function showSuccess() {
@@ -1112,6 +1112,10 @@ input[type="number"]::-webkit-inner-spin-button {
   // Init
   updateVisibility();
   updateTeaser();
+n  // Toggle submit button based on consent
+  document.getElementById('lead-consent').addEventListener('change', function() {
+    document.getElementById('submit-btn').disabled = !this.checked;
+  });
 })();
 </script>
 </body>

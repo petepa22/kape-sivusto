@@ -896,7 +896,7 @@ input[type="number"]:focus {
                 <input type="checkbox" id="lead-consent" name="consent" required>
                 <label for="lead-consent">Hyv&auml;ksyn, ett&auml; Rakennusliike KaPe Oy voi olla minuun yhteydess&auml; tarjouksen tiimoilta ja l&auml;hett&auml;&auml; ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
               </div>
-              <button type="submit" class="submit-btn" id="submit-btn">N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
+              <button type="submit" class="submit-btn" id="submit-btn" disabled>N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
               <div class="privacy-note">Tietojasi k&auml;sitell&auml;&auml;n luottamuksellisesti.<br>Emme luovuta niit&auml; kolmansille osapuolille.</div>
             </form>
           </div>
@@ -1184,10 +1184,10 @@ input[type="number"]:focus {
     // Submit via Netlify Forms
     var formData = new FormData(document.getElementById('lead-form'));
     formData.set('estimate', estimate);
-    fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', {
+    fetch('https://formspree.io/f/mqeglaay', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(formData))
+      headers: { 'Accept': 'application/json' },
+      body: formData
     }).then(function() { showSuccess(); }).catch(function() { showSuccess(); });
 
     function showSuccess() {
@@ -1198,6 +1198,10 @@ input[type="number"]:focus {
 
   // Initial teaser update
   updateTeaser();
+n  // Toggle submit button based on consent
+  document.getElementById('lead-consent').addEventListener('change', function() {
+    document.getElementById('submit-btn').disabled = !this.checked;
+  });
 })();
 </script>
 
