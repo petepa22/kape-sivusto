@@ -179,22 +179,21 @@
     <div class="container">
       <h2 class="section-title">Pyyd&auml; tarjous tai soita</h2>
       <p class="section-subtitle">Kerro projektistasi ja palaamme asiaan nopeasti. Voit my&ouml;s soittaa suoraan numeroon <a href="tel:+358440150618" style="color:#2d6432;font-weight:600;">044 015 0618</a>.</p>
-      <div class="contact-form">
-        <form>
+      <div class="contact-form-direct">
+        <form action="https://formspree.io/f/mqeglaay" method="POST">
+          <input type="hidden" name="_next" value="https://www.kape.fi/index.html?kiitos=1">
+          <input type="hidden" name="_subject" value="Tarjouspyynt&ouml; kape.fi:st&auml;">
           <div class="form-group">
             <label for="nimi">Nimi *</label>
             <input type="text" id="nimi" name="nimi" placeholder="Etunimi Sukunimi" required>
-            <div class="error-msg">Sy&ouml;t&auml; nimesi</div>
           </div>
           <div class="form-group">
             <label for="puhelin">Puhelin *</label>
             <input type="tel" id="puhelin" name="puhelin" placeholder="040 1234567" required>
-            <div class="error-msg">Sy&ouml;t&auml; puhelinnumerosi</div>
           </div>
           <div class="form-group">
             <label for="email">S&auml;hk&ouml;posti</label>
             <input type="email" id="email" name="email" placeholder="nimi@esimerkki.fi">
-            <div class="error-msg">Tarkista s&auml;hk&ouml;postiosoite</div>
           </div>
           <div class="form-group">
             <label for="viesti">Viesti</label>
@@ -202,9 +201,6 @@
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;">L&auml;het&auml; tarjouspyynt&ouml;</button>
         </form>
-        <div class="form-success">
-          &#10003; Kiitos yhteydenotosta! Palaamme asiaan mahdollisimman pian.
-        </div>
       </div>
     </div>
   </section>
