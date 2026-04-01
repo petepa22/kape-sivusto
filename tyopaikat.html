@@ -235,7 +235,7 @@
         <p>Kerro itsest&auml;si ja osaamisestasi. Otamme yhteyksi&auml; talteen ja olemme yhteydess&auml; kun sopiva paikka aukeaa.</p>
 
         <div class="contact-form">
-          <form id="hakemus-form">
+          <form id="hakemus-form" action="https://formspree.io/f/mqeglaay" method="POST">
             <div class="form-group">
               <label for="nimi">Nimi *</label>
               <input type="text" id="nimi" name="nimi" placeholder="Etunimi Sukunimi" required>
@@ -273,7 +273,7 @@
               <label for="consent">Hyv&auml;ksyn, ett&auml; Rakennusliike KaPe Oy tallentaa tietoni rekrytointitarkoituksessa ja voi olla minuun yhteydess&auml; ty&ouml;mahdollisuuksien tiimoilta. Tietoja s&auml;ilytet&auml;&auml;n enint&auml;&auml;n 12 kuukautta.</label>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width:100%; font-size:1.05rem; padding:14px;">L&auml;het&auml; hakemus</button>
+            <button type="submit" class="btn btn-primary" style="width:100%; font-size:1.05rem; padding:14px;" disabled>L&auml;het&auml; hakemus</button>
           </form>
 
           <div class="form-success" id="form-success">
@@ -350,7 +350,12 @@
       }
     });
 
-    // Form submission via mailto fallback
+    // Toggle submit button based on consent
+    document.getElementById('consent').addEventListener('change', function() {
+      document.querySelector('#hakemus-form button[type="submit"]').disabled = !this.checked;
+    });
+
+    // Form submission via Formspree
     var form = document.getElementById('hakemus-form');
     var success = document.getElementById('form-success');
 
@@ -375,26 +380,30 @@
       if (!kokemus) { document.getElementById('kokemus').closest('.form-group').classList.add('has-error'); valid = false; }
       if (!consent || !valid) return;
 
-      // Build mailto
-      var subject = 'Avoin ty\u00f6hakemus: ' + nimi;
-      var body = 'AVOIN TY\u00d6HAKEMUS\n';
-      body += '==================\n\n';
-      body += 'Nimi: ' + nimi + '\n';
-      body += 'Puhelin: ' + puhelin + '\n';
-      body += 'S\u00e4hk\u00f6posti: ' + email + '\n';
-      if (paikkakunta) body += 'Paikkakunta: ' + paikkakunta + '\n';
-      body += '\nOsaaminen ja kokemus:\n' + kokemus + '\n';
-      body += '\n---\nL\u00e4hetetty kape.fi/tyopaikat -sivulta';
+      // Submit to Formspree
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'L\u00e4hetet\u00e4\u00e4n...';
 
-      var mailtoLink = 'mailto:petteri.palosaari@kape.fi'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(body);
-
-      window.location.href = mailtoLink;
-
-      // Show success
-      form.style.display = 'none';
-      success.classList.add('show');
+      var formData = new FormData(form);
+      fetch('https://formspree.io/f/mqeglaay', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(response) {
+        if (response.ok) {
+          form.style.display = 'none';
+          success.classList.add('show');
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'L\u00e4het\u00e4 hakemus';
+          alert('Lomakkeen l\u00e4hetys ep\u00e4onnistui. Yrit\u00e4 uudelleen tai soita 044 015 0618.');
+        }
+      }).catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'L\u00e4het\u00e4 hakemus';
+        alert('Yhteysvirhe. Yrit\u00e4 uudelleen tai soita 044 015 0618.');
+      });
     });
   })();
   </script>
