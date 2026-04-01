@@ -14,7 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.kape.fi/yhteystiedot">
   <meta property="og:locale" content="fi_FI">
-  <link rel="stylesheet" href="css/styles.css?v=20260401">
+  <link rel="stylesheet" href="css/styles.css?v=20260401b">
 </head>
 <body>
 
@@ -118,24 +118,23 @@
 
         <!-- Lomake -->
         <div>
-          <div class="contact-form">
+          <div class="contact-form-direct">
             <h2 style="color:#2d6432; margin-bottom:8px; font-size:1.3rem;">L&auml;het&auml; viesti</h2>
             <p style="color:#666; margin-bottom:24px; font-size:0.93rem;">T&auml;yt&auml; alla oleva lomake, niin palaamme asiaan mahdollisimman pian.</p>
             <form action="https://formspree.io/f/mqeglaay" method="POST">
+              <input type="hidden" name="_next" value="https://www.kape.fi/yhteystiedot.html?kiitos=1">
+              <input type="hidden" name="_subject" value="Yhteydenotto kape.fi:st&auml;">
               <div class="form-group">
                 <label for="nimi">Nimi *</label>
                 <input type="text" id="nimi" name="nimi" placeholder="Etunimi Sukunimi" required>
-                <div class="error-msg">Sy&ouml;t&auml; nimesi</div>
               </div>
               <div class="form-group">
                 <label for="puhelin">Puhelin *</label>
                 <input type="tel" id="puhelin" name="puhelin" placeholder="040 1234567" required>
-                <div class="error-msg">Sy&ouml;t&auml; puhelinnumerosi</div>
               </div>
               <div class="form-group">
                 <label for="email">S&auml;hk&ouml;posti</label>
                 <input type="email" id="email" name="email" placeholder="nimi@esimerkki.fi">
-                <div class="error-msg">Tarkista s&auml;hk&ouml;postiosoite</div>
               </div>
               <div class="form-group">
                 <label for="viesti">Viesti</label>
@@ -143,9 +142,6 @@
               </div>
               <button type="submit" class="btn btn-primary" style="width:100%;">L&auml;het&auml; viesti</button>
             </form>
-            <div class="form-success">
-              &#10003; Kiitos yhteydenotosta! Palaamme asiaan mahdollisimman pian.
-            </div>
           </div>
         </div>
 
@@ -201,7 +197,7 @@
 
   <a href="tel:+358440150618" class="mobile-call-btn">&#128222; Soita: 044 015 0618</a>
 
-  <script src="js/main.js?v=20260401"></script>
+  <script src="js/main.js?v=20260401b"></script>
 <script data-goatcounter="https://kapeoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
