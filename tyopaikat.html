@@ -234,8 +234,10 @@
         <h2>L&auml;het&auml; avoin hakemus</h2>
         <p>Kerro itsest&auml;si ja osaamisestasi. Otamme yhteyksi&auml; talteen ja olemme yhteydess&auml; kun sopiva paikka aukeaa.</p>
 
-        <div class="contact-form">
+        <div class="contact-form-direct">
           <form id="hakemus-form" action="https://formspree.io/f/mqeglaay" method="POST">
+            <input type="hidden" name="_next" value="https://www.kape.fi/tyopaikat.html?kiitos=1">
+            <input type="hidden" name="_subject" value="Avoin ty&ouml;hakemus kape.fi:st&auml;">
             <div class="form-group">
               <label for="nimi">Nimi *</label>
               <input type="text" id="nimi" name="nimi" placeholder="Etunimi Sukunimi" required>
@@ -353,57 +355,6 @@
     // Toggle submit button based on consent
     document.getElementById('consent').addEventListener('change', function() {
       document.querySelector('#hakemus-form button[type="submit"]').disabled = !this.checked;
-    });
-
-    // Form submission via Formspree
-    var form = document.getElementById('hakemus-form');
-    var success = document.getElementById('form-success');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      var nimi = document.getElementById('nimi').value.trim();
-      var puhelin = document.getElementById('puhelin').value.trim();
-      var email = document.getElementById('email').value.trim();
-      var paikkakunta = document.getElementById('paikkakunta').value.trim();
-      var kokemus = document.getElementById('kokemus').value.trim();
-      var consent = document.getElementById('consent').checked;
-
-      // Validation
-      var valid = true;
-      var groups = form.querySelectorAll('.form-group');
-      groups.forEach(function(g) { g.classList.remove('has-error'); });
-
-      if (!nimi) { document.getElementById('nimi').closest('.form-group').classList.add('has-error'); valid = false; }
-      if (!puhelin) { document.getElementById('puhelin').closest('.form-group').classList.add('has-error'); valid = false; }
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('email').closest('.form-group').classList.add('has-error'); valid = false; }
-      if (!kokemus) { document.getElementById('kokemus').closest('.form-group').classList.add('has-error'); valid = false; }
-      if (!consent || !valid) return;
-
-      // Submit to Formspree
-      var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = 'L\u00e4hetet\u00e4\u00e4n...';
-
-      var formData = new FormData(form);
-      fetch('https://formspree.io/f/mqeglaay', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      }).then(function(response) {
-        if (response.ok) {
-          form.style.display = 'none';
-          success.classList.add('show');
-        } else {
-          btn.disabled = false;
-          btn.textContent = 'L\u00e4het\u00e4 hakemus';
-          alert('Lomakkeen l\u00e4hetys ep\u00e4onnistui. Yrit\u00e4 uudelleen tai soita 044 015 0618.');
-        }
-      }).catch(function() {
-        btn.disabled = false;
-        btn.textContent = 'L\u00e4het\u00e4 hakemus';
-        alert('Yhteysvirhe. Yrit\u00e4 uudelleen tai soita 044 015 0618.');
-      });
     });
   })();
   </script>
