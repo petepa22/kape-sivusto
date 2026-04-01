@@ -774,10 +774,6 @@ body {
     }
     updateTeaser();
 
-  // Toggle submit button based on consent
-  $('lead-consent').addEventListener('change', function() {
-    $('submit-btn').disabled = !this.checked;
-  });
   });
   $('lauteet_suora').addEventListener('change', function() {
     if (this.checked) {
@@ -785,10 +781,6 @@ body {
     }
     updateTeaser();
 
-  // Toggle submit button based on consent
-  $('lead-consent').addEventListener('change', function() {
-    $('submit-btn').disabled = !this.checked;
-  });
   });
 
   function getCalcData() {
@@ -937,7 +929,6 @@ body {
     var email = $('lead-email').value.trim();
     var consent = $('lead-consent').checked;
 
-    // Enable/disable submit based on consent is handled below
 
     var valid = true;
     $('err-name').style.display = name ? 'none' : 'block';
@@ -987,6 +978,7 @@ body {
   $('lead-consent').addEventListener('change', function() {
     $('submit-btn').disabled = !this.checked;
   });
+
 })();
 </script>
 </body>
