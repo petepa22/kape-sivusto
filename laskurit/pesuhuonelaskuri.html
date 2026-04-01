@@ -708,8 +708,10 @@ body {
       <h3>Saat arvion sähköpostiisi</h3>
       <p class="lead-intro">Täytä yhteystietosi, niin lähetämme sinulle yksityiskohtaisen hinta-arvion.</p>
 
-      <form id="lead-form" data-netlify="true">
-        <input type="hidden" name="form-name" value="pesuhuonelaskuri">
+      <form id="lead-form" action="https://formsubmit.co/petteri.palosaari@kape.fi" method="POST">
+        <input type="hidden" name="_subject" value="Pesuhuonelaskuri - uusi liidi">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.kape.fi/laskurit/pesuhuonelaskuri.html">
         <input type="hidden" name="estimate" id="estimate-data">
         <div class="lg-form-group">
           <label for="lead-name">Nimi *</label>
@@ -940,10 +942,10 @@ body {
     // Submit via Netlify Forms
     var formData = new FormData(document.getElementById('lead-form'));
     formData.set('estimate', estimate);
-    fetch('/', {
+    fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(formData))
     }).then(function() { showSuccess(); }).catch(function() { showSuccess(); });
 
     function showSuccess() {
