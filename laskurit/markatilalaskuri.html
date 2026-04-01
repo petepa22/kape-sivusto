@@ -727,8 +727,10 @@ body {
       <h3>Saat arvion s&auml;hk&ouml;postiisi</h3>
       <p class="lead-intro">T&auml;yt&auml; yhteystietosi, niin l&auml;het&auml;mme sinulle yksityiskohtaisen hinta-arvion.</p>
 
-      <form id="lead-form" data-netlify="true">
-        <input type="hidden" name="form-name" value="markatilaraskuri">
+      <form id="lead-form" action="https://formsubmit.co/petteri.palosaari@kape.fi" method="POST">
+        <input type="hidden" name="_subject" value="Märkätilalaskuri - uusi liidi">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.kape.fi/laskurit/markatilalaskuri.html">
         <input type="hidden" name="estimate" id="hidden-estimate" value="">
         <div class="lg-form-group">
           <label for="lead-name">Nimi *</label>
@@ -992,12 +994,12 @@ body {
       price_range: fmt(d.finalMin) + ' \u2013 ' + fmt(d.finalMax) + ' \u20ac'
     });
 
-    // Submit to Netlify
+    // Submit to FormSubmit.co
     var formData = new FormData($('lead-form'));
-    fetch('/', {
+    fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(formData))
     }).then(function() {
       $('lead-gate-section').style.display = 'none';
       $('lead-success').style.display = 'block';
