@@ -959,10 +959,6 @@ body {
     $('vesipisteCountWrap').classList.toggle('visible', this.checked);
     updateTeaser();
 
-  // Toggle submit button based on consent
-  $('lead-consent').addEventListener('change', function() {
-    $('submit-btn').disabled = !this.checked;
-  });
   });
 
   // Lead form
@@ -973,7 +969,6 @@ body {
     var email = $('lead-email').value.trim();
     var consent = $('lead-consent').checked;
 
-    // Enable/disable submit based on consent is handled below
 
     var valid = true;
     $('err-name').style.display = name ? 'none' : 'block';
@@ -1028,6 +1023,7 @@ body {
   $('lead-consent').addEventListener('change', function() {
     $('submit-btn').disabled = !this.checked;
   });
+
 })();
 </script>
 </body>

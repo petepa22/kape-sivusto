@@ -887,10 +887,6 @@ body {
       $(wrapId).style.display = this.checked ? 'block' : 'none';
       updateTeaser();
 
-  // Toggle submit button based on consent
-  $('lead-consent').addEventListener('change', function() {
-    $('submit-btn').disabled = !this.checked;
-  });
     });
   }
 
@@ -1063,7 +1059,6 @@ body {
     var email = $('lead-email').value.trim();
     var consent = $('lead-consent').checked;
 
-    // Enable/disable submit based on consent is handled below
 
     var valid = true;
     $('err-name').style.display = name ? 'none' : 'block';
@@ -1102,27 +1097,17 @@ body {
 
   // Bind all inputs
   document.querySelectorAll('input').forEach(function(el) {
-    el.addEventListener('input', function() { updateSections(); updateTeaser();
-
-  // Toggle submit button based on consent
-  $('lead-consent').addEventListener('change', function() {
-    $('submit-btn').disabled = !this.checked;
-  }); });
-    el.addEventListener('change', function() { updateSections(); updateTeaser();
-
-  // Toggle submit button based on consent
-  $('lead-consent').addEventListener('change', function() {
-    $('submit-btn').disabled = !this.checked;
-  }); });
+    el.addEventListener('input', function() { updateSections(); updateTeaser(); });
+    el.addEventListener('change', function() { updateSections(); updateTeaser(); });
   });
-
-  updateSections();
-  updateTeaser();
 
   // Toggle submit button based on consent
   $('lead-consent').addEventListener('change', function() {
     $('submit-btn').disabled = !this.checked;
   });
+
+  updateSections();
+  updateTeaser();
 })();
 </script>
 </body>
