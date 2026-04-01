@@ -95,14 +95,41 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (isValid) {
-        // Näytä onnistumisviesti
-        var successMsg = form.parentElement.querySelector('.form-success');
-        if (successMsg) {
-          form.style.display = 'none';
-          successMsg.classList.add('show');
+        // Lähetä Formspreelle jos action on asetettu
+        var action = form.getAttribute('action');
+        if (action && action.indexOf('formspree') !== -1) {
+          var btn = form.querySelector('button[type="submit"]');
+          if (btn) { btn.disabled = true; btn.textContent = 'Lähetetään...'; }
+
+          fetch(action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          }).then(function(response) {
+            if (response.ok) {
+              var successMsg = form.parentElement.querySelector('.form-success');
+              if (successMsg) {
+                form.style.display = 'none';
+                successMsg.classList.add('show');
+              }
+            } else {
+              if (btn) { btn.disabled = false; btn.textContent = 'Lähetä viesti'; }
+              alert('Lähetys epäonnistui. Yritä uudelleen tai soita 044 015 0618.');
+            }
+          }).catch(function() {
+            if (btn) { btn.disabled = false; btn.textContent = 'Lähetä viesti'; }
+            alert('Yhteysvirhe. Yritä uudelleen tai soita 044 015 0618.');
+          });
         } else {
-          alert('Kiitos yhteydenotosta! Palaamme asiaan pian.');
-          form.reset();
+          // Fallback ilman Formspreeta
+          var successMsg = form.parentElement.querySelector('.form-success');
+          if (successMsg) {
+            form.style.display = 'none';
+            successMsg.classList.add('show');
+          } else {
+            alert('Kiitos yhteydenotosta! Palaamme asiaan pian.');
+            form.reset();
+          }
         }
       }
     });
