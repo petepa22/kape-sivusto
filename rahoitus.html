@@ -6,7 +6,7 @@
   <title>Rakennus- ja remonttirahoitus - Rakennusliike KaPe Oy</title>
   <meta name="description" content="Rahoita remontti tai uudisrakennushanke KaPen kautta OP Yrityspankin myyntirahoituksella. Aloita kerralla ja maksa pienissä osissa. Veteli ja Keski-Pohjanmaa.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232d6432'/><text x='50%25' y='55%25' dominant-baseline='central' text-anchor='middle' fill='white' font-size='18' font-weight='bold' font-family='sans-serif'>K</text></svg>">
-  <link rel="canonical" href="https://www.kape.fi/rahoitus">
+  <link rel="canonical" href="https://www.kape.fi/rahoitus.html">
   <!-- Piilosivu: ei linkitetty navigaatioon eikä sitemapiin. noindex kunnes OP hyväksyy ja sivu julkaistaan. -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="geo.region" content="FI-12">
@@ -14,10 +14,14 @@
   <meta property="og:title" content="Rakennus- ja remonttirahoitus - Rakennusliike KaPe Oy">
   <meta property="og:description" content="Rahoita remontti tai uudisrakennushanke KaPen kautta OP Yrityspankin myyntirahoituksella. Aloita kerralla ja maksa pienissä osissa.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.kape.fi/rahoitus">
+  <meta property="og:url" content="https://www.kape.fi/rahoitus.html">
   <meta property="og:locale" content="fi_FI">
   <link rel="stylesheet" href="css/styles.css?v=20260401">
   <link rel="stylesheet" href="css/op-calc-widget.css?v=20260626">
+  <style>
+    /* Rahoitus-sivulla 4 askelta: nayta ne yhdella rivilla desktopilla (globaali .steps on 3-sarakkeinen). */
+    @media (min-width: 769px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 28px; } }
+  </style>
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
@@ -134,19 +138,11 @@
     </div>
   </section>
 
-  <!-- Laskuri: OP:n virallinen laskuri upotetaan tähän sopimuksen jälkeen -->
+  <!-- Laskuri: OP:n virallinen laskuri (op-calc-widget). Asetukset ja lataus sivun lopussa ennen </body>. Tunniste rakennusliikekape. -->
   <section class="section" id="laskuri">
     <div class="container" style="max-width:640px;">
       <h2 class="section-title">Laske itsellesi sopiva kuukausier&auml;</h2>
       <p class="section-subtitle">Laske kuukausier&auml; laskurilla ja siirry hakemukseen.</p>
-      <!--
-        OP:n virallinen laskuri (op-calc-widget). Asetukset ja widgetin lataus
-        ovat sivun lopussa ennen </body>-tagia.
-        HUOM: vaihda ITSEHAKUKANAVA_TUNNISTE oikeaan KaPen tunnisteeseen
-        (osoite muotoa https://hae.rahoitus.op.fi/kertaluotto/<tunniste>).
-        Ennen kuin tunniste on oikea, laskuri ei lataudu ja alla oleva
-        huomautus jaa nakyviin.
-      -->
       <div id="op-keti-init-content"></div>
       <div id="op-laskuri-fallback" style="background:#f4f6f4; border:1px solid #e4e8e4; border-radius:12px; padding:40px 28px; text-align:center; color:#7a857a;">
         <div style="font-size:2rem; margin-bottom:10px;">&#128202;</div>
@@ -200,7 +196,7 @@
     <div class="container" style="max-width:800px;">
       <div style="background:#f4f6f4; border-left:4px solid #2d6432; border-radius:8px; padding:20px 24px;">
         <p style="font-weight:600; color:#2d6432; margin-bottom:10px;">Huomioi korot ja kustannukset ennen kuin otat luoton.</p>
-        <p style="font-size:0.9rem; color:#555; line-height:1.7; margin:0;">Rahoitus on kertaluotto, jonka todellinen vuosikorko 7 500 euron luotolle on 11,55 %, kun luoton korko on OP-prime + 6,95 % (9,45 % 5/25), perustamismaksu 0 euroa ja laskutuspalkkio 7 euroa/kk. Arvioitu luoton kokonaiskustannus on 10 818,58 euroa. Laskelma on tehty olettaen, ett&auml; luotto on nostettu kokonaan, luoton korko sek&auml; maksut ja palkkiot pysyv&auml;t samana koko luottoajan ja luotto maksetaan takaisin 127,50 euron minimilyhennyksin (1,70 % luoton m&auml;&auml;r&auml;st&auml;) kuukauden v&auml;lein, jolloin luottoaika on 85 kk. Luoton my&ouml;nt&auml;&auml; OP Yrityspankki Oyj, Gebhardinaukio 1, 00510 Helsinki.</p>
+        <p style="font-size:0.9rem; color:#555; line-height:1.7; margin:0;">Rahoitus on kertaluotto, jonka todellinen vuosikorko 7 500 euron luotolle on 11,04 %, kun luoton korko on OP-prime + 6,95 % (9,45 % 7/26), perustamismaksu 0 euroa ja laskutuspalkkio 7 euroa/kk. Arvioitu luoton kokonaiskustannus on 14 135,27 euroa. Laskelma on tehty olettaen, ett&auml; luotto on nostettu kokonaan, luoton korko sek&auml; maksut ja palkkiot pysyv&auml;t samana koko luottoajan ja luotto maksetaan takaisin 170,00 euron minimilyhennyksin (1,70 % luoton m&auml;&auml;r&auml;st&auml;) kuukauden v&auml;lein, jolloin luottoaika on 84 kk. Luoton my&ouml;nt&auml;&auml; OP Yrityspankki Oyj, Gebhardinaukio 1, 00510 Helsinki.</p>
       </div>
     </div>
   </section>
