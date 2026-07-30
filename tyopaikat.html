@@ -263,9 +263,12 @@
         <p>Kerro itsest&auml;si ja osaamisestasi. Otamme yhteyksi&auml; talteen ja olemme yhteydess&auml; kun sopiva paikka aukeaa.</p>
 
         <div class="contact-form-direct">
-          <form id="hakemus-form" action="https://formspree.io/f/mqeglaay" method="POST">
+          <form id="hakemus-form" action="https://formsubmit.co/petteri.palosaari@kape.fi" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="_next" value="https://www.kape.fi/tyopaikat.html?kiitos=1">
             <input type="hidden" name="_subject" value="Avoin ty&ouml;hakemus kape.fi:st&auml;">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
             <div class="form-group">
               <label for="nimi">Nimi *</label>
               <input type="text" id="nimi" name="nimi" placeholder="Etunimi Sukunimi" required>
@@ -394,6 +397,17 @@
     document.getElementById('consent').addEventListener('change', function() {
       document.querySelector('#hakemus-form button[type="submit"]').disabled = !this.checked;
     });
+
+    // Näytä kiitosviesti kun palataan lähetyksen jälkeen (?kiitos=1)
+    if (window.location.search.indexOf('kiitos=1') !== -1) {
+      var form = document.getElementById('hakemus-form');
+      var success = document.getElementById('form-success');
+      if (form && success) {
+        form.style.display = 'none';
+        success.classList.add('show');
+        success.scrollIntoView({ block: 'center' });
+      }
+    }
   })();
   </script>
 <script data-goatcounter="https://kapeoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
