@@ -56,6 +56,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // --- Puheluklikkausten konversioseuranta (Google Ads) ---
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', { 'send_to': 'AW-1029024677/dqPZCJ359docEKXX1uoD' });
+      }
+    });
+  });
+
   // --- Lomakkeen perusvalidointi ---
   var forms = document.querySelectorAll('.contact-form form');
 
