@@ -71,6 +71,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.kape.fi/vesivahinko.html</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.kape.fi/yhteystiedot.html</loc>
     <lastmod>2026-04-01</lastmod>
     <priority>0.8</priority>
