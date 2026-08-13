@@ -690,6 +690,19 @@ input[type="number"]:focus {
   color: var(--gray-400);
   font-size: 0.85em;
 }
+
+.estimate-output {
+  white-space: pre-line;
+  text-align: left;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #333;
+  background: #f6f6f3;
+  border: 1px solid #e3e3dd;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-top: 1rem;
+}
 </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1029024677"></script>
@@ -893,8 +906,8 @@ input[type="number"]:focus {
               <div class="teaser-hint">T&auml;yt&auml; yhteystiedot n&auml;hd&auml;ksesi tarkan arvion</div>
             </div>
 
-            <h3>Saat arvion s&auml;hk&ouml;postiisi</h3>
-            <p class="lead-intro">T&auml;yt&auml; yhteystietosi, niin l&auml;het&auml;mme sinulle yksityiskohtaisen hinta-arvion.</p>
+            <h3>Näet tarkan arvion heti</h3>
+            <p class="lead-intro">Täytä yhteystietosi, niin arvio aukeaa tähän eriteltynä.</p>
 
             <form id="lead-form" action="https://formsubmit.co/petteri.palosaari@kape.fi" method="POST">
               <input type="hidden" name="_subject" value="Kattolaskuri - uusi liidi">
@@ -933,7 +946,7 @@ input[type="number"]:focus {
                 <input type="checkbox" id="lead-consent" name="consent" required>
                 <label for="lead-consent">Hyv&auml;ksyn, ett&auml; Rakennusliike KaPe Oy voi olla minuun yhteydess&auml; tarjouksen tiimoilta ja l&auml;hett&auml;&auml; ajankohtaista tietoa palveluistaan. Voin perua luvan milloin tahansa.</label>
               </div>
-              <button type="submit" class="submit-btn" id="submit-btn" disabled>N&auml;yt&auml; arvio ja l&auml;het&auml; s&auml;hk&ouml;postiin</button>
+              <button type="submit" class="submit-btn" id="submit-btn" disabled>Näytä tarkka arvio</button>
               <div class="privacy-note">Tietojasi k&auml;sitell&auml;&auml;n luottamuksellisesti.<br>Emme luovuta niit&auml; kolmansille osapuolille.</div>
             </form>
           </div>
@@ -942,8 +955,9 @@ input[type="number"]:focus {
         <!-- Success message -->
         <div class="lead-success" id="lead-success">
           <div class="success-icon">&#9989;</div>
-          <h3>Kiitos! Arvio on l&auml;hetetty s&auml;hk&ouml;postiisi.</h3>
-          <p>Tarkista s&auml;hk&ouml;postisi (my&ouml;s roskaposti-kansio).<br>Olemme sinuun yhteydess&auml; pian!</p>
+          <h3>Kiitos, tässä on arviosi</h3>
+    <p>Otamme sinuun yhteyttä pian.</p>
+    <div class="estimate-output" id="estimate-output"></div>
           <div style="margin-top:1.25rem;">
             <a href="tel:+358440150618" class="cta-button" style="font-size:0.95rem; padding:0.8rem 2rem;">&#9742; Soita heti: 044 015 0618</a>
           </div>
@@ -1230,6 +1244,11 @@ input[type="number"]:focus {
     function showSuccess() {
       document.getElementById('lead-gate-section').style.display = 'none';
       document.getElementById('lead-success').style.display = 'block';
+      var _out = document.getElementById('estimate-output');
+      if (_out) { _out.textContent = estimate; }
+      try { gtag('event', 'conversion', {'send_to': 'AW-1029024677/JTb2CNLJ2ckcEKXX1uoD'}); } catch (e) {}
+      try { fbq('track', 'Lead'); } catch (e) {}
+      try { document.getElementById('lead-success').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
     }
   });
 
