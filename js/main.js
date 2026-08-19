@@ -56,6 +56,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // --- Liidikonversion laukaisu (Google Ads ja Meta) ---
+  function laukaiseLiidikonversio() {
+    try { gtag('event', 'conversion', { 'send_to': 'AW-1029024677/JTb2CNLJ2ckcEKXX1uoD' }); } catch (e) {}
+    try { fbq('track', 'Lead'); } catch (e) {}
+  }
+
   // --- Puheluklikkausten konversioseuranta (Google Ads) ---
   document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
     link.addEventListener('click', function () {
@@ -116,6 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Accept': 'application/json' }
           }).then(function(response) {
             if (response.ok) {
+              if (form.getAttribute('data-liidi') !== null) {
+                laukaiseLiidikonversio();
+              }
               var successMsg = form.parentElement.querySelector('.form-success');
               if (successMsg) {
                 form.style.display = 'none';
