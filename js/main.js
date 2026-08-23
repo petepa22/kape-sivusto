@@ -153,4 +153,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // --- Kiitosviesti lomakkeen lähetyksen jälkeen ---
+  // Lomakkeet lähtevät Formspreelle tavallisena POSTina ja palaavat
+  // takaisin osoitteeseen ?kiitos=1. Näytetään silloin kiitosviesti
+  // lomakkeen tilalla, ettei lähettäjä jää arvailemaan menikö viesti perille.
+  if (window.location.search.indexOf('kiitos=1') !== -1) {
+    document.querySelectorAll('.form-success').forEach(function (viesti) {
+      var kuori = viesti.parentElement;
+      var lomake = kuori ? kuori.querySelector('form') : null;
+      if (lomake) { lomake.style.display = 'none'; }
+      viesti.classList.add('show');
+      try { viesti.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    });
+  }
+
 });
