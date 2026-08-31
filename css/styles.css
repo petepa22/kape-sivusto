@@ -954,6 +954,15 @@ ul {
 }
 
 /* --- Responsive --- */
+@media (max-width: 1080px) {
+  .nav-links {
+    gap: 16px;
+  }
+  .nav-links a {
+    font-size: 0.95rem;
+  }
+}
+
 @media (max-width: 992px) {
   .service-cards {
     grid-template-columns: repeat(2, 1fr);

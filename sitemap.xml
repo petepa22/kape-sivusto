@@ -110,4 +110,14 @@
     <lastmod>2026-08-17</lastmod>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://www.kape.fi/rahoitus</loc>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kape.fi/tietosuoja</loc>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.3</priority>
+  </url>
 </urlset>
