@@ -1222,12 +1222,12 @@ body {
   <div class="results-card lead-success" id="lead-success">
     <div class="success-icon">&#10004;&#65039;</div>
     <h3>Kiitos, tässä on arviosi</h3>
-    <p>Otamme sinuun yhteyttä pian.</p>
+    <p>Arvio on laskennallinen haarukka. Tarkka hinta selviää kohteessa.</p>
     <div class="estimate-output" id="estimate-output"></div>
     <div style="margin-top:1.25rem;">
       <a href="tel:+358440150618" class="cta-btn" style="font-size:0.95rem; padding:0.8rem 2rem;">&#9742; Soita heti: 044 015 0618</a>
     </div>
-    <div style="margin-top:0.75rem;font-size:0.82rem;color:var(--gray-500);font-style:italic;">Haluatko nopeamman vastauksen? Soita suoraan.</div>
+    <div style="margin-top:0.75rem;font-size:0.82rem;color:var(--gray-500);font-style:italic;">Soita, niin sovitaan katselmus ja lasketaan tarkka hinta.</div>
   </div>
 
   <!-- Disclaimer -->
@@ -1463,7 +1463,8 @@ body {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: formData
-    }).then(function() {
+    }).then(function(response) {
+      if (!response.ok) { return showError(); }
       $('lead-gate-section').style.display = 'none';
       $('lead-success').style.display = 'block';
       var _out = document.getElementById('estimate-output');
@@ -1471,16 +1472,13 @@ body {
       try { gtag('event', 'conversion', {'send_to': 'AW-1029024677/JTb2CNLJ2ckcEKXX1uoD'}); } catch (e) {}
       try { fbq('track', 'Lead'); } catch (e) {}
       try { document.getElementById('lead-success').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
-    }).catch(function() {
-      // Show success anyway (offline/dev)
-      $('lead-gate-section').style.display = 'none';
-      $('lead-success').style.display = 'block';
-      var _out = document.getElementById('estimate-output');
-      if (_out) { _out.textContent = estimate; }
-      try { gtag('event', 'conversion', {'send_to': 'AW-1029024677/JTb2CNLJ2ckcEKXX1uoD'}); } catch (e) {}
-      try { fbq('track', 'Lead'); } catch (e) {}
-      try { document.getElementById('lead-success').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
-    });
+    }).catch(function() { showError(); });
+
+    function showError() {
+      btn.disabled = false;
+      btn.textContent = 'N\u00e4yt\u00e4 tarkka arvio';
+      alert('L\u00e4hetys ep\u00e4onnistui. Yrit\u00e4 uudelleen tai soita 044 015 0618.');
+    }
   });
 
   // Bind all inputs
