@@ -350,6 +350,7 @@ ul {
 }
 
 .step-icon {
+  color: #2d6432;
   width: 72px;
   height: 72px;
   border-radius: 50%;
@@ -432,7 +433,8 @@ ul {
 }
 
 .service-card .card-icon {
-  font-size: 2.4rem;
+  font-size: 2.1rem;
+  color: #2d6432;
   margin-bottom: 16px;
   display: block;
 }
@@ -682,7 +684,7 @@ ul {
 }
 
 .service-detail h2 .icon {
-  font-size: 1.8rem;
+  font-size: 1.55rem;
 }
 
 .service-detail p {
@@ -747,7 +749,8 @@ ul {
 }
 
 .calc-card .calc-icon {
-  font-size: 3rem;
+  font-size: 2.4rem;
+  color: #2d6432;
   margin-bottom: 16px;
 }
 
@@ -866,6 +869,7 @@ ul {
 
 .contact-item .ci-icon {
   font-size: 1.4rem;
+  color: #2d6432;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -1127,4 +1131,19 @@ ul {
     padding: 12px 24px;
     font-size: 0.95rem;
   }
+}
+
+/* --- Ikonit (Lucide, ISC) --- */
+.ic {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+.ic-text {
+  margin-right: 0.45em;
+  vertical-align: -0.15em;
+  stroke-width: 2;
 }

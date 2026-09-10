@@ -7,6 +7,21 @@
 <meta name="description" content="Laske julkisivuremontin suuntaa-antava hinta-arvio: seinien pinta-ala, ikkunat ja ovet sekä kotitalousvähennyksen vaikutus. Rakennusliike KaPe Oy, Veteli.">
 <link rel="canonical" href="https://www.kape.fi/laskurit/julkisivulaskuri.html">
 <style>
+/* --- Ikonit (Lucide, ISC) --- */
+.ic {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+.ic-text {
+  margin-right: 0.45em;
+  vertical-align: -0.15em;
+  stroke-width: 2;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -583,7 +598,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display: none;
 }
 .lead-success .success-icon {
-  font-size: 3rem;
+  font-size: 2.5rem; color: #2d6432;
   margin-bottom: 0.5rem;
 }
 .lead-success h3 {
@@ -1164,7 +1179,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   <!-- Seinäpinta-ala -->
   <div class="card">
-    <div class="card-title"><span class="icon">&#9634;</span> Perustiedot</div>
+    <div class="card-title"><span class="icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" /></svg></span> Perustiedot</div>
     <div class="form-group">
       <label for="area">Seinien pinta-ala</label>
       <div class="help-text">Tyypillinen omakotitalo: 100 &ndash; 200 m&sup2;</div>
@@ -1177,7 +1192,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   <!-- Remontin tyyppi -->
   <div class="card">
-    <div class="card-title"><span class="icon">&#9998;</span> Remontin tyyppi</div>
+    <div class="card-title"><span class="icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> <path d="m15 5 4 4" /></svg></span> Remontin tyyppi</div>
     <div class="radio-group" id="typeGroup">
       <label class="radio-option selected" data-value="maalaus">
         <input type="radio" name="remonttityyppi" value="maalaus" checked>
@@ -1205,7 +1220,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   <!-- Lisätyöt -->
   <div class="card">
-    <div class="card-title"><span class="icon">&#10010;</span> Lis&auml;ty&ouml;t</div>
+    <div class="card-title"><span class="icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /> <path d="M12 5v14" /></svg></span> Lis&auml;ty&ouml;t</div>
     <div class="checkbox-group">
 
       <label class="checkbox-option" id="eristysOption">
@@ -1259,7 +1274,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   <!-- Kotitalousvähennys -->
   <div class="card">
-    <div class="card-title"><span class="icon">&#127968;</span> Kotitalousv&auml;hennys</div>
+    <div class="card-title"><span class="icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="19" x2="5" y1="5" y2="19" /> <circle cx="6.5" cy="6.5" r="2.5" /> <circle cx="17.5" cy="17.5" r="2.5" /></svg></span> Kotitalousv&auml;hennys</div>
     <div class="form-group">
       <label>Talouden henkil&ouml;m&auml;&auml;r&auml; (verotus)</label>
       <div class="help-text">Kotitalousv&auml;hennys 35 %, max 1 600 &euro;/henkil&ouml;, omavastuu 150 &euro;/henkil&ouml;</div>
@@ -1333,12 +1348,12 @@ input[type="number"]::-webkit-inner-spin-button {
 
   <!-- Success message -->
   <div class="card lead-success" id="lead-success">
-    <div class="success-icon">✅</div>
+    <div class="success-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /> <path d="m9 12 2 2 4-4" /></svg></div>
     <h3>Kiitos, tässä on arviosi</h3>
     <p>Arvio on laskennallinen haarukka. Tarkka hinta selviää kohteessa.</p>
     <div class="estimate-output" id="estimate-output"></div>
     <div style="margin-top:1.25rem;">
-      <a href="tel:+358440150618" class="cta-button" style="font-size:0.95rem; padding:0.8rem 2rem;">☎ Soita heti: 044 015 0618</a>
+      <a href="tel:+358440150618" class="cta-button" style="font-size:0.95rem; padding:0.8rem 2rem;"><svg class="ic ic-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg>Soita heti: 044 015 0618</a>
     </div>
     <div class="cta-note" style="margin-top:0.75rem;">Soita, niin sovitaan katselmus ja lasketaan tarkka hinta.</div>
   </div>
