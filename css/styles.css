@@ -314,6 +314,16 @@ ul {
   color: #2d6432;
 }
 
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-row-center {
+  justify-content: center;
+}
+
 /* --- Section generics --- */
 .section {
   padding: 80px 0;
