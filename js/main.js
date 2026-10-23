@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // --- Lomakkeen perusvalidointi ---
-  var forms = document.querySelectorAll('.contact-form form');
+  var forms = document.querySelectorAll('.contact-form form, form[data-liidi]');
 
   forms.forEach(function (form) {
     form.addEventListener('submit', function (e) {
