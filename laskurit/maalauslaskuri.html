@@ -1283,6 +1283,7 @@ body {
 
       <form id="lead-form" action="https://formsubmit.co/petteri.palosaari@kape.fi" method="POST">
         <input type="hidden" name="_subject" value="Maalauslaskuri - uusi liidi">
+        <div style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden" aria-hidden="true"><label>Jätä tämä kenttä tyhjäksi <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://www.kape.fi/laskurit/maalauslaskuri.html">
         <input type="hidden" name="estimate" id="hidden-estimate" value="">
@@ -1574,8 +1575,45 @@ body {
   }
 
   // Lead form
+  // Viesti lähtee kahta reittiä: Formspreehen ja FormSubmitin kautta suoraan
+  // sähköpostiin. Riittää, että toinen menee perille, joten yhden palvelun
+  // roskapostisuodatin ei voi hukata tarjouspyyntöä.
+  function kapeLaheta(data) {
+    var kopio = new FormData();
+    data.forEach(function (arvo, avain) {
+      if (avain !== '_next' && avain !== '_gotcha') { kopio.append(avain, arvo); }
+    });
+    kopio.append('_template', 'table');
+    kopio.append('_captcha', 'false');
+    var otsake = { 'Accept': 'application/json' };
+    function perilla(pyynto) {
+      return pyynto.then(function (r) {
+        if (!r.ok) { return false; }
+        return r.json().then(function (j) {
+          return j.success !== false && j.success !== 'false';
+        }, function () { return true; });
+      }, function () { return false; });
+    }
+    return new Promise(function (valmis) {
+      var kesken = 2;
+      function tulos(ok) {
+        if (ok) { valmis({ ok: true }); } else if (--kesken === 0) { valmis({ ok: false }); }
+      }
+      perilla(fetch('https://formspree.io/f/mqeglaay', { method: 'POST', headers: otsake, body: data })).then(tulos);
+      perilla(fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', { method: 'POST', headers: otsake, body: kopio })).then(tulos);
+    });
+  }
+
+  // Robotti täyttää piilokentän tai lähettää lomakkeen heti sivun avauduttua.
+  var kapeAvattu = Date.now();
+  function kapeRobotti(lomake) {
+    var ansa = lomake.querySelector('[name="_gotcha"]');
+    return !!(ansa && ansa.value) || Date.now() - kapeAvattu < 3000;
+  }
+
   $('lead-form').addEventListener('submit', function(e) {
     e.preventDefault();
+    if (kapeRobotti(this)) { return; }
 
     var name = $('lead-name').value.trim();
     var email = $('lead-email').value.trim();
@@ -1604,11 +1642,7 @@ body {
 
     // Submit to FormSubmit.co
     var formData = new FormData($('lead-form'));
-    fetch('https://formspree.io/f/mqeglaay', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: formData
-    }).then(function(response) {
+    kapeLaheta(formData).then(function(response) {
       if (!response.ok) { return showError(); }
       $('lead-gate-section').style.display = 'none';
       $('lead-success').style.display = 'block';

@@ -71,6 +71,42 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Viesti lähtee kahta reittiä: Formspreehen ja FormSubmitin kautta suoraan
+  // sähköpostiin. Riittää, että toinen menee perille, joten yhden palvelun
+  // roskapostisuodatin ei voi hukata tarjouspyyntöä.
+  function kapeLaheta(data) {
+    var kopio = new FormData();
+    data.forEach(function (arvo, avain) {
+      if (avain !== '_next' && avain !== '_gotcha') { kopio.append(avain, arvo); }
+    });
+    kopio.append('_template', 'table');
+    kopio.append('_captcha', 'false');
+    var otsake = { 'Accept': 'application/json' };
+    function perilla(pyynto) {
+      return pyynto.then(function (r) {
+        if (!r.ok) { return false; }
+        return r.json().then(function (j) {
+          return j.success !== false && j.success !== 'false';
+        }, function () { return true; });
+      }, function () { return false; });
+    }
+    return new Promise(function (valmis) {
+      var kesken = 2;
+      function tulos(ok) {
+        if (ok) { valmis({ ok: true }); } else if (--kesken === 0) { valmis({ ok: false }); }
+      }
+      perilla(fetch('https://formspree.io/f/mqeglaay', { method: 'POST', headers: otsake, body: data })).then(tulos);
+      perilla(fetch('https://formsubmit.co/ajax/petteri.palosaari@kape.fi', { method: 'POST', headers: otsake, body: kopio })).then(tulos);
+    });
+  }
+
+  // Robotti täyttää piilokentän tai lähettää lomakkeen heti sivun avauduttua.
+  var kapeAvattu = Date.now();
+  function kapeRobotti(lomake) {
+    var ansa = lomake.querySelector('[name="_gotcha"]');
+    return !!(ansa && ansa.value) || Date.now() - kapeAvattu < 3000;
+  }
+
   // --- Lomakkeen perusvalidointi ---
   var forms = document.querySelectorAll('.contact-form form');
 
@@ -113,14 +149,15 @@ document.addEventListener('DOMContentLoaded', function () {
         // Lähetä Formspreelle jos action on asetettu
         var action = form.getAttribute('action');
         if (action && action.indexOf('formspree') !== -1) {
+          if (kapeRobotti(form)) {
+            var ohitus = form.parentElement.querySelector('.form-success');
+            if (ohitus) { form.style.display = 'none'; ohitus.classList.add('show'); }
+            return;
+          }
           var btn = form.querySelector('button[type="submit"]');
           if (btn) { btn.disabled = true; btn.textContent = 'Lähetetään...'; }
 
-          fetch(action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          }).then(function(response) {
+          kapeLaheta(new FormData(form)).then(function(response) {
             if (response.ok) {
               if (form.getAttribute('data-liidi') !== null) {
                 laukaiseLiidikonversio();
