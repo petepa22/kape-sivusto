@@ -470,9 +470,26 @@ html[data-suunta="taakse"]::view-transition-new(root) { animation-name: sisaan-v
 .step.tulee-takaa { animation: sisaan-vasemmalta 180ms var(--helpotus); }
 .tulos.tulee-eteen { animation: sisaan-oikealta 180ms var(--helpotus); }
 
+/* Sivunvaihto Laskurit-sivun ja laskurin välillä: kortti kasvaa laskurin kysymyskortiksi.
+   Sisältöä ei skaalata, vain valkoinen laatikko kasvaa ja teksti vaihtuu sen sisällä. */
 @view-transition { navigation: auto; }
-::view-transition-group(ylapalkki) { animation-duration: 380ms; animation-timing-function: cubic-bezier(.2,.8,.2,1); }
-::view-transition-old(ylapalkki), ::view-transition-new(ylapalkki) { height: 100%; object-fit: cover; object-position: top left; }
+html.sivunvaihto::view-transition-old(root) { animation: none; }
+html.sivunvaihto::view-transition-new(root) { animation: kv-esiin 260ms ease both; }
+::view-transition-group(laskurikortti) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(.2,.8,.2,1);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  overflow: clip;
+}
+::view-transition-old(laskurikortti), ::view-transition-new(laskurikortti) {
+  width: 100%; height: 100%; object-fit: none; object-position: top center;
+}
+::view-transition-old(laskurikortti) { animation: kv-pois 120ms ease both; }
+::view-transition-new(laskurikortti) { animation: kv-esiin 200ms ease 160ms both; }
+@keyframes kv-pois { to { opacity: 0; } }
+@keyframes kv-esiin { from { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
@@ -1863,5 +1880,39 @@ html[data-suunta="taakse"]::view-transition-new(root) { animation-name: sisaan-v
 })();
 </script>
 <script data-goatcounter="https://kapeoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+// Laskurit-sivulta tultaessa näkyvä kysymyskortti on se, joksi painettu kortti kasvaa.
+(function () {
+  function laskuritSivu(u) {
+    try { return /^\/laskurit(\.html)?\/?$/.test(new URL(u).pathname); } catch (e) { return false; }
+  }
+  function kortti() { return document.querySelector('section.step:not([hidden])') || document.getElementById('laskuri'); }
+  function merkitse(vt) {
+    var k = kortti();
+    if (!k) { return; }
+    k.style.viewTransitionName = 'laskurikortti';
+    document.documentElement.classList.add('sivunvaihto');
+    if (vt) {
+      vt.finished.finally(function () {
+        k.style.viewTransitionName = '';
+        document.documentElement.classList.remove('sivunvaihto');
+      });
+    }
+  }
+  window.addEventListener('pagereveal', function (e) {
+    var a = window.navigation && navigation.activation;
+    if (e.viewTransition && a && a.from && laskuritSivu(a.from.url)) { merkitse(e.viewTransition); }
+  });
+  window.addEventListener('pageswap', function (e) {
+    if (e.viewTransition && e.activation && laskuritSivu(e.activation.entry.url)) { merkitse(null); }
+  });
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) { return; }
+    document.documentElement.classList.remove('sivunvaihto');
+    var k = document.querySelector('[style*="laskurikortti"]');
+    if (k) { k.style.viewTransitionName = ''; }
+  });
+})();
+</script>
 </body>
 </html>

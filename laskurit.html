@@ -16,9 +16,26 @@
   <meta property="og:locale" content="fi_FI">
   <link rel="stylesheet" href="css/styles.css?v=20260831c">
   <style>
+/* Sivunvaihto Laskurit-sivun ja laskurin välillä: kortti kasvaa laskurin kysymyskortiksi.
+   Sisältöä ei skaalata, vain valkoinen laatikko kasvaa ja teksti vaihtuu sen sisällä. */
 @view-transition { navigation: auto; }
-::view-transition-group(ylapalkki) { animation-duration: 380ms; animation-timing-function: cubic-bezier(.2,.8,.2,1); }
-::view-transition-old(ylapalkki), ::view-transition-new(ylapalkki) { height: 100%; object-fit: cover; object-position: top left; }
+html.sivunvaihto::view-transition-old(root) { animation: none; }
+html.sivunvaihto::view-transition-new(root) { animation: kv-esiin 260ms ease both; }
+::view-transition-group(laskurikortti) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(.2,.8,.2,1);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  overflow: clip;
+}
+::view-transition-old(laskurikortti), ::view-transition-new(laskurikortti) {
+  width: 100%; height: 100%; object-fit: none; object-position: top center;
+}
+::view-transition-old(laskurikortti) { animation: kv-pois 120ms ease both; }
+::view-transition-new(laskurikortti) { animation: kv-esiin 200ms ease 160ms both; }
+@keyframes kv-pois { to { opacity: 0; } }
+@keyframes kv-esiin { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; } }
 </style>
   <script>
@@ -32,9 +49,11 @@
   }
   function nimea(k, vt) {
     Array.prototype.forEach.call(document.querySelectorAll('.calc-card'), function (c) { c.style.viewTransitionName = ''; });
+    document.documentElement.classList.remove('sivunvaihto');
     if (!k) { return; }
-    k.style.viewTransitionName = 'ylapalkki';
-    if (vt) { vt.finished.finally(function () { k.style.viewTransitionName = ''; }); }
+    k.style.viewTransitionName = 'laskurikortti';
+    document.documentElement.classList.add('sivunvaihto');
+    if (vt) { vt.finished.finally(function () { k.style.viewTransitionName = ''; document.documentElement.classList.remove('sivunvaihto'); }); }
   }
   window.addEventListener('pageswap', function (e) {
     // Nimi jätetään paikalleen: selain ottaa kortista kuvan vasta tämän jälkeen.
