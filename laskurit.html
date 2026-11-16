@@ -15,6 +15,39 @@
   <meta property="og:url" content="https://www.kape.fi/laskurit">
   <meta property="og:locale" content="fi_FI">
   <link rel="stylesheet" href="css/styles.css?v=20260831c">
+  <style>
+@view-transition { navigation: auto; }
+::view-transition-group(ylapalkki) { animation-duration: 380ms; animation-timing-function: cubic-bezier(.2,.8,.2,1); }
+::view-transition-old(ylapalkki), ::view-transition-new(ylapalkki) { height: 100%; object-fit: cover; object-position: top left; }
+@media (prefers-reduced-motion: reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; } }
+</style>
+  <script>
+// Painettu laskurikortti muuttuu laskurin otsikkopalkiksi ja takaisin.
+(function () {
+  function kortti(url) {
+    if (!url) { return null; }
+    var tiedosto = String(url).split('?')[0].split('/').pop();
+    var a = tiedosto && document.querySelector('.calc-card a[href$="' + tiedosto + '"]');
+    return a ? a.closest('.calc-card') : null;
+  }
+  function nimea(k, vt) {
+    Array.prototype.forEach.call(document.querySelectorAll('.calc-card'), function (c) { c.style.viewTransitionName = ''; });
+    if (!k) { return; }
+    k.style.viewTransitionName = 'ylapalkki';
+    if (vt) { vt.finished.finally(function () { k.style.viewTransitionName = ''; }); }
+  }
+  window.addEventListener('pageswap', function (e) {
+    // Nimi jätetään paikalleen: selain ottaa kortista kuvan vasta tämän jälkeen.
+    if (e.viewTransition && e.activation) { nimea(kortti(e.activation.entry.url)); }
+  });
+  window.addEventListener('pagereveal', function (e) {
+    if (e.viewTransition && window.navigation && navigation.activation && navigation.activation.from) {
+      nimea(kortti(navigation.activation.from.url), e.viewTransition);
+    }
+  });
+})();
+</script>
+
   <script src="/js/seuranta.js?v=20261116"></script>
   <script type="application/ld+json">
 {

@@ -470,6 +470,10 @@ html[data-suunta="taakse"]::view-transition-new(root) { animation-name: sisaan-v
 .step.tulee-takaa { animation: sisaan-vasemmalta 180ms var(--helpotus); }
 .tulos.tulee-eteen { animation: sisaan-oikealta 180ms var(--helpotus); }
 
+@view-transition { navigation: auto; }
+::view-transition-group(ylapalkki) { animation-duration: 380ms; animation-timing-function: cubic-bezier(.2,.8,.2,1); }
+::view-transition-old(ylapalkki), ::view-transition-new(ylapalkki) { height: 100%; object-fit: cover; object-position: top left; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
     animation: none !important;
