@@ -474,10 +474,10 @@ html[data-suunta="taakse"]::view-transition-new(root) { animation-name: sisaan-v
    Sisältöä ei skaalata, vain valkoinen laatikko kasvaa ja teksti vaihtuu sen sisällä. */
 @view-transition { navigation: auto; }
 html.sivunvaihto::view-transition-old(root) { animation: none; }
-html.sivunvaihto::view-transition-new(root) { animation: kv-esiin 260ms ease both; }
+html.sivunvaihto::view-transition-new(root) { animation: kv-esiin 450ms ease both; }
 ::view-transition-group(laskurikortti) {
-  animation-duration: 380ms;
-  animation-timing-function: cubic-bezier(.2,.8,.2,1);
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(.3,0,.2,1);
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,.08);
@@ -486,8 +486,8 @@ html.sivunvaihto::view-transition-new(root) { animation: kv-esiin 260ms ease bot
 ::view-transition-old(laskurikortti), ::view-transition-new(laskurikortti) {
   width: 100%; height: 100%; object-fit: none; object-position: top center;
 }
-::view-transition-old(laskurikortti) { animation: kv-pois 120ms ease both; }
-::view-transition-new(laskurikortti) { animation: kv-esiin 200ms ease 160ms both; }
+::view-transition-old(laskurikortti) { animation: kv-pois 220ms ease both; }
+::view-transition-new(laskurikortti) { animation: kv-esiin 300ms ease 300ms both; }
 @keyframes kv-pois { to { opacity: 0; } }
 @keyframes kv-esiin { from { opacity: 0; } }
 
