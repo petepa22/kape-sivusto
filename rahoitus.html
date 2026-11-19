@@ -16,7 +16,7 @@
   <meta property="og:url" content="https://www.kape.fi/rahoitus.html">
   <meta property="og:locale" content="fi_FI">
   <link rel="stylesheet" href="css/styles.css?v=20260831c">
-  <link rel="stylesheet" href="css/op-calc-widget.css?v=20260626">
+  <link rel="stylesheet" href="css/op-calc-widget.css?v=20261119">
   <style>
     /* Rahoitus-sivulla 4 askelta: nayta ne yhdella rivilla desktopilla (globaali .steps on 3-sarakkeinen). */
     @media (min-width: 769px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 28px; } }
@@ -608,7 +608,7 @@
     <div class="container" style="max-width:800px;">
       <div style="background:#f4f6f4; border-left:4px solid #2d6432; border-radius:8px; padding:20px 24px;">
         <p style="font-weight:600; color:#2d6432; margin-bottom:10px;">Huomioi korot ja kustannukset ennen kuin otat luoton.</p>
-        <p style="font-size:0.9rem; color:#555; line-height:1.7; margin:0;">Rahoitus on kertaluotto, jonka todellinen vuosikorko 7 500 euron luotolle on 11,04 %, kun luoton korko on OP-prime + 6,95 % (9,45 % 7/26), perustamismaksu 0 euroa ja laskutuspalkkio 7 euroa/kk. Arvioitu luoton kokonaiskustannus on 14 135,27 euroa. Laskelma on tehty olettaen, ett&auml; luotto on nostettu kokonaan, luoton korko sek&auml; maksut ja palkkiot pysyv&auml;t samana koko luottoajan ja luotto maksetaan takaisin 170,00 euron minimilyhennyksin (1,70 % luoton m&auml;&auml;r&auml;st&auml;) kuukauden v&auml;lein, jolloin luottoaika on 84 kk. Luoton my&ouml;nt&auml;&auml; OP Yrityspankki Oyj, Gebhardinaukio 1, 00510 Helsinki.</p>
+        <p style="font-size:0.9rem; color:#555; line-height:1.7; margin:0;">Rahoitus on kertaluotto, jonka todellinen vuosikorko 7 500 euron luotolle on 11,06 %, kun luoton korko on OP-prime + 6,95 % (9,45 % 11/26), perustamismaksu 0 euroa ja laskutuspalkkio 7 euroa/kk. Arvioitu luoton kokonaiskustannus on 14 133,42 euroa. Laskelma on tehty olettaen, ett&auml; luotto on nostettu kokonaan, luoton korko sek&auml; maksut ja palkkiot pysyv&auml;t samana koko luottoajan ja luotto maksetaan takaisin 170,00 euron minimilyhennyksin (1,70 % luoton m&auml;&auml;r&auml;st&auml;) kuukauden v&auml;lein, jolloin luottoaika on 84 kk. Luoton my&ouml;nt&auml;&auml; OP Yrityspankki Oyj, Gebhardinaukio 1, 00510 Helsinki.</p>
       </div>
     </div>
   </section>
@@ -669,6 +669,9 @@
       "colorSecondary": "#ffffff",
       "type": "content",
       "showCta": true,
+      "showInput": true,
+      "enableInputChanges": true,
+      "initAmount": 5000,
       "texts": { "ctaButton": "Siirry hakemukseen" },
       showInfo: { realInterest: true, interestMargin: true, paybackTime: true, costEstimate: true }
     };
@@ -688,7 +691,7 @@
       }, 1000);
     })();
   </script>
-  <script type="text/javascript" src="js/op-calc-widget.js?v=20260626"></script>
+  <script type="text/javascript" src="js/op-calc-widget.js?v=20261119"></script>
 <script data-goatcounter="https://kapeoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
