@@ -284,12 +284,12 @@ ul {
 
 .btn-primary {
   background: #d4a843;
-  color: #fff;
+  color: #1a2e1c;
 }
 
 .btn-primary:hover {
   background: #c49a35;
-  color: #fff;
+  color: #1a2e1c;
 }
 
 .btn-secondary {
@@ -464,7 +464,7 @@ ul {
 .service-card .card-link {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #d4a843;
+  color: #8a6a1c;
 }
 
 .service-card .card-link:hover {
@@ -967,7 +967,7 @@ ul {
   margin-top: 40px;
   border-top: 1px solid rgba(255,255,255,0.1);
   font-size: 0.82rem;
-  color: #777;
+  color: #aaa;
 }
 
 /* --- Mobile call button --- */
