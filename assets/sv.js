@@ -43,16 +43,27 @@
 
   [].forEach.call(document.querySelectorAll('.sv'), function (sec) {
     var track = sec.querySelector('.sv-track'), svg = sec.querySelector('.sv-art svg'), steps = all(sec, '.sv-step'), n = steps.length, fn = V[sec.getAttribute('data-v')] || (window.SVX && window.SVX[sec.getAttribute('data-v')]);
-    var dotsBox = sec.querySelector('.sv-dots'), dots = [], texts = sec.querySelector('.sv-texts');
+    var ed = null, se = null, dotsBox = sec.querySelector('.sv-dots'), dots = [], texts = sec.querySelector('.sv-texts');
     /* Mobiili (<= 900 px): palvelut ovat vaakasuuntainen pyyhkäisykaruselli (CSS scroll-snap); talo seuraa kohdalle napsahtanutta korttia. */
     var mq = window.matchMedia ? matchMedia('(max-width: 900px)') : { matches: false };
     function car() { return mq.matches && sec.getAttribute('data-v') === 'p'; }
+    /* Pöytäkone (> 900 px): palvelu vaihtuu nuolista, pisteistä tai nuolinäppäimistä. Sivun vieritys ei vaihda palvelua eikä jää kiinni osioon. */
+    function desk() { return !mq.matches && sec.getAttribute('data-v') === 'p'; }
+    var sel = 0;
+    function go(i) { i = Math.max(0, Math.min(n - 1, i)); if (car()) { texts.scrollTo({ left: steps[i].offsetLeft - steps[0].offsetLeft, behavior: rm.matches ? 'auto' : 'smooth' }); return; } sel = i; req(); }
     sec.style.setProperty('--n', n);
     if (dotsBox) steps.forEach(function (st, i) { var b = document.createElement('button'); b.type = 'button'; b.innerHTML = '<i></i>';
       b.setAttribute('aria-label', (i + 1) + ' / ' + n + ': ' + st.querySelector('h3').textContent);
-      b.addEventListener('click', function () { if (car()) { texts.scrollTo({ left: steps[i].offsetLeft - steps[0].offsetLeft, behavior: rm.matches ? 'auto' : 'smooth' }); return; } var stg = sec.querySelector('.sv-stage'), span = track.offsetHeight - stg.offsetHeight, top = track.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(stg).top) || 0);
+      b.addEventListener('click', function () { if (car() || desk()) { go(i); return; } if (car()) { texts.scrollTo({ left: steps[i].offsetLeft - steps[0].offsetLeft, behavior: rm.matches ? 'auto' : 'smooth' }); return; } var stg = sec.querySelector('.sv-stage'), span = track.offsetHeight - stg.offsetHeight, top = track.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(stg).top) || 0);
         window.scrollTo({ top: Math.round(top + span * (i / (n - 1))), behavior: rm.matches ? 'auto' : 'smooth' }); });
       dotsBox.appendChild(b); dots.push(b); });
+    if (dotsBox && sec.getAttribute('data-v') === 'p') {
+      function nuoli(dir, txt) { var b = document.createElement('button'); b.type = 'button'; b.className = 'sv-arrow'; b.setAttribute('aria-label', txt);
+        b.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="' + (dir < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        b.addEventListener('click', function () { go(tgt + dir); }); return b; }
+      ed = nuoli(-1, 'Edellinen palvelu'); se = nuoli(1, 'Seuraava palvelu'); dotsBox.insertBefore(ed, dotsBox.firstChild); dotsBox.appendChild(se);
+      sec.addEventListener('keydown', function (e) { if (!desk() || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if (e.key === 'ArrowRight') { go(tgt + 1); e.preventDefault(); } else if (e.key === 'ArrowLeft') { go(tgt - 1); e.preventDefault(); } });
+    }
     /* Vieritys valitsee vain vaiheen (lepoalueet ja pieni hystereesi). Vaihto itse toistuu ajassa, aina kokonaan:
        näin vierityksen pysähtyessä ei jää puolivälin häivytettyjä tiloja eikä nykimistä hiiren rullan askelista. */
     var raf = 0, last = -1, cur = 0, tgt = 0, from = 0, t0 = 0, DUR = 650;
@@ -64,12 +75,14 @@
       if (car()) { steps.forEach(function (st, i) { st.style.opacity = ''; st.style.transform = ''; st.classList.toggle('on', i === on); st.removeAttribute('aria-hidden'); }); dots.forEach(function (d, i) { d.classList.toggle('on', i === on); }); return; }
       steps.forEach(function (st, i) { var w = cl(1 - Math.abs(s - i) * 1.7); st.style.opacity = w.toFixed(3); st.style.transform = 'translateY(' + ((1 - w) * (i < s ? -8 : 8)).toFixed(1) + 'px)'; st.classList.toggle('on', i === on); st.setAttribute('aria-hidden', i === on ? 'false' : 'true'); });
       dots.forEach(function (d, i) { d.classList.toggle('on', i === on); });
+      if (ed) { ed.disabled = on <= 0; se.disabled = on >= n - 1; }
     }
     function target() {
       if (car()) { var x = texts.scrollLeft, o0 = steps[0].offsetLeft, best = 0, bd = 1e9;
         steps.forEach(function (st, i) { var d = Math.abs(st.offsetLeft - o0 - x); if (d < bd) { bd = d; best = i; } });
         if (texts.scrollLeft + texts.clientWidth >= texts.scrollWidth - 4) best = n - 1;
         return best; }
+      if (desk()) return sel;
       var stage = sec.querySelector('.sv-stage'), span = track.offsetHeight - stage.offsetHeight, r = track.getBoundingClientRect();
       var off = parseFloat(getComputedStyle(stage).top) || 0, p = span > 0 ? cl((off - r.top) / span) : 1, raw = p * (n - 1);
       if (span <= 0) return n - 1;

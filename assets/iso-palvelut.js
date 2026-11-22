@@ -514,7 +514,7 @@
   window.SVX = window.SVX || {};
   window.SVX.p = function (svg, s) {
     st.svg = svg; st.s = s;
-    if (!st.io && 'IntersectionObserver' in window) { st.io = true; new IntersectionObserver(function (e) { st.vis = e[0].isIntersecting; st.last = 0; if (st.vis) { st.rk = -1; loop(); } }).observe(svg); document.addEventListener('visibilitychange', function () { st.last = 0; if (!document.hidden) loop(); }); }
+    if (!st.io && 'IntersectionObserver' in window) { st.io = true; new IntersectionObserver(function (e) { var v = e[0].isIntersecting && e[0].intersectionRatio >= .6; if (v === st.vis) return; st.vis = v; st.last = 0; if (v) { st.rk = -1; loop(); } }, { threshold: [0, .6] }).observe(svg); document.addEventListener('visibilitychange', function () { st.last = 0; if (!document.hidden) loop(); }); }
     draw(); loop();
   };
 })();

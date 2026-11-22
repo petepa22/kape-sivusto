@@ -103,3 +103,18 @@
   html, body { overflow-x: clip; }
   .sv[data-v="p"], .sv[data-v="p"] .sv-texts { touch-action: pan-y; }
 }
+
+/* Pöytäkone (> 900 px): palveluosio on tavallinen osio, ei vierityksen mukaan vaihtuva. Palvelu vaihtuu nuolista ja pisteistä. */
+.sv-arrow { display: none; }
+@media (min-width: 901px) {
+  .sv[data-v="p"] .sv-track { height: auto; }
+  .sv[data-v="p"] .sv-stage { position: relative; top: auto; height: auto; overflow: visible; display: block; padding: 72px 0 64px; }
+  .sv[data-v="p"] .sv-grid { margin: 0 auto; }
+  .sv[data-v="p"] .sv-dots { position: static; transform: none; flex-direction: row; justify-content: flex-start; align-items: center; gap: 2px; margin: 22px auto 0; max-width: calc(var(--content) + 2 * var(--gutter)); padding: 0 var(--gutter); box-sizing: border-box; }
+  .sv[data-v="p"] .sv-arrow { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--green-d); background: #fff; color: var(--green-d); cursor: pointer; padding: 0; transition: background-color 180ms, color 180ms, opacity 180ms; }
+  .sv[data-v="p"] .sv-arrow:first-child { margin-right: 8px; }
+  .sv[data-v="p"] .sv-arrow:last-child { margin-left: 8px; }
+  .sv[data-v="p"] .sv-arrow:hover:not(:disabled) { background: var(--green-d); color: #fff; }
+  .sv[data-v="p"] .sv-arrow:disabled { opacity: .35; cursor: default; }
+  .sv[data-v="p"] .sv-arrow:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+}
