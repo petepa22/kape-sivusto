@@ -4,11 +4,14 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // Uuden ilmeen sivuilla (body data-uusi) valikon ja yläpalkin hoitaa sivun oma skripti.
+  const uusi = document.body.hasAttribute('data-uusi');
+
   // --- Hamburger menu toggle ---
   const hamburger = document.querySelector('.hamburger');
   const navLinks = document.querySelector('.nav-links');
 
-  if (hamburger && navLinks) {
+  if (!uusi && hamburger && navLinks) {
     hamburger.addEventListener('click', function () {
       hamburger.classList.toggle('active');
       navLinks.classList.toggle('open');
@@ -26,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // --- Sticky header taustavärin vaihto scrollattaessa ---
   const header = document.querySelector('.site-header');
 
-  if (header) {
+  if (!uusi && header) {
     function updateHeader() {
       if (window.scrollY > 60) {
         header.classList.add('scrolled');
