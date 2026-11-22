@@ -14,7 +14,6 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.kape.fi/kattoremontti/toholampi.html">
   <meta property="og:locale" content="fi_FI">
-  <link rel="stylesheet" href="/css/styles.css?v=20261120">
   <script src="/js/seuranta.js?v=20261116"></script>
   <script type="application/ld+json">
 {
@@ -463,36 +462,1066 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Rakennusliike KaPe Oy:n toteuttamia rivitaloja">
   <meta name="twitter:card" content="summary_large_image">
-</head>
-<body>
+<style>:root {
+  --green: #2d6432;
+  --green-d: #1e4422;
+  --green-l: #3a8241;
+  --gold: #d4a843;
+  --bg: #f4f5f7;
+  --ink: #1a1a1a;
+  --muted: #4a4f4d;
+  --line: #e6e8ea;
+  --white: #ffffff;
+  --header-h: 64px;
+  --header-h-compact: 56px;
+  --content: 1120px;
+  --gutter: 48px;
+  --gutter-sm: 16px;
+  --radius: 8px;
+  --fs-xs: 13px;
+  --fs-sm: 15px;
+  --fs-nav: 16px;
+  --fs-btn: 17px;
+  --fs-body: 18px;
+  --fs-lead: 18px;
+  --fs-h3: 20px;
+  --fs-h2: 40px;
+  --fs-page: 56px;
+  --fs-hero: 72px;
+  --lh-body: 1.6;
+  --lh-tight: 1.08;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.skip {
+  position: absolute; left: -999px; top: 8px; background: var(--white); color: var(--green-d);
+  padding: 8px 12px; z-index: 100; font-weight: 700;
+}
+.skip:focus { left: 8px; }
+.container, .container-wide {
+  width: min(var(--content), calc(100% - 2 * var(--gutter)));
+  margin: 0 auto;
+}
 
-  <!-- Header -->
+/* Header */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  height: var(--header-h);
+  background: var(--green-d);
+  border-bottom: 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.18);
+  transition: height 0.2s ease;
+}
+.site-header.is-compact { height: var(--header-h-compact); }
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo-link { display: flex; align-items: center; flex: 0 0 auto; }
+.logo-img { height: 36px; width: auto; display: block; transition: height 0.2s ease; }
+.is-compact .logo-img { height: 32px; }
+.nav-links { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+.nav-links a {
+  text-decoration: none;
+  font-size: var(--fs-nav);
+  font-weight: 500;
+  color: rgba(255,255,255,0.92);
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { border-bottom-color: var(--gold); color: #fff; }
+.header-actions { display: flex; align-items: center; gap: 16px; flex: 0 0 auto; position: relative; z-index: 56; }
+.header-phone {
+  color: #fff; text-decoration: none; font-weight: 600; font-size: var(--fs-nav);
+  white-space: nowrap;
+}
+.header-phone:hover { color: var(--gold); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 48px; padding: 0 24px;
+  font: inherit; font-weight: 600; font-size: var(--fs-btn);
+  text-decoration: none; border-radius: var(--radius); border: 2px solid transparent;
+  cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn-primary { background: var(--gold); color: #1a1a1a; border-color: var(--gold); }
+.btn-primary:hover { background: #c79a38; border-color: #c79a38; }
+.btn-outline {
+  background: transparent; color: var(--green-d); border-color: var(--green-d);
+}
+.btn-outline:hover { background: var(--green-d); color: #fff; }
+.btn-outline-light {
+  background: transparent; color: #fff; border-color: rgba(255,255,255,0.7);
+}
+.btn-outline-light:hover { background: #fff; color: var(--green-d); }
+.header-cta { height: 40px; padding: 0 16px; font-size: 15px; }
+.hamburger {
+  display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: #fff;
+}
+.hamburger-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.nav-mobile-only { display: none !important; }
+.nobr { white-space: nowrap; }
+.hamburger-lines { position: relative; width: 22px; height: 16px; }
+.hamburger-lines span { position: absolute; left: 0; width: 22px; height: 2px; background: currentColor; transition: transform 0.2s ease, opacity 0.2s ease; }
+.hamburger-lines span:nth-child(1) { top: 0; }
+.hamburger-lines span:nth-child(2) { top: 7px; }
+.hamburger-lines span:nth-child(3) { top: 14px; }
+.hamburger[aria-expanded="true"] .hamburger-lines span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] .hamburger-lines span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] .hamburger-lines span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Hero */
+.hero {
+  background: var(--green-d);
+  color: #fff;
+  overflow: hidden;
+  padding: 64px 0 80px;
+}
+.hero-light { background: var(--bg); color: var(--ink); border-top: 0; }
+@media (min-width: 901px) {
+  .hero {
+    min-height: calc(100vh - var(--header-h));
+    display: flex; align-items: center;
+  }
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 48px;
+  align-items: center;
+}
+.hero h1 {
+  margin: 0 0 24px;
+  font-size: clamp(2.5rem, 4.4vw, var(--fs-hero));
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: #fff;
+}
+.hero-light h1 { color: var(--green-d); }
+.hero-lead { margin: 0 0 32px; font-size: var(--fs-lead); line-height: 1.55; color: rgba(255,255,255,0.82); max-width: 32rem; }
+.hero-light .hero-lead { color: var(--muted); }
+.hero .variant-note { color: rgba(255,255,255,0.78); }
+.hero-light .variant-note { color: var(--muted); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 16px; }
+.hero-visual { position: relative; min-height: 340px; }
+.hero-visual .hall-svg { width: 100%; height: auto; display: block; max-height: 440px; }
+/* Hall: plan comes to life. Drawing and tilt are driven in hall.js — no slide-up. */
+.hall-line {
+  stroke: #e8efe6;
+  stroke-width: 0.11;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  fill: none;
+}
+.hero-light .hall-line { stroke: var(--green); }
+.hall-line-soft { stroke-width: 0.085; opacity: 0.9; }
+.hero-light .hall-line-soft { stroke: var(--green-l); }
+.hall-guide { stroke-width: 0.055; opacity: 0.7; }
+.hero-light .hall-guide { stroke: #6e8a70; }
+.hall-mark { stroke-width: 0.10; fill: none; }
+.hero-light .hall-mark { stroke: var(--green-d); }
+.hall-wall { stroke-width: 0.13; }
+.hero-visual .hall-svg { overflow: visible; }
+
+/* Hero text: fade only, no slide */
+.hero-copy h1, .hero-copy .hero-lead, .hero-copy .btn-row {
+  animation: hero-fade 0.85s ease both;
+}
+.hero-copy .hero-lead { animation-delay: 0.12s; }
+.hero-copy .btn-row { animation-delay: 0.22s; }
+@keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Photo fade variant */
+.hero-photo .hero-visual { isolation: isolate; }
+.hero-photo .photo-end {
+  position: absolute; inset: 8% 6% 8% 6%;
+  background-size: cover; background-position: center;
+  opacity: 0;
+  animation: photo-in 1.6s ease 4.6s forwards;
+}
+.hero-photo .hall-svg { position: relative; z-index: 1; }
+.hero-photo .hall-lift { animation: hall-lift 1.35s cubic-bezier(.22,.7,.3,1) 3.25s forwards, hall-fade 1.6s ease 4.6s forwards; }
+@keyframes photo-in { to { opacity: 1; } }
+@keyframes hall-fade { to { opacity: 0.18; } }
+
+/* Sections */
+.section { padding: 96px 0; }
+.section-alt { background: #fff; }
+.section-title {
+  margin: 0 0 16px;
+  font-size: clamp(1.75rem, 2.4vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--green-d);
+  font-weight: 700;
+  text-align: left;
+}
+.cta-band .section-title, .area .section-title { text-align: center; }
+.section-subtitle {
+  margin: 0 0 48px;
+  text-align: left;
+  color: var(--muted);
+  max-width: 40rem;
+  font-size: var(--fs-lead); line-height: 1.55;
+}
+.section-head { text-align: left; margin-bottom: 48px; }
+.section-head .section-subtitle { margin-bottom: 0; }
+.cta-band .section-subtitle, .area .section-subtitle { text-align: center; margin-left: auto; margin-right: auto; }
+.section-link { display: inline-block; margin-top: 32px; color: var(--green); font-weight: 600; text-decoration: none; }
+.section-link:hover { text-decoration: underline; }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; }
+.step { text-align: left; }
+.step-number {
+  display: flex; align-items: baseline; gap: 8px;
+  font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  color: var(--green); margin-bottom: 16px;
+}
+.step-bar {
+  display: block; height: 3px; width: 64px; background: var(--green); margin-top: 8px; max-width: 64px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .step-bar { width: 0; }
+  .step.is-in .step-bar { animation: bar-grow 0.8s ease forwards; }
+}
+@keyframes bar-grow { to { width: 64px; } }
+.step h3 { margin: 0 0 8px; font-size: var(--fs-h3); color: var(--green-d); }
+.step p { margin: 0; color: var(--muted); }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+.stats-3 { grid-template-columns: repeat(3, 1fr); }
+.stat-number {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 700; letter-spacing: -0.03em; color: var(--green); line-height: 1.1;
+}
+.stat-label { color: var(--muted); margin-top: 8px; font-size: 1rem; }
+
+/* Services */
+.service-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.service-card, .ref-card, .calc-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+}
+.section-alt .service-card, .section-alt .calc-card { background: var(--bg); }
+.service-card:hover, .ref-card:hover, .calc-card:hover { border-color: var(--green); }
+@media (prefers-reduced-motion: no-preference) {
+  .service-card:hover, .ref-card:hover, .calc-card:hover { transform: translateY(-3px); }
+}
+.card-icon { display: inline-flex; color: var(--green); margin-bottom: 16px; }
+.card-icon svg { width: 28px; height: 28px; stroke-width: 1.7; }
+.service-card h3, .calc-card h3, .ref-card h3 { margin: 0 0 8px; font-size: var(--fs-h3); color: var(--green-d); }
+.service-card p, .calc-card p, .ref-card p { margin: 0 0 16px; color: var(--muted); }
+.service-card .card-link, .calc-card .card-link { margin-top: auto; }
+.card-link { color: var(--green); font-weight: 600; text-decoration: none; font-size: var(--fs-sm); }
+.card-link:hover { text-decoration: underline; }
+
+/* Refs */
+.ref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.ref-card { padding: 0; overflow: hidden; }
+.ref-card-img { aspect-ratio: 4/3; overflow: hidden; background: #e8ebe9; }
+.ref-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.ref-card-body { padding: 24px; }
+.ref-card-body p { margin: 0; }
+.ref-meta { font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+.ref-placeholder {
+  aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--green-d); color: #fff; text-align: center; padding: 24px;
+  font-weight: 700;
+}
+.ref-placeholder span { display: block; font-weight: 500; font-size: var(--fs-sm); opacity: 0.8; margin-top: 8px; }
+
+/* Calculators */
+.calc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.calc-note { margin: 32px auto 0; max-width: 40rem; text-align: center; color: var(--muted); font-size: var(--fs-sm); }
+
+/* Area + form */
+.area { text-align: center; }
+.area .container { max-width: 880px; }
+.area p { color: var(--muted); line-height: 1.8; }
+.contact-form-direct {
+  max-width: 560px; margin: 32px 0 0;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 32px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 600; font-size: var(--fs-sm); margin-bottom: 8px; color: var(--green-d); }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 12px 16px; border: 1px solid #d5d8db; border-radius: var(--radius);
+  font: inherit; background: #fff; color: var(--ink);
+}
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-group input:focus, .form-group textarea:focus {
+  outline: 2px solid var(--green); outline-offset: 1px; border-color: var(--green);
+}
+.form-row { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
+.form-note { display: none; margin-top: 16px; color: var(--muted); font-size: var(--fs-sm); }
+.gotcha { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.proposal { font-size: var(--fs-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+/* Footer */
+.site-footer { background: var(--green-d); color: rgba(255,255,255,0.88); padding: 64px 0 0; }
+.footer-grid {
+  width: min(var(--content), calc(100% - 2 * var(--gutter))); margin: 0 auto;
+  display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 48px; padding-bottom: 48px;
+}
+.footer-col h4 { margin: 0 0 12px; color: #fff; font-size: 1rem; }
+.footer-col p { margin: 0 0 8px; }
+.footer-col a { color: rgba(255,255,255,0.88); text-decoration: none; }
+.footer-col a:hover { color: #fff; text-decoration: underline; }
+.footer-links { display: flex; flex-direction: column; gap: 8px; }
+.footer-logo { height: 36px; width: auto; margin-bottom: 16px; }
+.rala { height: 56px; width: auto; margin-top: 16px; display: block; }
+.social-links { display: flex; gap: 8px; margin-top: 16px; }
+.social-links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 50%; color: #fff; text-decoration: none;
+}
+.social-links a:hover { background: rgba(255,255,255,0.12); text-decoration: none; }
+.social-links svg { width: 15px; height: 15px; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  text-align: center; padding: 16px 24px; font-size: var(--fs-sm); color: rgba(255,255,255,0.7);
+}
+
+/* Cookie */
+.cookie-bar {
+  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 60;
+  background: #fff; color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px 24px;
+  display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between;
+  width: min(var(--content), calc(100% - 2 * var(--gutter))); margin: 0 auto;
+}
+.cookie-bar p { margin: 0; font-size: var(--fs-sm); color: var(--muted); max-width: 46rem; }
+.cookie-bar a { color: var(--green-d); }
+.cookie-bar .proposal { color: var(--green) !important; }
+.cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.cookie-actions .btn { padding: 0 16px; height: 40px; font-size: var(--fs-sm); }
+.btn-quiet { background: transparent; color: var(--green-d); border-color: var(--green-d); }
+.btn-quiet:hover { background: var(--bg); }
+
+.mobile-call-btn { display: none; }
+.page-hero { padding: 64px 0 32px; background: var(--bg); }
+.page-hero h1 {
+  margin: 0 0 16px; font-size: clamp(2.25rem, 3.6vw, var(--fs-page)); line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--green-d); font-weight: 700;
+}
+.page-hero p { margin: 0; color: var(--muted); max-width: 44rem; font-size: var(--fs-lead); }
+
+.hero-label {
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 700; color: var(--gold); margin: 0 0 14px;
+}
+.hero-light .hero-label { color: var(--green); }
+.variant-note { padding: 20px 0 0; font-size: 0.9rem; color: var(--muted); }
+
+.reveal { opacity: 0; transform: translateY(8px); }
+.reveal.is-in { animation: fadeup 0.7s ease forwards; }
+@keyframes fadeup { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hall-line { stroke-dashoffset: 0 !important; }
+  .hero-copy h1, .hero-copy .hero-lead, .hero-copy .btn-row,
+  .step-bar, .reveal {
+    transform: none; animation: none !important; opacity: 1;
+  }
+  html { scroll-behavior: auto; }
+  .site-header, .logo-img { transition: none; }
+}
+
+@media (max-width: 1100px) {
+  .nav-hide-md { display: none; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero { padding: 40px 0 96px; min-height: 0; }
+  .hero-visual { min-height: 0; order: 2; }
+  .hero-copy { order: 1; }
+  .hall-svg { max-height: 230px; }
+  .steps, .stats, .stats-3, .service-cards, .footer-grid, .ref-grid, .calc-cards { grid-template-columns: 1fr; }
+  .nav-links, .header-phone { display: none; }
+  .nav-links.is-open {
+    display: flex; position: fixed; inset: 0; z-index: 55;
+    flex-direction: column; align-items: stretch; justify-content: flex-start;
+    background: var(--green-d);
+    padding: 88px 32px 40px; gap: 0;
+    overflow-y: auto;
+  }
+  .nav-links.is-open a { padding: 16px 0; font-size: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .nav-links.is-open .nav-mobile-only { display: inline-flex !important; }
+  .nav-links.is-open .nav-mobile-only.header-phone { margin-top: 32px; font-size: 20px; border-bottom: 0; }
+  .nav-links.is-open .nav-mobile-only.header-cta { margin-top: 16px; align-self: flex-start; height: 48px; padding: 0 24px; font-size: var(--fs-btn); border: 0; }
+  .nav-hide-md { display: block; }
+  .hamburger { display: block; z-index: 56; }
+  .logo-link { z-index: 56; position: relative; }
+  .header-inner { position: relative; }
+  .logo-link { order: 1; }
+  .header-actions { order: 2; margin-left: auto; }
+  .hamburger { order: 3; }
+  .mobile-call-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    position: fixed; right: 16px; bottom: 16px; z-index: 30;
+    background: var(--gold); color: #1a1a1a;
+    padding: 10px 16px; border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .mobile-call-btn svg { width: 16px; height: 16px; flex: 0 0 16px; }
+  body.has-cookie .mobile-call-btn { bottom: 110px; }
+  .form-row { grid-template-columns: 1fr; }
+  .container, .container-wide, .footer-grid { width: calc(100% - 2 * var(--gutter-sm)); }
+  .section { padding: 64px 0; }
+  .contact-form-direct { padding: 24px; }
+  .cookie-bar { left: 16px; right: 16px; bottom: 16px; width: auto; }
+  .header-cta { height: 40px; padding: 0 12px; }
+}
+
+
+/* ---------- Full-site additions (v4) ---------- */
+.article-wrap { width: min(720px, calc(100% - 2 * var(--gutter))); margin: 0 auto; padding: 16px 0 96px; }
+.article-wrap .back-link { margin-bottom: 24px; }
+.article-meta { margin: 0 0 24px; color: var(--muted); font-size: var(--fs-sm); }
+.article-content h2 {
+  margin: 32px 0 16px;
+  font-size: 24px;
+  color: var(--green-d);
+  letter-spacing: -0.02em;
+}
+.article-content p { margin: 0 0 16px; }
+.article-content ol, .article-content ul { margin: 0 0 16px; padding-left: 24px; }
+.article-content li { margin: 0 0 8px; }
+.article-content a { color: var(--green); font-weight: 600; }
+
+.back-link {
+  display: inline-block;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+.back-link:hover { text-decoration: underline; }
+
+.service-block {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 20px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line);
+}
+.service-block:last-of-type { border-bottom: 0; }
+.service-block .card-icon { margin: 4px 0 0; }
+.service-block h2 { margin: 0 0 8px; font-size: 1.45rem; color: var(--green-d); letter-spacing: -0.02em; }
+.service-block p { margin: 0 0 12px; }
+.service-block ul { margin: 0 0 12px; padding-left: 1.15rem; }
+.service-block li { margin: 0 0 4px; }
+.service-links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 8px; }
+.service-links a { color: var(--green); font-weight: 600; text-decoration: none; }
+.service-links a:hover { text-decoration: underline; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.contact-list { display: grid; gap: 16px; margin: 0; }
+.contact-list div { }
+.contact-list .label { display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.contact-list a { color: var(--green-d); font-weight: 600; text-decoration: none; }
+.contact-list a:hover { color: var(--green); }
+
+.split-media {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+.split-media img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); }
+
+.benefit-grid, .info-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.benefit, .info-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 22px 20px;
+}
+.benefit h3, .info-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: var(--green-d); }
+.benefit p, .info-card p { margin: 0; color: var(--muted); }
+.legal-note {
+  margin: 28px 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.prose { max-width: 42rem; }
+.prose h2 { margin: 2rem 0 0.7rem; font-size: 1.3rem; color: var(--green-d); }
+.prose p, .prose ul, .prose ol { margin: 0 0 1rem; }
+.prose ul, .prose ol { padding-left: 1.2rem; }
+.prose li { margin: 0 0 0.4rem; }
+
+.area-table-wrap { overflow-x: auto; margin: 28px 0; }
+.area-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.area-table th, .area-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.area-table th { background: #fff; color: var(--green-d); font-size: 0.85rem; letter-spacing: 0.02em; }
+.area-table tr:last-child td { border-bottom: 0; }
+.area-table tbody tr:hover { background: var(--bg); }
+.area-table a { color: var(--green); font-weight: 600; text-decoration: none; }
+.area-table a:hover { text-decoration: underline; }
+
+.article-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.article-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.article-card:hover { border-color: var(--green); }
+@media (prefers-reduced-motion: no-preference) {
+  .article-card:hover { transform: translateY(-3px); }
+}
+.article-card .ref-meta { margin-bottom: 8px; }
+.article-card h3 { margin: 0 0 8px; font-size: var(--fs-h3); color: var(--green-d); }
+.article-card p { margin: 0 0 16px; color: var(--muted); flex: 1; }
+
+.form-success {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+}
+.form-success p { margin: 0 0 8px; }
+.form-note { margin: 12px 0 0; font-size: 0.88rem; color: var(--muted); }
+
+.calc-frame-wrap { background: var(--bg); }
+.calc-frame {
+  width: 100%;
+  min-height: calc(100vh - var(--header-h));
+  height: 1400px;
+  border: 0;
+  display: block;
+  background: var(--bg);
+}
+
+.cta-band { text-align: center; }
+.cta-band .btn-row { justify-content: center; }
+
+@media (max-width: 900px) {
+  .contact-grid, .split-media, .benefit-grid, .info-cards, .article-grid { grid-template-columns: 1fr; }
+  .service-block { grid-template-columns: 1fr; }
+  .article-wrap, .container { width: calc(100% - 2 * var(--gutter-sm)); }
+  .calc-frame { height: 1600px; }
+}
+
+.info-cards-2 { grid-template-columns: repeat(2, 1fr); }
+.service-block { scroll-margin-top: 80px; }
+.service-block h2 { font-size: 24px; }
+.benefit h3, .info-card h3 { font-size: var(--fs-h3); }
+.prose h2 { margin: 32px 0 16px; font-size: 24px; }
+@media (max-width: 900px) {
+  .info-cards-2 { grid-template-columns: 1fr !important; }
+  .article-wrap { width: calc(100% - 2 * var(--gutter-sm)); }
+}
+
+.service-block > div { max-width: 46rem; }
+
+
+/* ===================== v6 ===================== */
+:root {
+  --ink: #1f2a22;
+  --muted: #1f2a22;
+  --fs-nav: 17px;
+  --fs-sm: 16px;
+  --fs-xs: 14px;
+}
+body { color: var(--ink); }
+
+/* Header: nav 17/600, puhelin korostettuna */
+.nav-links { gap: 20px; }
+.nav-links a { font-weight: 600; color: #fff; }
+.nav-links a:hover { color: var(--gold); }
+.nav-links a.active { color: #fff; }
+.header-actions { gap: 20px; }
+.header-phone {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 17px; color: #fff; letter-spacing: 0.01em;
+}
+.header-phone .ic { width: 18px; height: 18px; flex: 0 0 18px; stroke-width: 2; color: var(--gold); }
+.header-phone:hover .ic { color: #fff; }
+.header-cta { font-size: 16px; }
+
+/* Hero: suunnitelma herää eloon */
+.hero.hero-plan {
+  position: relative; isolation: isolate;
+  min-height: 0; padding: 48px 0 48px;
+  background: var(--bg);
+}
+@media (min-width: 901px) { .hero.hero-plan { min-height: 0; } }
+.hero-plan .hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.hero-gridbg {
+  position: absolute; inset: -24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%232d6432'%3E%3Cpath stroke-opacity='0.055' d='M24.5 0V120M48.5 0V120M72.5 0V120M96.5 0V120M0 24.5H120M0 48.5H120M0 72.5H120M0 96.5H120'/%3E%3Cpath stroke-opacity='0.085' d='M0.5 0V120M0 0.5H120'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  background-position: 0 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 86%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 86%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%);
+  mask-composite: intersect;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-gridbg { animation: grid-drift 140s linear infinite; }
+}
+@keyframes grid-drift { to { background-position: 120px 120px; } }
+.hero-plan .hero-grid {
+  display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr);
+  gap: 0; align-items: center; min-height: 0;
+}
+.hero-plan .hero-copy { position: relative; z-index: 2; padding: 8px 0; }
+.hero-plan h1 { margin: 0 0 24px; }
+.hero-plan .hero-lead { color: var(--ink); font-size: 20px; line-height: 1.55; max-width: 30rem; margin-bottom: 32px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn-call { gap: 10px; }
+.btn-call .ic { width: 19px; height: 19px; flex: 0 0 19px; stroke-width: 2; }
+.hero-plan .hero-visual {
+  position: relative; min-height: 0; height: 540px;
+  margin-right: -120px; margin-left: 0;
+}
+.house-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.house-svg path { stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.h-line { stroke: var(--green); stroke-width: 1.6; }
+.h-plan-wall { stroke-width: 1.4; }
+.house-svg .h-plan-wall { fill: #d3e0d4; }
+.h-soft { stroke: var(--green-l); stroke-width: 1; stroke-opacity: 0.75; }
+.h-truss { stroke-opacity: 0.9; }
+.h-seam { stroke-opacity: 0.45; }
+.h-guide { stroke: var(--green-l); stroke-width: 1; stroke-opacity: 0.55; }
+.h-dim { stroke-opacity: 0.7; }
+.h-rail { stroke-width: 1.4; }
+.house-svg .h-face-front { fill: #fbfcfb; }
+.house-svg .h-face-back { fill: #f3f6f3; }
+.house-svg .h-face-side { fill: #edf2ed; }
+.house-svg .h-face-top { fill: #f6f8f6; }
+.house-svg .h-glass { fill: #e6eee7; }
+.house-svg .h-glass-side { fill: #dfe8e0; }
+.house-svg .h-door { fill: #eef3ee; }
+.house-svg .h-roof { fill: #e8efe8; }
+.house-svg .h-roof-edge { fill: #dde7de; }
+.house-svg .h-shadow { fill: var(--green-d); fill-opacity: 0.05; stroke: none; }
+#hall-stage.is-static { animation: house-fade 0.6s ease both; }
+@keyframes house-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Palvelut heti heron alla, näkyy ensimmäisessä näkymässä */
+.home-services { padding-top: 72px; }
+.home-services .section-subtitle { margin-bottom: 40px; }
+
+/* Luettavuus: leipä 18 px ja tumma */
+.section-subtitle, .step p, .service-card p, .calc-card p, .ref-card p, .area p,
+.benefit p, .info-card p, .article-card p, .page-hero p, .prose p, .prose li { color: var(--ink); }
+.stat-label { font-size: 18px; color: var(--ink); }
+.card-link { font-size: 17px; }
+.footer-col h4 { font-size: 18px; }
+.footer-col, .footer-col p, .footer-col a { font-size: 17px; }
+.service-card:hover, .ref-card:hover, .calc-card:hover, .article-card:hover { transform: none !important; }
+.service-card, .ref-card, .calc-card { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.service-card:hover, .ref-card:hover, .calc-card:hover { box-shadow: 0 6px 18px rgba(30,68,34,0.08); }
+
+@media (max-width: 1360px) {
+  .hero-plan .hero-visual { margin-right: -32px; }
+}
+@media (max-width: 1180px) {
+  .hero-plan .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+  .hero-plan .hero-visual { margin-right: 0; margin-left: 0; height: 460px; }
+}
+@media (max-width: 900px) {
+  .hero.hero-plan { padding: 32px 0 40px; }
+  .hero-plan .hero-grid { grid-template-columns: 1fr; gap: 16px; }
+  .hero-plan .hero-visual { height: 300px; margin: 0 -8px; }
+  .hero-plan .hero-lead { font-size: 18px; margin-bottom: 24px; }
+  .hero-gridbg {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 88%, transparent 100%);
+  }
+  .header-actions .header-cta { display: none; }
+  .header-actions .header-phone { display: inline-flex; font-size: 16px; gap: 6px; }
+  .header-actions { margin-left: auto; margin-right: 4px; }
+  .nav-links.is-open .nav-mobile-only.header-phone { gap: 10px; }
+  .nav-links.is-open .nav-mobile-only.header-phone .ic { width: 22px; height: 22px; flex-basis: 22px; }
+  .mobile-call-btn { display: none !important; }
+  .home-services { padding-top: 48px; }
+  .btn-row .btn { flex: 1 1 auto; }
+}
+@media (max-width: 359px) {
+  .header-phone-num { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-gridbg { animation: none; }
+}
+
+.hero-plan h1 .l { white-space: nowrap; }
+/* Evästeilmoitus pienenä korttina oikeaan alakulmaan, ei peitä sisältöä leveällä näytöllä */
+@media (min-width: 901px) {
+  .cookie-bar {
+    left: auto; right: 24px; bottom: 24px; width: 360px; margin: 0;
+    padding: 16px 20px; gap: 12px; box-shadow: 0 8px 24px rgba(30,68,34,0.12);
+  }
+  .cookie-bar p { font-size: 15px; line-height: 1.5; }
+}
+
+/* Palvelut-sivu: sisällys ja yhteystieto oikealla, ei tyhjää laitaa */
+.svc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 64px; align-items: start; }
+.svc-aside { position: sticky; top: 88px; display: grid; gap: 16px; padding-top: 40px; }
+.svc-toc { display: flex; flex-direction: column; border-left: 2px solid var(--line); }
+.svc-toc a { padding: 8px 0 8px 16px; margin-left: -2px; border-left: 2px solid transparent; color: var(--ink); text-decoration: none; font-size: 17px; font-weight: 600; line-height: 1.35; }
+.svc-toc a:hover { color: var(--green); border-left-color: var(--green); }
+.svc-contact { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: grid; gap: 16px; }
+.svc-contact h3 { margin: 0; font-size: 20px; color: var(--green-d); }
+.svc-phone { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; color: var(--green-d); text-decoration: none; }
+.svc-phone .ic { width: 22px; height: 22px; stroke-width: 2; color: var(--green); }
+.svc-contact .btn { width: 100%; }
+@media (max-width: 1100px) { .svc-layout { grid-template-columns: 1fr; } .svc-aside { display: none; } }
+@media (min-width: 901px) and (max-height: 960px) {
+  .hero.hero-plan { padding: 32px 0; }
+  .hero-plan .hero-visual { height: 480px; }
+  .home-services { padding-top: 64px; }
+}
+.house-svg .h-post { fill: #8fae93; stroke-width: 1.2; }
+.house-svg .h-screen { fill: #e9efe9; }
+.h-tread { stroke-width: 1.2; }
+@media (max-width: 900px) { .hero-plan .hero-visual { height: 230px; } }
+.house-svg .h-post-side { fill: #7fa184; stroke-width: 1.2; }
+@media (min-width: 1600px) { .hero-plan .hero-visual { margin-right: -210px; } }
+
+/* ===== v8: mikroanimaatiot (Hallabit-henkiset, hillityt) ===== */
+:root { --ease-out: cubic-bezier(.16,1,.3,1); --ease-snap: cubic-bezier(.23,1,.32,1); }
+
+/* mittalinjat ja ikkunavalot */
+.house-svg .h-dimline { stroke: var(--green-d); stroke-width: 1; stroke-opacity: 0.5; fill: none; }
+.house-svg .h-dimext { stroke-opacity: 0.3; }
+.house-svg .h-dimtick { stroke-width: 1.4; stroke-opacity: 0.75; }
+.house-svg .h-lit { fill: #f2e2b0; stroke: none; }
+.h-dim-g { will-change: opacity; }
+
+/* heron teksti: fade + max 8 px, porrastettu piirron tahtiin */
+.hero-plan .hero-copy h1, .hero-plan .hero-copy .hero-lead, .hero-plan .hero-copy .btn-row { animation: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-plan h1 .l { display: inline-block; opacity: 0; transform: translate3d(0, 8px, 0); animation: kp-in 0.9s var(--ease-out) forwards; }
+  .hero-plan h1 .l:nth-of-type(1) { animation-delay: 0.10s; }
+  .hero-plan h1 .l:nth-of-type(2) { animation-delay: 0.22s; }
+  .hero-plan h1 .l:nth-of-type(3) { animation-delay: 0.34s; }
+  .hero-plan .hero-copy .hero-lead { opacity: 0; transform: translate3d(0, 8px, 0); animation: kp-in 0.9s var(--ease-out) 0.50s forwards; }
+  .hero-plan .btn-row .btn { opacity: 0; transform: translate3d(0, 8px, 0); animation: kp-in 0.8s var(--ease-out) forwards; }
+  .hero-plan .btn-row .btn:nth-child(1) { animation-delay: 0.66s; }
+  .hero-plan .btn-row .btn:nth-child(2) { animation-delay: 0.76s; }
+}
+@keyframes kp-in { to { opacity: 1; transform: none; } }
+
+/* napit: 2 px nousu ja pehmeä varjo (Hallabit fx-nousu), painallus 0.98 */
+.btn { transition: transform 220ms var(--ease-snap), box-shadow 220ms ease-out, background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -12px rgba(30,68,34,0.55), 0 3px 8px -5px rgba(30,68,34,0.35); }
+  .hero-plan .btn-row .btn:hover { transform: translateY(-2px); }
+}
+.btn:active { transform: scale(0.98); transition-duration: 90ms; }
+.btn:focus-visible { box-shadow: 0 10px 20px -12px rgba(30,68,34,0.55); }
+
+/* palvelukortit: yläreunaan piirtyvä viiva, ikoni piirtyy rullatessa, linkin alleviiva liukuu */
+.service-card { position: relative; overflow: hidden; }
+.service-card::before {
+  content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 100%;
+  background: var(--green); transform: scaleX(0); transform-origin: left center;
+  transition: transform 340ms var(--ease-snap);
+}
+.service-card .card-icon svg { transition: transform 340ms var(--ease-snap); }
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover .card-icon svg { transform: translateY(-2px); }
+  .service-card:hover .card-link { text-underline-offset: 6px; text-decoration-thickness: 2px; }
+}
+.card-link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(45,100,50,0.35);
+  transition: text-underline-offset 200ms ease-out, text-decoration-thickness 200ms ease-out, text-decoration-color 200ms ease-out; }
+.card-link:hover { text-decoration-color: currentColor; }
+.service-card:hover .card-link { text-decoration-color: currentColor; }
+@media (prefers-reduced-motion: no-preference) {
+  .draw-icons .card-icon svg > * { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .draw-icons.is-drawn .card-icon svg > * { stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 80ms); }
+}
+
+/* logon kuutio kootaan latauksessa alhaalta ylös */
+@media (prefers-reduced-motion: no-preference) {
+  .logo-img.kp-build .cube-part { opacity: 0; transform: translate3d(0, -6px, 0); animation: kp-cube 0.62s var(--ease-out) forwards; }
+  .logo-img.kp-build .cube-part.p1 { animation-delay: 0.10s; }
+  .logo-img.kp-build .cube-part.p2 { animation-delay: 0.22s; }
+  .logo-img.kp-build .cube-part.p3 { animation-delay: 0.34s; }
+  .logo-img.kp-build .cube-part.p4 { animation-delay: 0.46s; }
+  .logo-img.kp-build .logo-word { opacity: 0; animation: kp-fade 0.6s ease 0.55s forwards; }
+}
+@keyframes kp-cube { to { opacity: 1; transform: none; } }
+@keyframes kp-fade { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn:hover, .btn:active { transform: none !important; transition: background-color 160ms, color 160ms, border-color 160ms; }
+  .service-card::before { transition: none; }
+}
+
+/* v8: piha, leikkialue ja linnut */
+.house-svg .h-trunk { stroke-width: 1.8; }
+.house-svg .h-crown { fill: #e4ede4; stroke-width: 1.4; }
+.house-svg .h-bush { fill: #dbe7dc; stroke-width: 1.2; }
+.house-svg .h-branch { stroke-width: 1; }
+.house-svg .h-yshadow { fill: var(--green-d); fill-opacity: 0.06; stroke: none; }
+.house-svg .h-play { stroke-width: 1.3; }
+.house-svg .h-seat { stroke-width: 1.5; }
+.house-svg .h-bird { stroke: var(--green-d); stroke-width: 1.3; fill: none; }
+
+/* v9: rakennustelineet ja autonosturi */
+.house-svg .h-scaf { stroke: var(--green-l); stroke-width: 0.9; stroke-opacity: 0.8; fill: none; }
+
+/* v10: suunnitelma, puut, iltavalo */
+.house-svg .h-sketch { stroke-opacity: 0.4; }
+.house-svg .h-furn { stroke-opacity: 0.6; stroke-width: 0.9; }
+.house-svg .h-bubble { stroke-opacity: 0.75; }
+.house-svg .h-secline { stroke-opacity: 0.35; }
+.house-svg .h-section { fill: var(--green-d); stroke: var(--green-d); stroke-width: 1; }
+.house-svg .h-elev { stroke-opacity: 0.7; stroke-width: 0.9; }
+.house-svg .h-trunk { fill: #c9d6c9; stroke-width: 1.1; }
+.house-svg .h-crown { fill: #e3ece2; stroke-width: 1.2; }
+.house-svg .h-bush { fill: #dae6d9; stroke-width: 1.1; }
+.house-svg .h-branch { stroke-width: 0.9; stroke-opacity: 0.7; }
+.house-svg .h-lit { fill: #f1d68c; }
+.house-svg .h-lamp { stroke-width: 1.2; }
+.house-svg .h-lamp-head { fill: #eef3ee; stroke-width: 1; }
+.house-svg .h-pool { fill: #f4dfa4; fill-opacity: 0.35; stroke: none; }
+.house-svg .h-pool-in { fill-opacity: 0.4; }
+.h-warm-g, .h-elev-g { will-change: opacity; }
+/* v11: ei maastosävyä; kulkuväylä, pollarit ja niiden valokeilat; ihmishahmot */
+.house-svg .h-walk { fill: #eceeea; stroke-width: 1.1; }
+.house-svg .h-walk-seam { stroke-width: 0.7; stroke-opacity: 0.45; }
+.house-svg .h-pool { fill: #f3dc9c; fill-opacity: 0.32; stroke: none; }
+.house-svg .h-pool-in { fill-opacity: 0.38; }
+.house-svg .h-cone { fill: #f3dc9c; fill-opacity: 0.16; stroke: none; }
+/* v17: tilavat hahmot: tummanvihreä ääriviiva, valkoiset ja hyvin vaaleat täytöt, yksi tasainen varjosävy */
+.house-svg .h-person { will-change: opacity; stroke-width: 0.6px; }
+.house-svg .h-people path { stroke: #1e4422; stroke-width: inherit; stroke-linejoin: round; stroke-linecap: round; fill: #fbfcfa; }
+.house-svg .h-people .k-skin, .house-svg .h-people .k-c0 { fill: #fbfcfa; }
+.house-svg .h-people .k-c1 { fill: #e9f0e9; }
+.house-svg .h-people .k-c2 { fill: #d5e2d6; }
+.house-svg .h-people .k-sh { fill: #d3dfd4; stroke: none; }
+.house-svg .h-people .k-ink { fill: #1e4422; stroke: none; }
+.house-svg .h-people .k-nf { stroke: none; }
+.house-svg .h-people .k-boxsh { fill: #d3dfd4; }
+.house-svg .h-people .k-hair { fill: #2d6432; stroke: #1e4422; }
+.house-svg .h-people .k-hairo { fill: #1e4422; stroke: #1e4422; }
+.house-svg .h-people .k-hairf { fill: #2d6432; stroke: #2d6432; }
+.house-svg .h-people .k-shoe { fill: #1e4422; }
+.house-svg .h-people .k-eye { fill: #1e4422; stroke: none; }
+.house-svg .h-people .k-gold { fill: #d4a843; }
+.house-svg .h-people .k-tape { fill: none; stroke: #d4a843; }
+.house-svg .h-people .k-gsh { fill: #1e4422; fill-opacity: 0.09; stroke: none; }
+.house-svg .h-lamp { stroke-width: 1.2; }
+.house-svg .h-lamp-head { fill: #eef3ee; stroke-width: 1; }
+.house-svg .h-pool { fill: #f4dfa4; fill-opacity: 0.35; stroke: none; }
+.house-svg .h-pool-in { fill-opacity: 0.4; }
+.h-warm-g, .h-elev-g { will-change: opacity; }
+/* v11: ei maastosävyä; kulkuväylä, pollarit ja niiden valokeilat; ihmishahmot */
+.house-svg .h-walk { fill: #eceeea; stroke-width: 1.1; }
+.house-svg .h-walk-seam { stroke-width: 0.7; stroke-opacity: 0.45; }
+.house-svg .h-pool { fill: #f3dc9c; fill-opacity: 0.32; stroke: none; }
+.house-svg .h-pool-in { fill-opacity: 0.38; }
+.house-svg .h-cone { fill: #f3dc9c; fill-opacity: 0.16; stroke: none; }
+.house-svg .h-lamp { stroke-width: 1.2; }
+.house-svg .h-lamp-head { fill: #eef3ee; stroke-width: 1; }
+.house-svg .h-pool { fill: #f4dfa4; fill-opacity: 0.35; stroke: none; }
+.house-svg .h-pool-in { fill-opacity: 0.4; }
+.h-warm-g, .h-elev-g { will-change: opacity; }
+/* v11: ei maastosävyä; kulkuväylä, pollarit ja niiden valokeilat; ihmishahmot */
+.house-svg .h-walk { fill: #eceeea; stroke-width: 1.1; }
+.house-svg .h-walk-seam { stroke-width: 0.7; stroke-opacity: 0.45; }
+.house-svg .h-pool { fill: #f3dc9c; fill-opacity: 0.32; stroke: none; }
+.house-svg .h-pool-in { fill-opacity: 0.38; }
+.house-svg .h-cone { fill: #f3dc9c; fill-opacity: 0.16; stroke: none; }
+.house-svg .h-lamp { fill: #e9efe9; stroke-width: 1.15; }
+.house-svg .h-lamp-head { stroke-width: 0.9; }
+/* v13: avautuva ovi */
+.house-svg .h-door-void { fill: #f1d68c; fill-opacity: 0.85; stroke: var(--green); stroke-width: 1.2; }
+.house-svg .h-door-leaf { fill: #eef3ee; stroke-width: 1.2; }
+
+/* ---------- v15: siisti yläpalkki – logo vasemmalla, valikko oikealla, ei puhelinta eikä CTA:ta ---------- */
+:root { --header-h: 72px; --header-h-compact: 60px; }
+@media (max-width: 900px) { :root { --header-h: 60px; --header-h-compact: 60px; } }
+.site-header { height: 72px; }
+.site-header.is-compact { height: 60px; }
+.header-inner { gap: 40px; align-items: center; }
+.header-actions, .header-phone, .header-cta, .nav-mobile-only { display: none !important; }
+.logo-link { line-height: 0; }
+.logo-img { height: 34px; }
+.is-compact .logo-img { height: 30px; }
+.nav-links { gap: 34px; margin-left: auto; align-items: center; }
+.nav-links a {
+  position: relative; display: inline-flex; align-items: center;
+  font-size: 16px; font-weight: 500; letter-spacing: 0.015em; line-height: 1;
+  color: rgba(255,255,255,0.86); padding: 10px 0; border-bottom: 0;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 1.5px;
+  background: var(--gold); opacity: 0; transform: scaleX(0.4); transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: #fff; }
+.nav-links a.active::after { opacity: 0.85; transform: scaleX(1); }
+@media (max-width: 1180px) { .nav-links { gap: 24px; } .nav-links a { font-size: 15px; } }
+@media (max-width: 1000px) { .nav-links { gap: 18px; } }
+@media (max-width: 900px) {
+  .site-header, .site-header.is-compact { height: 60px; }
+  .logo-img, .is-compact .logo-img { height: 30px; }
+  .hamburger { margin-left: auto; margin-right: 0; color: #fff; padding: 6px 0 6px 12px; overflow: visible; }
+  .hamburger-lines { display: block; }
+  .nav-links.is-open { padding: 96px 16px 40px; }
+  .nav-links.is-open a { padding: 18px 0; font-size: 22px; font-weight: 500; letter-spacing: 0.01em; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .nav-links.is-open a::after { display: none; }
+  .nav-links.is-open a.active { color: var(--gold); }
+}
+@media (prefers-reduced-motion: reduce) { .nav-links a::after { transition: none; } }
+/* v16: lähennyksessä talon viivat pysyvät ohuina, hahmot skaalautuvat */
+.house-svg path { vector-effect: non-scaling-stroke; }
+.house-svg .h-people path { vector-effect: none; }
+.house-svg { overflow: hidden; }
+</style>
+  
+<style>
+/* kape.fi: oikeat lomakkeet ja evästebanneri */
+.gotcha { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.form-success { display: none; }
+.form-success.show { display: block; }
+.form-group .error-msg { display: none; color: #b42318; font-size: var(--fs-sm); margin-top: 4px; }
+.form-group.has-error input, .form-group.has-error textarea, .form-group.has-error select { border-color: #b42318; }
+.form-group.has-error .error-msg { display: block; }
+.btn-secondary { background: transparent; color: var(--green); border: 2px solid var(--green); }
+.btn-secondary:hover { background: var(--green); color: #fff; }
+body:has(.nav-links.is-open) #kape-evastebanneri { display: none !important; }
+.ref-facts { margin-top: 40px; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); text-align: center; }
+.ref-facts p { margin: 0 0 8px; color: var(--muted); }
+.ref-facts p:last-child { margin-bottom: 0; }
+.page-hero .container.kapea { max-width: 800px; }
+</style>
+</head>
+<body data-uusi>
+
+  <a class="skip" href="#sisalto">Siirry sisältöön</a>
   <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">
-        <a href="/"><img src="/img/logo-vaaka.jpg" alt="Rakennusliike KaPe Oy" style="height:50px;width:auto;"></a>
-      </div>
-      <nav>
-        <button class="hamburger" aria-label="Avaa valikko"><span class="hamburger-label">Valikko</span><span class="hamburger-lines">
-          <span></span><span></span><span></span></span>
-        </button>
-        <div class="nav-links">
-          <a href="/">Etusivu</a>
-          <a href="/palvelut">Palvelut</a>
-          <a href="/referenssit">Referenssit</a>
-          <a href="/laskurit">Laskurit</a>
-          <a href="/rahoitus">Rahoitus</a>
-          <a href="/artikkelit">Artikkelit</a>
-          <a href="/yhteystiedot">Yhteystiedot</a>
-        </div>
+    <div class="header-inner container-wide">
+      <a class="logo-link" href="/" aria-label="Rakennusliike KaPe Oy, etusivu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0.350 0.450 208.340 70.900" role="img" aria-label="KaPe" class="logo-img kp-build" role="img">
+<svg x="0" y="0" width="61.89" height="72" viewBox="257.050 252.050 81.150 94.400" overflow="hidden">
+<defs>
+<clipPath id="hdr-cw_cw_m_clip-0">
+<path clip-rule="nonzero" d="M 260 253 L 298 253 L 298 292 L 260 292 Z M 260 253 "/>
+</clipPath>
+<clipPath id="hdr-cw_cw_m_clip-1">
+<path clip-rule="nonzero" d="M 297.441406 274.136719 L 274.914062 291.664062 L 260.277344 279.925781 L 297.59375 253.160156 L 334.292969 279.847656 L 320.105469 291.453125 L 297.441406 274.136719 "/>
+</clipPath>
+<clipPath id="hdr-cw_cw_m_clip-2">
+<path clip-rule="nonzero" d="M 297 281 L 337 281 L 337 339 L 297 339 Z M 297 281 "/>
+</clipPath>
+<clipPath id="hdr-cw_cw_m_clip-3">
+<path clip-rule="nonzero" d="M 297.207031 312.667969 L 336.378906 281.152344 L 336.460938 303.761719 L 297.253906 338.371094 L 258.304688 304.070312 L 258.035156 281.152344 L 297.207031 312.667969 "/>
+</clipPath>
+</defs>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<path class="cube-part p1" fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 336.417969 345.246094 L 258.207031 345.246094 L 258.207031 328.375 L 278.375 328.375 L 297.363281 345.136719 L 316.351562 328.375 L 336.417969 328.375 L 336.417969 345.246094 "/>
+<path class="cube-part p4" fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 297.441406 274.136719 L 274.914062 291.664062 L 260.277344 279.925781 L 297.59375 253.160156 L 334.292969 279.847656 L 320.105469 291.453125 L 297.441406 274.136719 "/>
+<g class="cube-part p3" clip-path="url(#hdr-cw_cw_m_clip-0)">
+<g clip-path="url(#hdr-cw_cw_m_clip-1)">
+<path fill-rule="evenodd" fill="#ffffff" fill-opacity="1" d="M 297.460938 314.144531 L 297.457031 315.144531 L 258.457031 315.144531 L 258.457031 310.835938 Z M 258.457031 233.320312 L 297.683594 233.320312 L 297.507812 296.878906 L 282.882812 298.050781 L 258.925781 278.839844 L 258.457031 279.078125 L 258.457031 233.320312 "/>
+</g>
+</g>
+<path class="cube-part p2" fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 297.207031 312.667969 L 336.378906 281.152344 L 336.460938 303.761719 L 297.253906 338.371094 L 258.304688 304.070312 L 258.035156 281.152344 L 297.207031 312.667969 "/>
+<g class="cube-part p2" clip-path="url(#hdr-cw_cw_m_clip-2)">
+<g clip-path="url(#hdr-cw_cw_m_clip-3)">
+<path fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 297.234375 338.371094 L 336.460938 338.371094 L 336.460938 281.152344 L 297.234375 281.152344 Z M 297.234375 338.371094 "/>
+</g>
+</g>
+</svg>
+<g class="logo-word" transform="translate(2.0400 0)"><path fill="#ffffff" d="M83.13008013457234 47.80803867967799V37.36861815731274Q84.37184881205845 35.620269179983296 85.61186802354582 33.9664891813579Q86.8518872350332 32.312709182732505 88.14805026762129 30.65740538843849Q89.44421330020937 29.002101594144477 90.86045054697838 27.23343807115336L99.31718279572029 16.88796875H110.05567134482494L94.15809644324413 35.82567305458244L93.3686100996501 35.755704815090866ZM76.4516229147202 54.72V16.88796875H85.53813739612174V26.213388280883663L85.49976789415173 36.424171439283526L85.53813739612174 40.7687036058621V54.72ZM100.09774864353763 54.72 89.84776910725573 38.50897335581132 95.35362044066365 31.683482872670282 110.59734494046366 54.72Z"/><path fill="#ffffff" d="M109.0122393539542 54.72 121.92713711316638 16.88796875H133.9639597881952L147.01213508284593 54.72H136.84317972818565L131.68350131351792 38.113256236158776Q130.44668965549965 33.9525545088097 129.23651331688336 29.62151401143521Q128.02633697826707 25.29047351406072 126.76312858898483 20.32225841621286H129.1338344118168Q127.85053945116407 25.2931818198401 126.64973049959109 29.626930622993967Q125.4489215480181 33.960679426147834 124.18999227525374 38.113256236158776L118.94410168224304 54.72ZM117.86004525611234 47.272005730132804V40.19103198737022H138.1793379232305V47.272005730132804Z"/><path fill="#ffffff" d="M147.58802916472018 54.72V16.88796875H163.0631338416581Q167.4215222337382 16.88796875 170.59682045484192 18.468565730507834Q173.77211867594565 20.04916271101567 175.4935487694031 22.93393678477034Q177.21497886286056 25.81871085852501 177.21497886286056 29.740834017836022Q177.21497886286056 33.65223681501695 175.4776375004742 36.535148461901116Q173.74029613808784 39.41806010878528 170.54118696367482 40.99312707949022Q167.3420777892618 42.56819405019516 162.96653587553124 42.56819405019516H152.85114781050765V35.10421325365198H162.14690898517551Q164.0539055081765 35.10421325365198 165.40609121501734 34.44157713015622Q166.75827692185817 33.77894100666046 167.4852353662584 32.57306098301953Q168.21219381065862 31.3671809593786 168.21219381065862 29.740834017836022Q168.21219381065862 28.086162223770515 167.4852353662584 26.896024263651924Q166.75827692185817 25.705886303533333 165.4054141385725 25.050359827101346Q164.05255135528682 24.39483335066936 162.14420067939614 24.39483335066936H156.67454364612172V54.72Z"/><path fill="#ffffff" d="M178.63670103972018 54.72V16.88796875H206.38451065217433V24.55485168981133H187.72321552112172V31.96366322622518H204.94762728154947V39.41613421222311H187.72321552112172V47.05311706018867H206.37954450653106V54.72Z"/></g>
+</svg></a>
+      <button class="hamburger" type="button" aria-label="Avaa valikko" aria-expanded="false">
+        <span class="hamburger-label">Valikko</span>
+        <span class="hamburger-lines"><span></span><span></span><span></span></span>
+      </button>
+      <nav class="nav-links" aria-label="Päävalikko">
+        <a href="/" data-nav="etusivu">Etusivu</a>
+        <a href="/palvelut" data-nav="palvelut">Palvelut</a>
+        <a href="/referenssit" data-nav="referenssit">Referenssit</a>
+        <a href="/laskurit" data-nav="laskurit">Laskurit</a>
+        <a href="/rahoitus" data-nav="rahoitus">Rahoitus</a>
+        <a href="/artikkelit" data-nav="artikkelit">Artikkelit</a>
+        <a href="/yhteystiedot" data-nav="yhteystiedot">Yhteystiedot</a>
       </nav>
     </div>
   </header>
 
-    <!-- Page hero -->
+<main id="sisalto">
+<!-- Page hero -->
   <section class="page-hero">
-    <h1>Kattoremontti Toholampi</h1>
+    <div class="container kapea">
+      <h1>Kattoremontti Toholampi</h1>
     <p>KaPe hoitaa</p>
+    </div>
   </section>
 
   <section class="section">
@@ -543,12 +1572,64 @@
   </section>
 
   <!-- Footer -->
+</main>
+
   <footer class="site-footer">
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 style="margin-bottom:8px;"><a href="/" style="color:#fff;text-decoration:none;">Rakennusliike KaPe Oy</a></h4>
+        <a href="/" aria-label="Rakennusliike KaPe Oy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0.350 0.450 208.340 70.900" role="img" aria-label="KaPe" class="footer-logo" role="img">
+<svg x="0" y="0" width="61.89" height="72" viewBox="257.050 252.050 81.150 94.400" overflow="hidden">
+<defs>
+<clipPath id="ftr-cw_cw_m_clip-0">
+<path clip-rule="nonzero" d="M 260 253 L 298 253 L 298 292 L 260 292 Z M 260 253 "/>
+</clipPath>
+<clipPath id="ftr-cw_cw_m_clip-1">
+<path clip-rule="nonzero" d="M 297.441406 274.136719 L 274.914062 291.664062 L 260.277344 279.925781 L 297.59375 253.160156 L 334.292969 279.847656 L 320.105469 291.453125 L 297.441406 274.136719 "/>
+</clipPath>
+<clipPath id="ftr-cw_cw_m_clip-2">
+<path clip-rule="nonzero" d="M 297 281 L 337 281 L 337 339 L 297 339 Z M 297 281 "/>
+</clipPath>
+<clipPath id="ftr-cw_cw_m_clip-3">
+<path clip-rule="nonzero" d="M 297.207031 312.667969 L 336.378906 281.152344 L 336.460938 303.761719 L 297.253906 338.371094 L 258.304688 304.070312 L 258.035156 281.152344 L 297.207031 312.667969 "/>
+</clipPath>
+</defs>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<path fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 336.417969 345.246094 L 258.207031 345.246094 L 258.207031 328.375 L 278.375 328.375 L 297.363281 345.136719 L 316.351562 328.375 L 336.417969 328.375 L 336.417969 345.246094 "/>
+<path fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 297.441406 274.136719 L 274.914062 291.664062 L 260.277344 279.925781 L 297.59375 253.160156 L 334.292969 279.847656 L 320.105469 291.453125 L 297.441406 274.136719 "/>
+<g clip-path="url(#ftr-cw_cw_m_clip-0)">
+<g clip-path="url(#ftr-cw_cw_m_clip-1)">
+<path fill-rule="evenodd" fill="#ffffff" fill-opacity="1" d="M 297.460938 314.144531 L 297.457031 315.144531 L 258.457031 315.144531 L 258.457031 310.835938 Z M 258.457031 233.320312 L 297.683594 233.320312 L 297.507812 296.878906 L 282.882812 298.050781 L 258.925781 278.839844 L 258.457031 279.078125 L 258.457031 233.320312 "/>
+</g>
+</g>
+<path fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 297.207031 312.667969 L 336.378906 281.152344 L 336.460938 303.761719 L 297.253906 338.371094 L 258.304688 304.070312 L 258.035156 281.152344 L 297.207031 312.667969 "/>
+<g clip-path="url(#ftr-cw_cw_m_clip-2)">
+<g clip-path="url(#ftr-cw_cw_m_clip-3)">
+<path fill-rule="nonzero" fill="#ffffff" fill-opacity="1" d="M 297.234375 338.371094 L 336.460938 338.371094 L 336.460938 281.152344 L 297.234375 281.152344 Z M 297.234375 338.371094 "/>
+</g>
+</g>
+</svg>
+<g transform="translate(2.0400 0)"><path fill="#ffffff" d="M83.13008013457234 47.80803867967799V37.36861815731274Q84.37184881205845 35.620269179983296 85.61186802354582 33.9664891813579Q86.8518872350332 32.312709182732505 88.14805026762129 30.65740538843849Q89.44421330020937 29.002101594144477 90.86045054697838 27.23343807115336L99.31718279572029 16.88796875H110.05567134482494L94.15809644324413 35.82567305458244L93.3686100996501 35.755704815090866ZM76.4516229147202 54.72V16.88796875H85.53813739612174V26.213388280883663L85.49976789415173 36.424171439283526L85.53813739612174 40.7687036058621V54.72ZM100.09774864353763 54.72 89.84776910725573 38.50897335581132 95.35362044066365 31.683482872670282 110.59734494046366 54.72Z"/><path fill="#ffffff" d="M109.0122393539542 54.72 121.92713711316638 16.88796875H133.9639597881952L147.01213508284593 54.72H136.84317972818565L131.68350131351792 38.113256236158776Q130.44668965549965 33.9525545088097 129.23651331688336 29.62151401143521Q128.02633697826707 25.29047351406072 126.76312858898483 20.32225841621286H129.1338344118168Q127.85053945116407 25.2931818198401 126.64973049959109 29.626930622993967Q125.4489215480181 33.960679426147834 124.18999227525374 38.113256236158776L118.94410168224304 54.72ZM117.86004525611234 47.272005730132804V40.19103198737022H138.1793379232305V47.272005730132804Z"/><path fill="#ffffff" d="M147.58802916472018 54.72V16.88796875H163.0631338416581Q167.4215222337382 16.88796875 170.59682045484192 18.468565730507834Q173.77211867594565 20.04916271101567 175.4935487694031 22.93393678477034Q177.21497886286056 25.81871085852501 177.21497886286056 29.740834017836022Q177.21497886286056 33.65223681501695 175.4776375004742 36.535148461901116Q173.74029613808784 39.41806010878528 170.54118696367482 40.99312707949022Q167.3420777892618 42.56819405019516 162.96653587553124 42.56819405019516H152.85114781050765V35.10421325365198H162.14690898517551Q164.0539055081765 35.10421325365198 165.40609121501734 34.44157713015622Q166.75827692185817 33.77894100666046 167.4852353662584 32.57306098301953Q168.21219381065862 31.3671809593786 168.21219381065862 29.740834017836022Q168.21219381065862 28.086162223770515 167.4852353662584 26.896024263651924Q166.75827692185817 25.705886303533333 165.4054141385725 25.050359827101346Q164.05255135528682 24.39483335066936 162.14420067939614 24.39483335066936H156.67454364612172V54.72Z"/><path fill="#ffffff" d="M178.63670103972018 54.72V16.88796875H206.38451065217433V24.55485168981133H187.72321552112172V31.96366322622518H204.94762728154947V39.41613421222311H187.72321552112172V47.05311706018867H206.37954450653106V54.72Z"/></g>
+</svg></a>
         <p>Laadukasta rakentamista Keski-Pohjanmaalla ja lähialueilla. Uudisrakentaminen, saneeraus, suunnittelu ja mittauspalvelut ammattitaidolla.</p>
-        <div style="margin-top:16px;"><img src="/img/rala-patevyys.png" alt="RALA-pätevyys" style="height:60px;width:auto;"></div>
+        <img class="rala" src="/img/rala-patevyys.png" alt="RALA-pätevyys" width="90" height="56">
       </div>
       <div class="footer-col">
         <h4>Sivut</h4>
@@ -569,24 +1650,187 @@
       <div class="footer-col">
         <h4>Yhteystiedot</h4>
         <p>Petteri Palosaari, RKM</p>
+        
         <p><a href="tel:+358440150618">044 015 0618</a></p>
         <p><a href="mailto:petteri.palosaari@kape.fi">petteri.palosaari@kape.fi</a></p>
         <p style="margin-top:8px;">Veteli, Keski-Pohjanmaa</p>
         <p>Y-tunnus: 2241282-3</p>
-        <div class="social-links" style="margin-top:12px;display:flex;gap:10px;">
-          <a href="https://www.facebook.com/kapeoy" target="_blank" rel="noopener" title="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:#fff;border-radius:50%;color:#2d6432;font-weight:bold;font-size:1.2rem;text-decoration:none;">f</a>
-          <a href="https://www.instagram.com/kapeoy" target="_blank" rel="noopener" title="Instagram" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:#fff;border-radius:50%;color:#2d6432;font-weight:bold;font-size:1.1rem;text-decoration:none;">ig</a>
+        <div class="social-links">
+          <a href="https://www.facebook.com/kapeoy" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path fill="currentColor" stroke="none" d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.6l.4-3H13V9c0-.6.4-1 1-1z"/></svg></a>
+          <a href="https://www.instagram.com/kapeoy" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg></a>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      &copy; 2026 Rakennusliike KaPe Oy. Kaikki oikeudet pid&auml;tet&auml;&auml;n.
-    </div>
+    <div class="footer-bottom">© 2026 Rakennusliike KaPe Oy. Kaikki oikeudet pidätetään.</div>
   </footer>
+  <a href="tel:+358440150618" class="mobile-call-btn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg> Soita: 044 015 0618</a>
 
-  <a href="tel:+358440150618" class="mobile-call-btn"><svg class="ic ic-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg>Soita: 044 015 0618</a>
+<script>(function(){
+  function reduceMotion(){
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
 
-  <script src="/js/main.js?v=20261023b"></script>
+  function bindHeader(){
+    var header = document.querySelector(".site-header");
+    if (!header || header.dataset.bound) return;
+    header.dataset.bound = "1";
+    var onScroll = function(){ header.classList.toggle("is-compact", window.scrollY > 24); };
+    onScroll();
+    window.addEventListener("scroll", onScroll, {passive:true});
+  }
+
+  function bindMenu(){
+    var btn = document.querySelector(".hamburger");
+    var nav = document.querySelector(".nav-links");
+    if (!btn || !nav || btn.dataset.bound) return;
+    btn.dataset.bound = "1";
+    btn.addEventListener("click", function(){
+      var open = nav.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Sulje valikko" : "Avaa valikko");
+      document.body.style.overflow = open ? "hidden" : "";
+      var bar = document.querySelector(".cookie-bar");
+      if (bar) bar.style.display = open ? "none" : "";
+    });
+    nav.addEventListener("click", function(e){
+      if (e.target.closest("a") && nav.classList.contains("is-open")) {
+        nav.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+        btn.setAttribute("aria-label", "Avaa valikko");
+        document.body.style.overflow = "";
+        var bar = document.querySelector(".cookie-bar");
+        if (bar) bar.style.display = "";
+      }
+    });
+  }
+
+  function closeMenu(){
+    var btn = document.querySelector(".hamburger");
+    var nav = document.querySelector(".nav-links");
+    if (nav) nav.classList.remove("is-open");
+    if (btn) {
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-label", "Avaa valikko");
+    }
+    document.body.style.overflow = "";
+  }
+
+  function bindReveal(){
+    var els = document.querySelectorAll(".reveal, .step");
+    var reduce = reduceMotion();
+    if (reduce || !("IntersectionObserver" in window)) {
+      els.forEach(function(el){ el.classList.add("is-in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -24px 0px" });
+    els.forEach(function(el){ io.observe(el); });
+  }
+
+  function bindCounts(){
+    if (reduceMotion()) return;
+    document.querySelectorAll("[data-count]").forEach(function(el){
+      if (el.dataset.counted) return;
+      var end = el.getAttribute("data-count");
+      var suffix = el.getAttribute("data-suffix") || "";
+      var target = parseFloat(end);
+      var startObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          startObs.unobserve(el);
+          el.dataset.counted = "1";
+          var t0 = performance.now();
+          var dur = 1100;
+          (function tick(now){
+            var p = Math.min(1, (now-t0)/dur);
+            var eased = 1 - Math.pow(1-p, 3);
+            var val = Math.round(target * eased);
+            el.textContent = val + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = end + suffix;
+          })(t0);
+        });
+      }, {threshold:0.4});
+      startObs.observe(el);
+    });
+  }
+
+  document.addEventListener("submit", function(e){
+    var form = e.target.closest("form[data-mock]");
+    if (!form) return;
+    e.preventDefault();
+    var box = form.closest(".contact-form-direct") || form.parentElement;
+    var ok = box.querySelector(".form-success");
+    if (ok) {
+      form.hidden = true;
+      ok.hidden = false;
+    } else {
+      var note = box.querySelector(".form-note");
+      if (note) {
+        note.textContent = "Kiitos. Tässä mallissa viestiä ei lähetetä.";
+        note.style.display = "block";
+      }
+    }
+  });
+
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-cookie]");
+    if (!b) return;
+    var bar = document.querySelector(".cookie-bar");
+    if (bar) bar.remove();
+    document.body.classList.remove("has-cookie");
+  });
+
+  // v8: palvelukorttien ikonit piirtyvät kun kortit tulevat näkyviin (Hallabit: IO threshold .3, 0.8 s ease-out)
+  function bindDraw(){
+    var wrap = document.querySelector(".service-cards");
+    if (!wrap || wrap.dataset.draw || reduceMotion() || !("IntersectionObserver" in window)) return;
+    wrap.dataset.draw = "1";
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("is-drawn"); io.unobserve(e.target); } });
+    }, { threshold: 0.3 });
+    wrap.querySelectorAll(".service-card").forEach(function(card, i){
+      card.querySelectorAll(".card-icon svg > *").forEach(function(sh){ sh.setAttribute("pathLength", "1"); });
+      card.style.setProperty("--i", i % 3);
+      card.classList.add("draw-icons");
+      io.observe(card);
+    });
+  }
+  // v8: logon kuutio kootaan vain ensimmäisellä latauksella
+  function bindLogo(){
+    var lg = document.querySelector(".logo-img.kp-build");
+    if (!lg || lg.dataset.kp) return;
+    lg.dataset.kp = "1";
+    try {
+      if (sessionStorage.getItem("kp-logo")) { lg.classList.remove("kp-build"); return; }
+      sessionStorage.setItem("kp-logo", "1");
+    } catch (err) {}
+  }
+
+  window.initSite = function(){
+    bindLogo();
+    bindDraw();
+    bindHeader();
+    bindMenu();
+    bindReveal();
+    bindCounts();
+    if (window.initHall) window.initHall();
+  };
+
+  window.closeSiteMenu = closeMenu;
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", window.initSite);
+  } else {
+    window.initSite();
+  }
+})();
+
+</script>
+<script src="/js/main.js?v=20261122"></script>
 <script data-goatcounter="https://kapeoy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

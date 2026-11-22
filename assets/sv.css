@@ -1,0 +1,105 @@
+/* Vierityskonseptit: kiinnitetty piirros, jonka tila vaihtuu vierityksen mukana. Tekstit ovat mallisivulta. */
+.sv { position: relative; }
+.sv-track { position: relative; height: calc(100vh - 60px + (var(--n) - 1) * var(--gap, 80vh)); height: calc(100svh - 60px + (var(--n) - 1) * var(--gap, 80vh)); }
+.sv-stage { position: sticky; top: 60px; height: calc(100vh - 60px); height: calc(100svh - 60px); overflow: hidden; display: flex; align-items: center; }
+.sv-grid { width: 100%; max-width: var(--content); margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: center; }
+.sv-head .section-title { margin-bottom: 8px; }
+.sv-head .section-subtitle { margin-bottom: 0; }
+.sv-texts { display: grid; margin-top: 36px; }
+.sv-step { grid-area: 1 / 1; opacity: 0; transform: translateY(10px); pointer-events: none; }
+.sv-step.on { pointer-events: auto; }
+.sv-step .step-number { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--green); margin-bottom: 14px; display: block; }
+.sv-step h3 { margin: 0 0 8px; font-size: var(--fs-h3); color: var(--green-d); }
+.sv-step p { margin: 0; color: var(--muted); max-width: 30rem; }
+.sv-step .card-link { display: inline-block; margin-top: 14px; color: var(--green); font-weight: 600; text-decoration: none; }
+.sv-art { position: relative; width: 100%; }
+.sv-art svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sv-dots { position: absolute; right: max(12px, calc((100vw - var(--content)) / 2 - 36px)); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2px; z-index: 3; }
+.sv-dots button { width: 32px; height: 32px; border: 0; background: none; padding: 0; cursor: pointer; display: grid; place-items: center; }
+.sv-dots button i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--green-d); box-sizing: border-box; transition: background-color 200ms; }
+.sv-dots button.on i { background: var(--green-d); }
+.sv-dots button:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; border-radius: 50%; }
+
+/* piirroksen viivat */
+.h-l { fill: none; stroke: var(--green-d); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.h-thin { stroke-width: 1.25; }
+.h-plan { fill: none; stroke: var(--green); stroke-width: 1.25; stroke-dasharray: 5 5; }
+.h-dim { fill: none; stroke: var(--green); stroke-width: 1.25; }
+.h-ground { stroke: #c9cfcb; stroke-width: 1.5; }
+.h-fill { fill: #e6efe5; }
+
+@media (max-width: 860px) {
+  .sv-track { --gap: 90vh; }
+  .sv-stage { align-items: stretch; }
+  .sv-grid { display: flex; flex-direction: column; justify-content: flex-start; gap: 0; padding: 18px var(--gutter-sm) 0; }
+  .sv-col { display: contents; }
+  .sv-head { order: 0; }
+  .sv-art { order: 1; margin-top: 14px !important; }
+  .sv-texts { order: 2; }
+  .sv-head .section-title { font-size: 28px; }
+  .sv-head .section-subtitle { font-size: 16px; }
+  .sv-texts { margin-top: 18px; }
+  .sv-step .step-number { font-size: 2rem; margin-bottom: 8px; }
+  .sv-art { max-width: 420px; margin: 0 auto; }
+  .sv-dots { right: 2px; top: auto; bottom: 16px; transform: none; flex-direction: row; left: 50%; right: auto; transform: translateX(-50%); }
+}
+@media (max-height: 520px) { .sv-track { height: auto; } .sv-stage { position: static; height: auto; padding: 48px 0; } }
+.h-l { stroke: var(--hs, var(--green-d)); }
+.g-air .flow { fill: none; stroke: #2f6fb5; stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 5 4; }
+/* 3D-leikkaus */
+.sv[data-v="c"] .sv-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 32px; }
+.iso-svg { display: block; width: 100%; height: auto; }
+.iso-leg { display: none; }
+@media (max-width: 860px) {
+  .iso-leg { display: grid; grid-template-columns: 1fr 1fr; gap: 1px 10px; align-content: start; list-style: none; margin: 2px 0 0; padding: 0; font-size: 11px; line-height: 1.3; color: var(--muted); min-height: 80px; }
+  .iso-leg li { display: flex; gap: 5px; align-items: baseline; }
+  .iso-leg b { color: #fff; background: var(--green); border-radius: 50%; width: 14px; height: 14px; flex: none; display: inline-grid; place-items: center; font-size: 9px; }
+  .sv[data-v="c"] .sv-art { max-width: none; }
+}
+/* palvelut + 3D-talo */
+.sv[data-v="p"] .sv-track { --gap: 70vh; }
+.sv[data-v="p"] .sv-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 32px; }
+/* kokonaisuus: sama vasen reuna kuin muulla sivulla (.container) */
+.sv[data-v="p"] .sv-grid { max-width: calc(var(--content) + 2 * var(--gutter)); }
+.sv[data-v="p"] .card-icon { margin-bottom: 10px; }
+@media (max-width: 860px) {
+  .sv[data-v="p"] .sv-track { --gap: 80vh; }
+  .sv[data-v="p"] .sv-art { max-width: none; }
+  .sv[data-v="p"] .card-icon { margin-bottom: 4px; }
+  .sv[data-v="p"] .card-icon svg { width: 24px; height: 24px; }
+}
+/* Kiinnitetty näkymä tasapainossa: talo keskellä pystysuunnassa, ei tyhjää kaistaa alareunaan.
+   Automaattiset marginaalit keskittävät turvallisesti: jos näkymä on matala, sisältö alkaa ylhäältä eikä leikkaudu yläreunasta.
+   Alaosan pieni lisätila nostaa kokonaisuutta hieman optisen keskikohdan suuntaan. */
+@media (min-width: 901px) {
+  .sv-stage { align-items: flex-start; padding: 24px 0 calc(24px + 4vh); box-sizing: border-box; }
+  .sv-grid { align-items: start; margin-top: auto; margin-bottom: auto; }   /* tekstipalsta talon yläreunan tasalla: otsikko ei painu alas heron jälkeen */
+}
+
+/* Mobiili ja kapea tabletti (<= 900 px): palvelut vaakasuuntaisena pyyhkäisykaruselina.
+   Talo pysyy yläpuolella ja korostaa kohdalle napsahtaneen kortin osaa; sijaintipisteet ovat karusellin alla, eivät tekstin päällä. */
+@media (max-width: 900px) {
+  .sv[data-v="p"] .sv-track { height: auto; }
+  .sv[data-v="p"] .sv-stage { position: relative; top: auto; height: auto; overflow: visible; display: block; padding: 56px 0 40px; }
+  .sv[data-v="p"] .sv-grid { display: flex; flex-direction: column; gap: 0; padding: 0 var(--gutter-sm); max-width: none; }
+  .sv[data-v="p"] .sv-col { display: contents; }
+  .sv[data-v="p"] .sv-head { order: 0; align-self: stretch; }
+  .sv[data-v="p"] .sv-art { order: 1; align-self: center; width: 100%; margin: 16px auto 0 !important; max-width: 460px; }
+  .sv[data-v="p"] .sv-texts { order: 2; align-self: stretch; min-width: 0; display: flex; gap: 12px; margin: 20px calc(-1 * var(--gutter-sm)) 0; padding: 4px var(--gutter-sm) 10px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter-sm); overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .sv[data-v="p"] .sv-texts::-webkit-scrollbar { display: none; }
+  .sv[data-v="p"] .sv-step { grid-area: auto; flex: 0 0 84%; max-width: 360px; scroll-snap-align: start; opacity: 1 !important; transform: none !important; pointer-events: auto;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 20px 18px; box-sizing: border-box; box-shadow: 0 1px 2px rgba(30, 68, 34, .04);
+    transition: border-color 220ms var(--ease-snap), box-shadow 220ms var(--ease-snap); }
+  .sv[data-v="p"] .sv-step.on { border-color: rgba(46, 125, 50, .35); box-shadow: 0 6px 18px rgba(30, 68, 34, .08); }
+  .sv[data-v="p"] .sv-step p { max-width: none; }
+  .sv[data-v="p"] .sv-dots { position: static; transform: none; left: auto; right: auto; bottom: auto; display: flex; flex-direction: row; justify-content: center; gap: 0; margin-top: 6px; }
+  .sv[data-v="p"] .sv-dots button { width: 28px; height: 28px; }
+  .sv[data-v="p"] .sv-dots button i { width: 8px; height: 8px; border: 0; background: #c9d3cc; transition: width 260ms var(--ease-snap), background-color 200ms; border-radius: 4px; }
+  .sv[data-v="p"] .sv-dots button.on i { width: 22px; background: var(--green-d); }
+}
+/* Mobiili: sivu vierii pystysuunnassa luonnollisesti. Korttirivi ei reagoi pystyvieritykseen; kortti vaihtuu vain selvästä vaakapyyhkäisystä (sv.js) tai pisteistä. */
+@media (max-width: 900px) {
+  html, body { overflow-x: clip; }
+  .sv[data-v="p"], .sv[data-v="p"] .sv-texts { touch-action: pan-y; }
+}
